@@ -1,0 +1,264 @@
+.main{
+    .gallary{
+        padding: 30px 0;
+        .filters{
+            border-bottom: 1px solid #d9d9d9;
+            ul{
+                display: flex;
+                align-items: center;
+                li{
+                    &+li{
+                        margin-left: 30px;
+                    }
+                    &.line{
+                        padding: 15px 0;
+                    }
+                    button{
+                        padding: 0;
+                        border: 0;
+                        background: transparent;
+                        position: relative;
+                        padding: 15px 0;
+                        bottom: -3px;
+                        &::before{
+                            position: absolute;
+                            bottom:0;
+                            display: block;
+                            background: #ff0000;
+                            height: 0px;
+                            width: 50px;
+                            content: '';
+                            left: 50%;
+                            transform: translate(-50%,0);
+                            // transition: height 0.5s;
+                        }
+                        &:hover{
+                            &::before{
+                                height: 3px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .galleryList{
+            .container{
+                > ul{
+                    display: flex;
+                    align-items: center;
+                    > li{
+                        cursor: pointer;
+                        width: 18.4%;
+                        margin-top: 30px;
+                        &+li{
+                            margin-left: 2%;
+                        }
+                        .thumbnail{
+                            border-radius: 10px;
+                            background-position: center center;
+                            background-size: cover;
+                            position: relative;
+                            &::after{
+                                content: "";
+                                display: block;
+                                padding-bottom: 100%;
+                            }
+                            &::before{
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                background: rgba(255,255,255,0.5);
+                                display: block;
+                                content: '';
+                                top: 0;
+                                left: 0;
+                                opacity: 0;
+                                transition: opacity 0.5s;
+                            }
+                            &:hover{
+                                &::before{
+                                    opacity: 1;
+                                }
+                            }
+                        }
+                        .titleBox{
+                            width: 100%;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            margin-top: 10px;
+                        }
+                        .infoBox{
+                            margin-top: 10px;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            flex: 0 0 40%;
+                            .memberInfo{
+                                width: 40%;
+                            }
+                            .itemInfo{
+                                width: 40%;
+                                ul{
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-between; 
+                                    li{
+                                        svg{
+                                            margin-right: 5px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#galleryDetailModal{
+    .modal-body{
+        .detailHeader{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .headerLeft{
+                .galleryTitle{
+                    font-weight: bold;
+                    font-size: 1.4rem;
+                }
+                .galleryInfo{
+                    margin-top: 5px;
+                    display: flex;
+                    color: #999;
+                    ul{
+                        display: flex;
+                        &::before{
+                            display: inline-block;
+                            padding: 0 5px;
+                            content:'|'; 
+                        }
+                        li{
+                            &+li{
+                                &::before{
+                                    display: inline-block;
+                                    padding: 0 5px;
+                                    content:'\00B7';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .headerRight{
+                width: 40%;
+                display: flex;
+                justify-content: space-between;
+                dl{
+                    text-align: center;
+                    color: #999;
+                    dd{
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }
+        .detailBody{
+            margin: 30px auto;
+            .detailContent{
+                padding: 0 50px;
+                .contentWrap{
+                    &+.contentWrap{
+                        margin-top: 15px;
+                    }
+                    img{
+                        max-width: 100%;
+                    }
+                }
+            }
+            .btnBox{
+                margin-top:50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                button{
+                    background: transparent;
+                    border: 1px solid #d9d9d9;
+                    width: 200px;
+                    padding: 10px 0;
+                    border-radius: 50px;
+                    & + button{
+                        margin-left: 15px;
+                    }
+                }
+            }
+        }
+        .detailFooter{
+            .hashtagList{
+                display: flex;
+                a{
+                    padding: 5px 10px;
+                    border: 1px solid #d9d9d9;
+                    border-radius: 50px;
+                    font-size: 0.8rem;
+                    &+a{
+                        margin-left: 5px;
+                    }
+                }
+            }
+            .commentBox{
+                margin-top: 30px;
+                .btnBox{
+                    margin-top: 15px;
+                    display: flex;
+                    justify-content: flex-end;
+                    button{
+                        background: transparent;
+                        border: 1px solid #d9d9d9;
+                        padding: 10px 30px;
+                        border-radius: 50px;
+                    }
+                }
+            }
+        }
+    }   
+}
+.modal-sidebar{
+    position:  fixed;
+    right: 15%;
+    top: 30px;
+    z-index: 9999;
+    display: none;
+    ul{
+        li{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            button{
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                padding: 0;
+                border: 0;
+                margin-bottom: 5px;
+            }
+            &+li{
+                margin-top: 10px;
+            }
+            color: #fff;
+            &.btnProfile{
+                button{
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    border: 2px solid #999;
+                }
+            }
+        }
+    }
+}
+.modal-sidebar.on{
+    display: block;
+}

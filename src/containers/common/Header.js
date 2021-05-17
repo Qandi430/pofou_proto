@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from 'reactstrap';
-import GlobalNavigation from '../../components/common/header/GlobalNavigation';
-import PersonalNavigation from '../../components/common/header/PersonalNavigation';
+import GlobalNavigation from '../../components/header/GlobalNavigation';
+import PersonalNavigation from '../../components/header/PersonalNavigation';
 
 const Header = () => {
     return (
