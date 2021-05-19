@@ -1,0 +1,152 @@
+.upload{
+    background: #f1f1f1;
+    padding: 10px 0;
+    .uploadForm{
+        .contentsBox{
+            margin-top: 15px;
+            background: #fff;
+            padding: 15px 30px;
+            border: 1px solid #d9d9d9;
+            .contentsPreset{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 100px 0;
+                border: 2px solid transparent;
+                transition: border 0.5s;
+                ul{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-top: 50px;
+                    li{
+                        text-align: center;
+                        &+li{
+                            margin-left: 30px;
+                        }
+                        button{
+                            background: transparent;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 100px;
+                            height: 100px;
+                            border: 1px solid #d9d9d9;
+                            margin-bottom: 15px;
+                            border-radius: 50%; 
+                            color: #999;
+                            background: transparent;
+                            transition: all 0.5s;
+                            svg{
+                                font-size: 1.4rem;
+                            }
+                            &:hover{
+                                background: #f85272;
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+                &:hover{
+                    border-color: #333;
+                }
+            }
+        }
+    }
+    .uploadSideBar{
+        .contentsSetting{
+            background: #fff;
+            &+.contentsSetting{
+                margin-top: 30px;
+            }
+            &.setting1{
+                ul{
+                    display: flex;
+                    flex-wrap: wrap;
+                    border: 1px solid #d9d9d9;
+                    li{
+                        flex: 0 0 50%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 15% 0;
+                        font-size: 0.9rem;
+                        cursor: pointer;
+                        &:nth-child(2n){
+                            border-left: 1px solid #d9d9d9;
+                        }
+                        &:nth-child(n+3){
+                            border-top: 1px solid #d9d9d9;
+                        }
+                        svg{
+                            margin-bottom: 10px;
+                            font-size: 1.4rem;
+                        }
+                    }
+                }
+            }
+            &.setting2{
+                ul{
+                    display: flex;
+                    flex-wrap: wrap;
+                    border: 1px solid #d9d9d9;
+                    li{
+                        flex: 0 0 50%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 15% 0;
+                        font-size: 0.9rem;
+                        cursor: pointer;
+                        &:nth-child(2){
+                            border-left: 1px solid #d9d9d9;
+                        }
+                        svg{
+                            margin-bottom: 10px;
+                            font-size: 1.4rem;
+                        }
+                    }
+                }
+            }
+            &.setting3{
+                padding: 10px 15px;
+                dl{
+                    padding: 10px 0;
+                    dd{
+                        margin-top: 5px;
+                        display: flex;
+                        align-items: center;
+                    }
+                    &.background{
+                        dd{
+                            border: 1px solid #d9d9d9;
+                            input{
+                                flex: 0 0 20%;
+                                border: 0;
+                                padding: 0;
+                                border-right: 1px solid #d9d9d9;
+                            }
+                            label{
+                                margin-left: 5px;
+                            }
+                        }
+                    }
+                    &.margin{
+                        border-top: 1px solid #d9d9d9;
+                        dd{
+                            input[type=range]{
+                                flex: 0 0 70%;
+                            }
+                            input[type=text]{
+                                margin-left: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

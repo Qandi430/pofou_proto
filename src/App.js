@@ -4,11 +4,16 @@ import Header from './containers/common/Header';
 import MainPage from './pages/main/MainPage';
 import './resources/scss/common/reset.scss';
 import './resources/scss/common/common.scss';
+import { Route, Switch } from 'react-router';
+import UploadPage from './pages/upload/UploadPage';
 function App() {
   return (
     <Fragment>
       <Header/>
-      <MainPage/>
+      <Switch>
+        <Route path="/upload" component={UploadPage}/>
+        <Route path="/" component={MainPage}/>
+      </Switch>
     </Fragment>   
   );
 }

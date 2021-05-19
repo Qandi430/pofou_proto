@@ -25,6 +25,7 @@ header{
             margin-left: auto;
             ul{
                 display: flex;
+                align-items: center;
                 li{
                     &+li{
                         margin-left: 1rem;
@@ -34,6 +35,15 @@ header{
                         margin: 0;
                         border: 0;
                         background: transparent; 
+                        display: flex;
+                    }
+                    a{
+                        &.btnUpload{
+                            background: #f85272;
+                            color: #fff;                            
+                            padding: 5px 30px;
+                            border-radius: 30px;
+                        }
                     }
                 }
             }
