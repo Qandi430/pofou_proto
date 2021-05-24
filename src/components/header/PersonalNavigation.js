@@ -16,10 +16,10 @@ const PersonalNavigation = () => {
                     </button>
                 </li>
                 <li>
-                    <button>로그인</button>
+                    <Link className="btnLogin" to="/auth/login">로그인</Link>
                 </li>
                 <li>
-                    <button>회원가입</button>
+                    <Link className="btnRegist" to="/auth/register">회원가입</Link>
                 </li>            
             </ul>
         </nav>
