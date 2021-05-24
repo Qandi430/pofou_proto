@@ -6,7 +6,6 @@ const LoginForm = () => {
         <Form className="loginForm">
             <FormGroup>
                 <input type="email" name="loginEmail"/>
-                
                 <Label>이메일 아이디</Label>
                 <div className="line"></div>
             </FormGroup>
