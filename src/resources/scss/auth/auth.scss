@@ -50,6 +50,15 @@
                                 color: turquoise;
                             }
                         }
+                        &.focus{
+                            &~.line{
+                                transform: scale(1);
+                            }
+                            &~label{
+                                transform: translateY(-15px) scale(0.8);
+                                color: turquoise;
+                            }
+                        }
                     }
                     .line{
                         position: absolute;

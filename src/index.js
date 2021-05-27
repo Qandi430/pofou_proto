@@ -10,7 +10,7 @@ const customHistory = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={customHistory}>  
-    <App />
+    <App history={customHistory}/>
   </Router>,
   document.getElementById('root')
 );
