@@ -7,6 +7,7 @@ import { Route, Switch } from 'react-router';
 import UploadPage from './pages/upload/UploadPage';
 import AuthPage from './pages/auth/AuthPage';
 import {CommonProvider} from './context/commonContext';
+import Archive from './pages/contents/Archive';
 
 function App({history}) {
   // console.log(history)
@@ -16,6 +17,7 @@ function App({history}) {
       <Switch>
         <Route path="/upload" component={UploadPage}/>
         <Route path="/auth" component={AuthPage}/>
+        <Route path="/archive" component={Archive}/>
         <Route path="/" component={MainPage}/>
       </Switch>
       </CommonProvider>

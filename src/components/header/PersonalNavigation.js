@@ -1,15 +1,21 @@
 import { faBell } from '@fortawesome/free-regular-svg-icons';
 import {faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { createCommonConsumer } from '../../context/commonContext';
 import AlarmMenu from './AlarmMenu';
 import MyPageMenu from './MyPageMenu';
 
-const PersonalNavigation = ({isLogin}) => {
+const PersonalNavigation = ({isLogin,history}) => {
     const [openMyPageMenu,setOpenMyPageMenu] = useState(false);
     const [openAlarmMenu,setOpenAlarmMenu] = useState(false);
+    let location = useLocation();
+    
+    useEffect(() => {
+        setOpenMyPageMenu(false);
+        setOpenAlarmMenu(false);
+    },[location])
 
     const handleOpenMyPageMenu = () => {
         if(openAlarmMenu){
