@@ -1,0 +1,161 @@
+.resume{
+    padding: 30px 0;
+    .resumeList{
+        .empty{
+            min-height: 500px;
+            border: 1px solid #d9d9d9;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            a{
+                margin-top: 10px;
+                color: #2ac5c6;
+            }
+        }
+    }
+    .resumeForm{
+        .form-group{
+            display: flex;
+            flex-wrap: wrap;
+            padding: 30px 0;
+            .formTitle{
+                flex: 0 0 100%;
+                display: flex;
+                align-items: flex-end;
+                font-weight: bold;
+                font-size: 1.2rem;
+                margin-bottom: 30px;
+                span{
+                    color: #999;
+                    font-size: 0.9rem;
+                }
+            }
+            .flexTable{
+                .tableRow{
+                    display: flex;
+                    border: 1px solid #d9d9d9;
+                    .tableData{
+                        flex: 0 0 50%;
+                        
+                        display: flex;
+                        .th{
+                            height: 100%;
+                            background: #d9d9d9;
+                            // flex: 0 0 20%;
+                            width: 100px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                        .td{
+                            padding: 10px;
+                            width: calc(100% - 100px);
+                            input{
+                                width: 100%;
+                                border: 0;
+                                &:focus{
+                                    outline: none;
+                                }
+                            }
+                            select{
+                                border-color: #d9d9d9;
+                            }
+                        }
+                        
+                    }
+                    &+.tableRow{
+                        border-top: 0;
+                    }
+                }
+            }
+        }
+        .resumeTitle{
+            border-bottom: 1px solid #d9d9d9;
+            padding: 5px 0;
+            h5{
+                display: flex;
+                align-items: center;
+                font-size: 1.4rem;
+                color: #ff6813;
+                font-weight: bold;
+                button{
+                    background-color: transparent;
+                    border: 0;
+                    padding: 0;
+                    font-size: 0.9rem;
+                    margin-left: 0.5em;
+                }
+            }
+            input{
+                border: 0;
+                border-bottom: 1px solid #d9d9d9;
+                &+button{
+                    border: 1px solid #d9d9d9;
+                    padding: 5px 10px;
+                    background-color: transparent;
+                    border-radius: 0px 3px 3px 0;
+                    transition: all 0.5s;
+                    &:hover{
+                        background: #333;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+        .basicInfo{
+            justify-content: space-between;
+            .resumeImage{
+                flex: 0 0 15%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                .imageWrap{
+                    border: 2px solid #d9d9d9;
+                }
+                button{
+                    border: 0;
+                    background: #ff6813;
+                    color: #fff;
+                    padding: 5px 10px;
+                    border-radius: 20px;
+                    margin-top: 10px;
+                    border: 1px solid #ff6813;
+                    transition: all 0.5s;
+                    &:hover{
+                        background: transparent;
+                        color: #ff6813;
+                    }
+                }
+            }
+            .flexTable{
+                flex: 0 0 80%;
+                .tableRow{
+                    &:first-child{
+                        .tableData{
+                            flex: 0 0 33.333%;
+                            &.birthDate{
+                                .td{
+                                    display: flex;
+                                    justify-content: center;
+                                    select{
+                                        &+select{
+                                            margin-left: 5px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    &:last-child{
+                        .tableData{
+                            flex: 0 0 100%;
+                            // width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
