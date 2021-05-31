@@ -4,7 +4,7 @@ import defaultImage from '../../../resources/images/contents/resume/default_prof
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const ResumeFormContents = ({openTitleInput,resumeTitle,changeFormData,handleTitleInput}) => {
+const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,formData,handleEducationAdditionalModal}) => {
 
 
     const getYearList = () => {
@@ -31,12 +31,12 @@ const ResumeFormContents = ({openTitleInput,resumeTitle,changeFormData,handleTit
                 {
                     openTitleInput ? 
                     <>
-                    <input type="text" id="resumeTitle" name="resumeTitle" value={resumeTitle} onChange={changeFormData} />
+                    <input type="text" id="resumeTitle" name="title" value={formData.title} onChange={changeFormData} />
                     <button onClick={handleTitleInput}>적용</button>
                     </>
                     :
                     <h5>
-                        {resumeTitle}
+                        {formData.title}
                         <button onClick={handleTitleInput}><FontAwesomeIcon icon={faEdit}/></button>
                     </h5>
                 }
@@ -53,18 +53,18 @@ const ResumeFormContents = ({openTitleInput,resumeTitle,changeFormData,handleTit
                     <div className="tableRow">
                         <div className="tableData name">
                             <div className="th">
-                                <label htmlFor="">이름</label>
+                                <label htmlFor="resumeName">이름</label>
                             </div>
                             <div className="td">
-                                <input type="text" id="basicName" name="name" />
+                                <input type="text" id="resumeName" name="name" value={formData.name} onChange={changeFormData} />
                             </div>
                         </div>
                         <div className="tableData birthDate">
                             <div className="th">
-                                <label htmlFor="">생년월일</label>
+                                <label htmlFor="birthYear">생년월일</label>
                             </div>
                             <div className="td">
-                                <select name="birthYead">
+                                <select name="birthYear" id="birthYear" onChange={changeFormData}>
                                     {
                                         getYearList().map(
                                             (year,index) => 
@@ -72,7 +72,7 @@ const ResumeFormContents = ({openTitleInput,resumeTitle,changeFormData,handleTit
                                         )
                                     }
                                 </select>
-                                <select name="birthMonth">
+                                <select name="birthMonth" id="birthMonth" onChange={changeFormData}>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -86,7 +86,7 @@ const ResumeFormContents = ({openTitleInput,resumeTitle,changeFormData,handleTit
                                     <option value="11">11</option>
                                     <option value="12">12</option>
                                 </select>
-                                <select name="birthDay">
+                                <select name="birthDay" id="birthDay" onChange={changeFormData}>
                                     {
                                         getDayList().map(
                                             (day,index) => 
@@ -98,10 +98,10 @@ const ResumeFormContents = ({openTitleInput,resumeTitle,changeFormData,handleTit
                         </div>
                         <div className="tableData gender">
                             <div className="th">
-                                <label htmlFor="">성별</label>
+                                <label htmlFor="gender">성별</label>
                             </div>
                             <div className="td">
-                                <select name="gender">
+                                <select name="gender" id="gender" onChange={changeFormData}>
                                     <option value="M">남자</option>
                                     <option value="F">여자</option>
                                 </select>
@@ -111,49 +111,68 @@ const ResumeFormContents = ({openTitleInput,resumeTitle,changeFormData,handleTit
                     <div className="tableRow">
                         <div className="tableData phone">
                             <div className="th">
-                                <label htmlFor="">전화번호</label>
+                                <label htmlFor="phone">전화번호</label>
                             </div>
                             <div className="td">
-                                <input type="text" id="basicName" name="phone" />
+                                <input type="text" id="phone" name="phone" value={formData.phone} onChange={changeFormData} />
                             </div>
                         </div>
                         <div className="tableData mobile">
                             <div className="th">
-                                <label htmlFor="">휴대폰번호</label>
+                                <label htmlFor="mobile">휴대폰번호</label>
                             </div>
                             <div className="td">
-                                <input type="text" id="basicName" name="phone" />
+                                <input type="text" id="mobile" name="mobile" value={formData.mobile} onChange={changeFormData}/>
                             </div>
                         </div>
                     </div>
                     <div className="tableRow">
                         <div className="tableData email">
                             <div className="th">
-                                <label htmlFor="">이메일</label>
+                                <label htmlFor="email">이메일</label>
                             </div>
                             <div className="td">
-                                <input type="text" id="basicName" name="phone" />
+                                <input type="text" id="email" name="email" value={formData.email} onChange={changeFormData}/>
                             </div>
                         </div>
-                        <div className="tableData mobile">
+                        <div className="tableData sns">
                             <div className="th">
-                                <label htmlFor="">SNS</label>
+                                <label htmlFor="sns">SNS</label>
                             </div>
                             <div className="td">
-                                <input type="text" id="basicName" name="phone" />
+                                <input type="text" id="sns" name="sns" value={formData.sns} onChange={changeFormData}/>
                             </div>
                         </div>
                     </div>
                     <div className="tableRow">
-                        <div className="tableData phone">
+                        <div className="tableData address">
                             <div className="th">
-                                <label htmlFor="">주소</label>
+                                <label htmlFor="address">주소</label>
                             </div>
                             <div className="td">
-                                <input type="text" id="basicName" name="phone" />
+                                <input type="text" id="address" name="address" value={formData.address} onChange={changeFormData}/>
                             </div>
                         </div>
                     </div>
+                </div>
+            </FormGroup>
+            <FormGroup className="education">
+                <h6 className="formTitle">
+                    학력 <button onClick={handleEducationAdditionalModal}>추가 +</button>
+                </h6>
+                <div className="educationList">
+                    {
+                        formData.educationList.length > 0 ?
+                            <ul>
+                                <li></li>
+                            </ul>
+                        :
+                        <div className="empty">
+                            등록된 학력이 없습니다.
+                            <button onClick={handleEducationAdditionalModal}>학력 등록하기</button>
+                        </div>
+                    }
+                    
                 </div>
             </FormGroup>
         </Form>

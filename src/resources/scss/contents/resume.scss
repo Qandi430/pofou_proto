@@ -24,11 +24,27 @@
                 display: flex;
                 align-items: flex-end;
                 font-weight: bold;
-                font-size: 1.2rem;
+                font-size: 1.4rem;
                 margin-bottom: 30px;
                 span{
                     color: #999;
                     font-size: 0.9rem;
+                    margin-left: 10px; 
+                }
+                button{
+                    padding: 2px 5px;
+                    border: 0;
+                    background-color: #ff6813;
+                    color: #fff;
+                    font-size: 0.75rem;
+                    border-radius: 20px;
+                    margin-left: 5px;
+                    border: 1px solid #ff6813;
+                    transition: all 0.5s;
+                    &:hover{
+                        background-color: transparent;
+                        color: #ff6813;
+                    }
                 }
             }
             .flexTable{
@@ -153,6 +169,120 @@
                             flex: 0 0 100%;
                             // width: 100%;
                         }
+                    }
+                }
+            }
+        }
+        .education{
+            .educationList{
+                border: 1px solid #d9d9d9;
+                flex: 1;
+                .empty{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 300px;
+                    width: 100%;
+                    button{
+                        padding: 0;
+                        color: #ff6813;
+                        border: 0;
+                        margin-top: 10px;
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#educationAdditionalModal{
+    .modal-body{
+        .formTitle{
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1em;
+            margin-top: 1em;
+            display: flex;
+            align-items: flex-end;
+            > p{
+                font-size: 0.9rem;
+                font-weight: normal;
+                margin-left: 10px;
+            }
+        }
+        .form-group{
+            label{
+                margin-bottom: 1em;
+            }
+            .dropdown{
+                .dropdown-toggle{
+                    background-color: transparent;
+                    border-color: #d9d9d9;
+                    color: #333;
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .dropdown-menu{
+                    width: 100%;
+                    .dropdown-item{
+                        padding-top: 10px;
+                        padding-bottom: 10px;
+                        transition: background-color 0.5s;
+                    }
+                }
+            }
+        }
+        .majorInfo{
+            .majorList{
+                li{
+                    &+li{
+                        margin-top: 10px;
+                    }
+                    .btnRemoveMajor{
+                        width: 100%;
+                        height: 100%;
+                        border: 1px solid #ff5165;
+                        background-color: transparent;
+                        border-radius: .25rem;
+                        color: #ff5165;
+                        transition: all 0.5s;
+                        &:hover{
+                            background-color: #ff5165;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+            .btnAddMajor{
+                background-color: transparent;
+                padding: 0;
+                border: 0;
+                margin-top: 10px;
+                color: #2ac5c6;
+            }
+        }
+        .educationPeriod{
+            .form-group{
+                display: flex;
+
+                align-items: center;
+                input{
+                    flex: 0 0 28%;
+                    position: relative;
+                }
+                span{
+                    display: block;
+                    padding: 0 0.8em;
+                }
+                .dropdown{
+                    margin-left: auto;
+                    flex: 0 0 28%;
+                    .dropdown-menu{
+                        min-width: auto;
                     }
                 }
             }
