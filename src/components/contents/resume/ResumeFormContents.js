@@ -3,8 +3,9 @@ import { Form, FormGroup } from 'reactstrap';
 import defaultImage from '../../../resources/images/contents/resume/default_profile.png'
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import EducationContents from './EducationContent';
 
-const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,formData,handleEducationAdditionalModal}) => {
+const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,formData,handleEducationAdditionalModal,removeEducation,modifyEducation,modifyEducationForm}) => {
 
 
     const getYearList = () => {
@@ -163,16 +164,15 @@ const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,form
                 <div className="educationList">
                     {
                         formData.educationList.length > 0 ?
-                            <ul>
-                                <li></li>
-                            </ul>
+                        formData.educationList.map(
+                            (education,index) => <EducationContents education={education} key={index} removeEducation={removeEducation} modifyEducation={modifyEducation} modifyEducationForm={modifyEducationForm}/>
+                        )
                         :
                         <div className="empty">
                             등록된 학력이 없습니다.
                             <button onClick={handleEducationAdditionalModal}>학력 등록하기</button>
                         </div>
                     }
-                    
                 </div>
             </FormGroup>
         </Form>

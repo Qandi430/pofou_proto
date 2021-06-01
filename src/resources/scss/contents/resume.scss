@@ -175,9 +175,9 @@
         }
         .education{
             .educationList{
-                border: 1px solid #d9d9d9;
                 flex: 1;
                 .empty{
+                    border: 1px solid #d9d9d9;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
@@ -190,6 +190,52 @@
                         border: 0;
                         margin-top: 10px;
                         background-color: transparent;
+                    }
+                }
+                .educationContent{
+                    border-bottom: 1px solid #d9d9d9;
+                    padding: 10px 0;
+                    position: relative;
+                    >button{
+                        position: absolute;
+                        top: 10px;
+                        background-color: transparent;
+                        padding:0;
+                        border: 0;
+                        transition: color 0.5s;
+                        &:hover{
+                            color: #ff6813;
+                        }
+                        &.btnModify{
+                            right: 30px;
+                        }
+                        &.btnRemove{
+                            right: 0;
+                        }
+                    }
+                    .educationName{
+                        font-size: 1.2rem;
+                        font-weight: bold;
+                    }
+                    .majorList{
+                        margin-top: 15px; 
+                        display: flex;
+                        li{
+                            font-weight: 100;
+                            font-size: 1.1rem;
+                            &+li{
+                                &::before{
+                                    content:',';
+                                    display: inline-block;
+                                    margin-right: 5px; 
+                                }
+                            }
+                        }
+                    }
+                    .educationPeriod{
+                        margin-top: 15px;
+                        color: #999; 
+                        font-size: 0.9rem;
                     }
                 }
             }
@@ -216,6 +262,12 @@
             label{
                 margin-bottom: 1em;
             }
+            input{
+                &.withIcon{
+                    padding-left: 50px; 
+                }
+                
+            }
             .dropdown{
                 .dropdown-toggle{
                     background-color: transparent;
@@ -234,6 +286,18 @@
                         transition: background-color 0.5s;
                     }
                 }
+            }
+        }
+        .withIcon{
+            position: relative;
+            svg{
+                position: absolute;
+                bottom: 10px;
+                left: 20px;
+                color: #999;
+            }
+            input{
+                padding-left: 30px;
             }
         }
         .majorInfo{

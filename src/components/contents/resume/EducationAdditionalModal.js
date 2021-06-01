@@ -1,9 +1,9 @@
-import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React,{ useEffect, useState} from 'react';
 import {Row, Col, Modal, ModalBody, ModalFooter, ModalHeader, FormGroup, Label, Input,Dropdown, DropdownToggle, DropdownMenu, DropdownItem,Button } from 'reactstrap';
 
-const EducationAdditionalModal = ({isOpen,toggle,addEducation}) => {
+const EducationAdditionalModal = ({isOpen,toggle,addEducation,modifyEducationForm}) => {
 
     const [openEduTypeDropdown, setOpenEduTypeDropdown] = useState(false);
     const [openHighSchoolMajor,setOpenHighSchoolMajor] = useState(false);
@@ -33,26 +33,30 @@ const EducationAdditionalModal = ({isOpen,toggle,addEducation}) => {
         setOpenEduTypeDropdown(false);
         setOpenHighSchoolMajor(false);
         setOpenGraduatedType(false);
-        setEduForm({
-            educationType : "univercity",
-            educationName : "",
-            majorList : [
-                {
-                    index : 0,
-                    degreeType : "Bechelor",
-                    openDegreeTypeDropdown : false,
-                    openMajorTypeDropdown : false,
-                    majorType : "major",
-                    majorName : "",
-                },
-            ],
-            highScoolMajor : "",
-            admissionYear : "",
-            graduatedYear : "",
-            graduatedType : "",
-            educationContent : "",
-        })
-    },[isOpen])
+        if(modifyEducationForm !== null){
+            setEduForm(modifyEducationForm);
+        }else{
+            setEduForm({
+                educationType : "univercity",
+                educationName : "",
+                majorList : [
+                    {
+                        index : 0,
+                        degreeType : "Bechelor",
+                        openDegreeTypeDropdown : false,
+                        openMajorTypeDropdown : false,
+                        majorType : "major",
+                        majorName : "",
+                    },
+                ],
+                highScoolMajor : "",
+                admissionYear : "",
+                graduatedYear : "",
+                graduatedType : "",
+                educationContent : "",
+            })
+        }
+    },[isOpen,modifyEducationForm]);
 
     const handleDropdown = (type,index) => {
         if(type === "eduType"){
@@ -215,10 +219,11 @@ const EducationAdditionalModal = ({isOpen,toggle,addEducation}) => {
                             </Dropdown>
                         </FormGroup>
                     </Col>
-                    <Col md={9}>
+                    <Col md={9} className="withIcon">
                         <FormGroup>
                             <Label>학교</Label>
-                            <Input type="text" name="educationName" value={eduForm.educationName} onChange={e => changeEduForm("educationName",e.target.value)}/>
+                            <FontAwesomeIcon icon={faSearch}/>
+                            <Input type="text" name="educationName" value={eduForm.educationName} onChange={e => changeEduForm("educationName",e.target.value)} placeholder="예 : 서울대학교"/>
                         </FormGroup>
                     </Col>
                 </Row>
@@ -275,8 +280,9 @@ const EducationAdditionalModal = ({isOpen,toggle,addEducation}) => {
                                                     </Dropdown>
                                                 </FormGroup>
                                             </Col>
-                                            <Col md={major.index === 0 ? 6 : 5}>
-                                                <Input type="text" name="majorName" value={major.majorName} onChange={e => changeEduForm("majorName",e.target.value,major.index)}/>
+                                            <Col md={major.index === 0 ? 6 : 5} className="withIcon">
+                                                <FontAwesomeIcon icon={faSearch}/>
+                                                <Input type="text" name="majorName" value={major.majorName} onChange={e => changeEduForm("majorName",e.target.value,major.index)} placeholder="예 : 컴퓨터공학부"/>
                                             </Col>
                                             {
                                                 major.index > 0 &&
@@ -322,9 +328,9 @@ const EducationAdditionalModal = ({isOpen,toggle,addEducation}) => {
                     </Col>
                     <Col md={6}>
                         <FormGroup>
-                            <Input type="text" name="admissionYear" />
+                            <Input type="text" name="admissionYear" onChange={e => changeEduForm("admissionYear",e.target.value)} placeholder="입학년도"/>
                             <span>-</span>
-                            <Input type="text" name="graduatedYear"/>
+                            <Input type="text" name="graduatedYear"  onChange={e => changeEduForm("graduatedYear",e.target.value)} placeholder="졸업년도"/>
                             <Dropdown isOpen={openGraduatedType} toggle={() => handleDropdown("openGraduatedType")}>
                                 <DropdownToggle caret>
                                     {convertValueToName("graduatedType")}
