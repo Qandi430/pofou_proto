@@ -5,7 +5,6 @@ import React from 'react';
 const EducationContents = ({education,removeEducation,modifyEducation}) => {
 
     const convertValueToName = (type,name) => {
-        console.log(type,name)
         if(type === "educationType"){
             switch(name){
                 case "highSchool":

@@ -4,6 +4,7 @@ import { Col, Row } from 'reactstrap';
 import ResumeFormContents from '../../../components/contents/resume/ResumeFormContents';
 import EducationAdditionalModal from '../../../components/contents/resume/EducationAdditionalModal';
 import CertificateSearchModal from '../../../components/contents/resume/CetificateSearchModal';
+import CareerAdditiaonalModal from '../../../components/contents/resume/CareeaAdditionalModal';
 
 const ResumeForm = () => {
 
@@ -60,11 +61,14 @@ const ResumeForm = () => {
             }
         ],
         certificateList : [],
+        carrerList : [],
     });
     const [openEducationAdditionalModal,setOpenEducationAdditionalModal] = useState(false);
     const [modifyEducationForm,setModifyEducationForm] = useState(null);
     const [openCertificateSearchModal,setOpenCertificateSearchModal] = useState(false);
     const [certificateSearchIndex,setCertificateSearchIndex] = useState(0);
+    const [openCareerAdditionalModal,setOpenCareerAdditionalModal] = useState(false);
+    const [modifyCareerForm,setModifyCareerForm] = useState(null);
 
     useEffect(() => {
         if(!openEducationAdditionalModal){
@@ -198,6 +202,41 @@ const ResumeForm = () => {
         }
     }
 
+    const handleCareerAdditionalModal = e => {
+        e.preventDefault();
+        setOpenCareerAdditionalModal(!openCareerAdditionalModal);
+        
+        if(openCareerAdditionalModal){
+            console.log("modify form is null")
+            setModifyCareerForm(null);
+        }
+    }
+
+    const addCareer = careerForm =>{
+        careerForm["index"] = formData.carrerList.length;
+        setFormData({
+            ...formData,
+            carrerList : formData.carrerList.concat(careerForm)
+        });
+        setOpenCareerAdditionalModal(false);
+    }
+
+    const removeCareer = (e,index) => {
+        e.preventDefault();
+        if(window.confirm("해당 경력을 삭제하시겠습니까?")){
+            setFormData({
+                ...formData,
+                carrerList: formData.carrerList.filter(career => career.index !== index)
+            })
+        }
+    }
+
+    const modifyCareer = (e,index) => {
+        e.preventDefault();
+        setModifyCareerForm(formData.carrerList.find(career => career.index === index));
+        setOpenCareerAdditionalModal(true);
+    }
+
     return (
         <div className="resumeForm">
             <Row>
@@ -214,6 +253,9 @@ const ResumeForm = () => {
                         addCertificateList = {addCertificateList}
                         changteCertificateData = {changteCertificateData}
                         handleCertificateSearchModal={handleCertificateSearchModal}
+                        handleCareerAdditionalModal={handleCareerAdditionalModal}
+                        modifyCareer = {modifyCareer}
+                        removeCareer = {removeCareer}
                     />
                 </Col>
                 <Col md={3}>
@@ -222,6 +264,7 @@ const ResumeForm = () => {
             </Row>
             <EducationAdditionalModal isOpen={openEducationAdditionalModal} toggle={handleEducationAdditionalModal} addEducation={addEducation} modifyEducationForm={modifyEducationForm}/>
             <CertificateSearchModal isOpen={openCertificateSearchModal} toggle={handleCertificateSearchModal} index={certificateSearchIndex} changteCertificateData={changteCertificateData}/>
+            <CareerAdditiaonalModal isOpen={openCareerAdditionalModal} toggle={handleCareerAdditionalModal} modifyCareerForm={modifyCareerForm} addCareer={addCareer}/>
         </div>
     )
 }

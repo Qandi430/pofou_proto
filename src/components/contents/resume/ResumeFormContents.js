@@ -2,12 +2,13 @@ import React from 'react';
 import { Button, Form, FormGroup } from 'reactstrap';
 import defaultImage from '../../../resources/images/contents/resume/default_profile.png'
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EducationContents from './EducationContent';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,formData,handleEducationAdditionalModal,removeEducation,modifyEducation,modifyEducationForm,addCertificateList,changteCertificateData,handleCertificateSearchModal}) => {
+const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,formData,handleEducationAdditionalModal,removeEducation,modifyEducation,modifyEducationForm,addCertificateList,changteCertificateData,handleCertificateSearchModal,handleCareerAdditionalModal,modifyCareer,removeCareer}) => {
 
     const getYearList = () => {
         let list = [];
@@ -218,6 +219,36 @@ const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,form
                             등록된 자격/면허가 없습니다.
                             <button onClick={addCertificateList}>자격/면허 등록하기</button>
                         </div>
+                    }
+                </div>
+            </FormGroup>
+            <FormGroup className="career">
+                <h6 className="formTitle">
+                    경력 <button onClick={handleCareerAdditionalModal}>추가 +</button>
+                </h6>
+                <div className="careerList">
+                    {
+                        formData.carrerList.length > 0 ?
+                            formData.carrerList.map(
+                                career => 
+                                    <div className="careerContent" key={career.index}>
+                                        <h4 className="careerRole">{career.careerRole}</h4>
+                                        <p className="careerName">{career.careerName}</p>
+                                        <p className="careerPeriod">{`${career.careerStartYear}년 ${career.careerStartMonth}월 - ${career.careerPeriodType === "workOn" ? "현재" : `${career.careerEndYear}년 ${career.careerEndMonth}월`}`}</p>
+                                        <p className="content">{career.careerContent}</p>
+                                        <button className="btnModify" onClick={e => modifyCareer(e,career.index)}>
+                                            <FontAwesomeIcon icon={faPen}/>
+                                        </button>
+                                        <button className="btnRemove" onClick={e => removeCareer(e,career.index)}>
+                                            <FontAwesomeIcon icon={faTrashAlt}/>
+                                        </button>
+                                    </div>
+                            )
+                            :
+                            <div className="empty">
+                                등록된 경력이 없습니다.
+                                <button onClick={handleCareerAdditionalModal}>경력 등록하기</button>
+                            </div>
                     }
                 </div>
             </FormGroup>

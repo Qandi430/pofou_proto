@@ -12,7 +12,7 @@ const CertificateSearchModal = ({isOpen,toggle,index,changteCertificateData}) =>
                     <InputGroup>
                         
                         <Input type="text"/>
-                        <InputGroupAddon><Button>검색</Button></InputGroupAddon>
+                        <InputGroupAddon addonType="append"><Button>검색</Button></InputGroupAddon>
                     </InputGroup>   
                 </FormGroup>
                 <ul className="list">
