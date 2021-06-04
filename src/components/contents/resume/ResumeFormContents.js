@@ -1,12 +1,13 @@
 import React from 'react';
-import { Form, FormGroup } from 'reactstrap';
+import { Button, Form, FormGroup } from 'reactstrap';
 import defaultImage from '../../../resources/images/contents/resume/default_profile.png'
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EducationContents from './EducationContent';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
-const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,formData,handleEducationAdditionalModal,removeEducation,modifyEducation,modifyEducationForm}) => {
-
+const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,formData,handleEducationAdditionalModal,removeEducation,modifyEducation,modifyEducationForm,addCertificateList,changteCertificateData,handleCertificateSearchModal}) => {
 
     const getYearList = () => {
         let list = [];
@@ -25,7 +26,7 @@ const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,form
 
         return list;
     }
-
+    
     return (
         <Form>
             <div className="resumeTitle">
@@ -171,6 +172,51 @@ const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,form
                         <div className="empty">
                             등록된 학력이 없습니다.
                             <button onClick={handleEducationAdditionalModal}>학력 등록하기</button>
+                        </div>
+                    }
+                </div>
+            </FormGroup>
+            <FormGroup className="certificate">
+                <h6 className="formTitle">자격/면허 <button onClick={addCertificateList}>추가 +</button></h6>
+                <div className="certificateList">
+                    {
+                        formData.certificateList.length > 0 ?
+                            formData.certificateList.map(
+                                (certificate) => 
+                                    <div className="certificateContent" key={certificate.index}>
+                                        <dl>
+                                            <dt>이름</dt>
+                                            <dd>
+                                                <Button color="default" onClick={e => handleCertificateSearchModal(e,certificate.index)}>검색</Button>
+                                            </dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>발행처/기관</dt>
+                                            <dd><input type="text" name="certificateIssuer" value={certificate.certificateIssuer} onChange={e => changteCertificateData("certificateIssuer",e.target.value,certificate.index)}/></dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>등급</dt>
+                                            <dd><input type="text" name="certificateGrade" value={certificate.certificateGrade} onChange={e => changteCertificateData("certificateGrade",e.target.value,certificate.index)}/></dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>발행일</dt>
+                                            <dd>
+                                                <DatePicker
+                                                    selected={certificate.certificateIssueDate}
+                                                    selectsStart
+                                                    maxDate={new Date()}
+                                                    dateFormat="yyyy.MM.dd"
+                                                    onChange={data=> changteCertificateData("certificateIssueDate",data,certificate.index)}
+                                                />
+                                            </dd>
+                                        </dl>
+                                        <button className="btnRemoveCertificate">삭제하기</button>
+                                    </div>
+                            ) 
+                        : 
+                        <div className="empty">
+                            등록된 자격/면허가 없습니다.
+                            <button onClick={addCertificateList}>자격/면허 등록하기</button>
                         </div>
                     }
                 </div>

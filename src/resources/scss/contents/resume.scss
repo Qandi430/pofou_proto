@@ -85,6 +85,22 @@
                     }
                 }
             }
+            .empty{
+                border: 1px solid #d9d9d9;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 300px;
+                width: 100%;
+                button{
+                    padding: 0;
+                    color: #ff6813;
+                    border: 0;
+                    margin-top: 10px;
+                    background-color: transparent;
+                }
+            }
         }
         .resumeTitle{
             border-bottom: 1px solid #d9d9d9;
@@ -240,6 +256,64 @@
                 }
             }
         }
+        .certificate{
+            .certificateList{
+                flex: 1;
+                .certificateContent{
+                    display: flex;
+                    flex-wrap: wrap;
+                    &+.certificateContent{
+                        margin-top: 30px;
+                    }
+                    dl{
+                        flex: 0 0 50%;
+                        display: flex;
+                        border: 1px solid #d9d9d9; 
+                        &:nth-child(n+3){
+                            border-top: 0;
+                        }
+                        &:nth-child(2n){
+                            border-left: 0;
+                        }
+                        dt{
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            flex: 0 0 20%;
+                            background-color: #eee;
+                        }
+                        dd{
+                            flex: 0 0 80%;
+                            padding: 10px;
+                            input{
+                                width: 100%;
+                                border: 0;
+                                height: 35px;
+                                &:focus{
+                                    outline: none;
+                                }
+                            }
+                            button{
+                                border-color: #d9d9d9;
+                                color: #999;
+                                transition: all 0.5s;
+                                &:hover{
+                                    background-color: #999;
+                                    color: #fff;
+                                }
+                            }
+                        }
+                    }
+                    .btnRemoveCertificate{
+                        margin-left: auto;
+                        border: 0;
+                        background-color: transparent;
+                        margin-top: 10px;
+                        color: #ff6813;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -350,6 +424,14 @@
                     }
                 }
             }
+        }
+    }
+}
+
+#certificateSearchModal{
+    .modal-body{
+        .list{
+            min-height: 300px;
         }
     }
 }

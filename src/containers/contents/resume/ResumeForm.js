@@ -3,6 +3,7 @@ import React,{useEffect, useState} from 'react';
 import { Col, Row } from 'reactstrap';
 import ResumeFormContents from '../../../components/contents/resume/ResumeFormContents';
 import EducationAdditionalModal from '../../../components/contents/resume/EducationAdditionalModal';
+import CertificateSearchModal from '../../../components/contents/resume/CetificateSearchModal';
 
 const ResumeForm = () => {
 
@@ -58,9 +59,12 @@ const ResumeForm = () => {
                 educationContent : "",
             }
         ],
+        certificateList : [],
     });
     const [openEducationAdditionalModal,setOpenEducationAdditionalModal] = useState(false);
     const [modifyEducationForm,setModifyEducationForm] = useState(null);
+    const [openCertificateSearchModal,setOpenCertificateSearchModal] = useState(false);
+    const [certificateSearchIndex,setCertificateSearchIndex] = useState(0);
 
     useEffect(() => {
         if(!openEducationAdditionalModal){
@@ -86,7 +90,6 @@ const ResumeForm = () => {
     }
 
     const addEducation = educationForm => {
-
         if(educationForm.educationType === ""){
             alert("학교 구분을 선택해 주세요.");
             return false;
@@ -159,6 +162,42 @@ const ResumeForm = () => {
         setOpenEducationAdditionalModal(true);
     }
 
+    const addCertificateList = e => {
+        e.preventDefault();
+        setFormData({
+            ...formData,
+            certificateList : formData.certificateList.concat({
+                index: formData.certificateList.length,
+                certificateName : "",
+                certificateIssuer : "",
+                certificateGrade : "",
+                certificateIssueDate : new Date(),
+            })
+        })   
+    }
+
+    const changteCertificateData = (name,value,index) => {
+        let certificateList = formData.certificateList;
+        console.log(name,value,index)
+        certificateList[index][name] = value;
+
+        setFormData({
+            ...formData,
+            certificateList : certificateList
+        })
+    }
+
+    const handleCertificateSearchModal = (e,index) => {
+        e.preventDefault();
+        if(index !== undefined){
+            setCertificateSearchIndex(index);
+            setOpenCertificateSearchModal(true);
+        }else{
+            setCertificateSearchIndex(0);
+            setOpenCertificateSearchModal(false);
+        }
+    }
+
     return (
         <div className="resumeForm">
             <Row>
@@ -172,6 +211,9 @@ const ResumeForm = () => {
                         removeEducation = {removeEducation}
                         modifyEducation = {modifyEducation}
                         modifyEducationForm = {modifyEducationForm}
+                        addCertificateList = {addCertificateList}
+                        changteCertificateData = {changteCertificateData}
+                        handleCertificateSearchModal={handleCertificateSearchModal}
                     />
                 </Col>
                 <Col md={3}>
@@ -179,6 +221,7 @@ const ResumeForm = () => {
                 </Col>
             </Row>
             <EducationAdditionalModal isOpen={openEducationAdditionalModal} toggle={handleEducationAdditionalModal} addEducation={addEducation} modifyEducationForm={modifyEducationForm}/>
+            <CertificateSearchModal isOpen={openCertificateSearchModal} toggle={handleCertificateSearchModal} index={certificateSearchIndex} changteCertificateData={changteCertificateData}/>
         </div>
     )
 }
