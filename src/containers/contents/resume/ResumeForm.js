@@ -62,6 +62,20 @@ const ResumeForm = () => {
         ],
         certificateList : [],
         carrerList : [],
+        languageList: [],
+        awardsList : [],
+        abroadsList : [],
+        preferred : {
+            veteran : "",
+            disabledWhether : "",
+            militaryServiceStatus : "",
+            militaryStartYear : "",
+            militaryStartMonth : "",
+            militaryEndYear : "",
+            militaryEndMonth : "",
+            mos : "",
+            militaryClasses : "",
+        },
     });
     const [openEducationAdditionalModal,setOpenEducationAdditionalModal] = useState(false);
     const [modifyEducationForm,setModifyEducationForm] = useState(null);
@@ -90,6 +104,18 @@ const ResumeForm = () => {
         setFormData({
             ...formData,
             [name]:value
+        })
+    }
+
+    const changePreferredData = e => {
+        const {value,name} = e.target;
+
+        setFormData({
+            ...formData,
+            preferred : {
+                ...formData.preferred,
+                [name]:value
+            }
         })
     }
 
@@ -256,6 +282,7 @@ const ResumeForm = () => {
                         handleCareerAdditionalModal={handleCareerAdditionalModal}
                         modifyCareer = {modifyCareer}
                         removeCareer = {removeCareer}
+                        changePreferredData = {changePreferredData}
                     />
                 </Col>
                 <Col md={3}>

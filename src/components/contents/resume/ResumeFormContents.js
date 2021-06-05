@@ -8,11 +8,11 @@ import EducationContents from './EducationContent';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,formData,handleEducationAdditionalModal,removeEducation,modifyEducation,modifyEducationForm,addCertificateList,changteCertificateData,handleCertificateSearchModal,handleCareerAdditionalModal,modifyCareer,removeCareer}) => {
+const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,formData,handleEducationAdditionalModal,removeEducation,modifyEducation,modifyEducationForm,addCertificateList,changteCertificateData,handleCertificateSearchModal,handleCareerAdditionalModal,modifyCareer,removeCareer,changePreferredData}) => {
 
     const getYearList = () => {
         let list = [];
-        for(let i = 1900; i<=2021; i++){
+        for(let i = 2021; i>=1900; i--){
             list.push(i);
         }
         return list;
@@ -251,6 +251,138 @@ const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,form
                             </div>
                     }
                 </div>
+            </FormGroup>
+            <FormGroup className="language">
+                <h6 className="formTitle">어학(의논 필요)</h6>
+                <ul className="languageList"></ul>
+            </FormGroup>
+            <FormGroup className="awards">
+                <h6 className="formTitle">수상</h6>
+                <ul className="awardsList"></ul>
+            </FormGroup>
+            <FormGroup className="abroads">
+                <h6 className="formTitle">해외 연수</h6>
+                <ul className="abroadsList"></ul>
+            </FormGroup>
+            <FormGroup className="preferred">
+                <h6 className="formTitle">우대사항</h6>
+                <ul className="preferredItems">
+                    <li className="veteran">
+                        <dl>
+                            <dt>
+                                보훈 사항
+                            </dt>
+                            <dd>
+                                <input type="radio" name="veteran" value="Y" id="veteranY" onChange={changePreferredData}/>
+                                <label htmlFor="veteranY">대상</label>
+                                <input type="radio" name="veteran" value="N" id="veteranN" onChange={changePreferredData}/>
+                                <label htmlFor="veteranN">비대상</label>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li className="disabledWhether">
+                        <dl>
+                            <dt>
+                                장애 여부
+                            </dt>
+                            <dd>
+                                <input type="radio" name="disabledWhether" value="Y" id="disabledWhetherY" onChange={changePreferredData}/>
+                                <label htmlFor="disabledWhetherY">대상</label>
+                                <input type="radio" name="disabledWhether" value="N" id="disabledWhetherN" onChange={changePreferredData}/>
+                                <label htmlFor="disabledWhetherN">비대상</label>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li className="militaryServiceStatus">
+                        <dl>
+                            <dt>
+                                병역 구분
+                            </dt>
+                            <dd>
+                                <input type="radio" name="militaryServiceStatus" value="Fulfilled" id="fulfilled" onChange={changePreferredData}/>
+                                <label htmlFor="fulfilled">대상</label>
+                                <input type="radio" name="militaryServiceStatus" value="Unfulfilled" id="unfulfilled" onChange={changePreferredData}/>
+                                <label htmlFor="unfulfilled">비대상</label>
+                                <input type="radio" name="militaryServiceStatus" value="Exempted" id="exempted" onChange={changePreferredData}/>
+                                <label htmlFor="exempted">비대상</label>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li className="militatyServicePeriod">
+                        <dl>
+                            <dt>
+                                복무기간
+                            </dt>
+                            <dd>
+                                <select name="militaryStartYear" id="militaryStartYear" onChange={changePreferredData}>
+                                    <option value="">--</option>
+                                    {
+                                        getYearList().map(
+                                            (year,index) => 
+                                                <option key={index} value={year}>{year}</option>
+                                        )
+                                    }
+                                </select>
+                                <select name="militaryStartMonth" id="militaryStartMonth" onChange={changePreferredData}>
+                                    <option value="">--</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                                <label htmlFor="militaryEndYear">-</label>
+                                <select name="militaryEndYear" id="militaryEndYear" onChange={changePreferredData}>
+                                    <option value="">--</option>
+                                    {
+                                        getYearList().map(
+                                            (year,index) => 
+                                                <option key={index} value={year}>{year}</option>
+                                        )
+                                    }
+                                </select>
+                                <select name="militaryEndMonth" id="militaryEndMonth" onChange={changePreferredData}>
+                                    <option value="">--</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li className="mos">
+                        <dl>
+                            <dt>군별</dt>
+                            <dd>
+                                <input type="text" name="mos" value={formData.preferred.mos} onChange={changePreferredData}/>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li className="militaryClasses">
+                        <dl>
+                            <dt>계급</dt>
+                            <dd>
+                                <input type="text" name="militaryClasses" value={formData.preferred.militaryClasses} onChange={changePreferredData}/>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
             </FormGroup>
         </Form>
     )
