@@ -357,7 +357,48 @@
             }
         }
         .language{}
-        .awards{}
+        .awards{
+            .awardsList{
+                flex: 1;
+                .awardsContent{
+                    border-bottom: 1px solid #d9d9d9;
+                    padding: 10px 0;
+                    position: relative;
+                    >button{
+                        position: absolute;
+                        top: 10px;
+                        background-color: transparent;
+                        padding:0;
+                        border: 0;
+                        transition: color 0.5s;
+                        &:hover{
+                            color: #ff6813;
+                        }
+                        &.btnModify{
+                            right: 30px;
+                        }
+                        &.btnRemove{
+                            right: 0;
+                        }
+                    }
+                    .awardsName{
+                        font-size: 1.2rem;
+                        font-weight: bold;
+                    }
+                    .awardsAgency{
+                        margin-top: 15px;
+                    }
+                    .awardsDate{
+                        margin-top: 15px;
+                        color: #999; 
+                        font-size: 0.9rem;
+                    }
+                    .content{
+                        margin-top: 15px;
+                    }
+                }
+            }
+        }
         .abroads{}
         .preferred{
             .preferredItems{
@@ -428,6 +469,48 @@
                     &.militaryClasses{
                         flex: 0 0 50%;
                         border-left: 0;
+                    }
+                }
+            }
+        }
+        .experience{
+            .experienceList{
+                flex: 1;
+                .experienceContent{
+                    border-bottom: 1px solid #d9d9d9;
+                    padding: 10px 0;
+                    position: relative;
+                    >button{
+                        position: absolute;
+                        top: 10px;
+                        background-color: transparent;
+                        padding:0;
+                        border: 0;
+                        transition: color 0.5s;
+                        &:hover{
+                            color: #ff6813;
+                        }
+                        &.btnModify{
+                            right: 30px;
+                        }
+                        &.btnRemove{
+                            right: 0;
+                        }
+                    }
+                    .experienceName{
+                        font-size: 1.2rem;
+                        font-weight: bold;
+                    }
+                    .experienceInstitution{
+                        margin-top: 15px;
+                    }
+                    .experiencePeriod{
+                        margin-top: 15px;
+                        color: #999; 
+                        font-size: 0.9rem;
+                    }
+                    .content{
+                        margin-top: 15px;
                     }
                 }
             }
@@ -609,6 +692,91 @@
             }
             input{
                 padding-left: 30px;
+            }
+        }
+    }
+}
+
+#awardsAdditionalModal{
+    .modal-body{
+        .formTitle{
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1em;
+            margin-top: 1em;
+            display: flex;
+            align-items: flex-end;
+            > p{
+                font-size: 0.9rem;
+                font-weight: normal;
+                margin-left: 10px;
+            }
+        }
+        .form-group{
+            label{
+                margin-bottom: 1em;
+            }
+            input{
+                &.withIcon{
+                    padding-left: 50px; 
+                }
+                
+            }
+            .dropdown{
+                .dropdown-toggle{
+                    background-color: transparent;
+                    border-color: #d9d9d9;
+                    color: #333;
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .dropdown-menu{
+                    width: 100%;
+                    .dropdown-item{
+                        padding-top: 10px;
+                        padding-bottom: 10px;
+                        transition: background-color 0.5s;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#experienceAdditionalModal{
+    .modal-body{
+        .formTitle{
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1em;
+            margin-top: 1em;
+            display: flex;
+            align-items: flex-end;
+            > p{
+                font-size: 0.9rem;
+                font-weight: normal;
+                margin-left: 10px;
+            }
+        }
+        .form-group{
+            label{
+                margin-bottom: 1em;
+            }
+        }
+        .experiencePeriod{
+            .form-group{
+                display: flex;
+                align-items: center;
+                label{
+                    margin: 0 10px;
+                }
+                input{
+                    padding: .375rem .75rem;
+                    border: 1px solid #ced4da;
+                    border-radius: .25rem;
+                }
             }
         }
     }

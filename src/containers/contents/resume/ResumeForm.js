@@ -5,6 +5,8 @@ import ResumeFormContents from '../../../components/contents/resume/ResumeFormCo
 import EducationAdditionalModal from '../../../components/contents/resume/EducationAdditionalModal';
 import CertificateSearchModal from '../../../components/contents/resume/CetificateSearchModal';
 import CareerAdditiaonalModal from '../../../components/contents/resume/CareeaAdditionalModal';
+import AwardsAdditionalModal from '../../../components/contents/resume/AwardsAdditionalModal';
+import ExperienceAdditionalModal from '../../../components/contents/resume/ExperienceAdditionalModal';
 
 const ResumeForm = () => {
 
@@ -76,6 +78,7 @@ const ResumeForm = () => {
             mos : "",
             militaryClasses : "",
         },
+        experienceList : [],
     });
     const [openEducationAdditionalModal,setOpenEducationAdditionalModal] = useState(false);
     const [modifyEducationForm,setModifyEducationForm] = useState(null);
@@ -83,6 +86,10 @@ const ResumeForm = () => {
     const [certificateSearchIndex,setCertificateSearchIndex] = useState(0);
     const [openCareerAdditionalModal,setOpenCareerAdditionalModal] = useState(false);
     const [modifyCareerForm,setModifyCareerForm] = useState(null);
+    const [openAwardsAdditionalModal, setOpenAwardsAdditionalModal] = useState(false);
+    const [modifyAwardsForm,setModifyAwardsForm] = useState(null);
+    const [openExperienceModal,setOpenExperienceModal] = useState(false);
+    const [modifyExperienceForm, setModifyExperienceForm] = useState(null);
 
     useEffect(() => {
         if(!openEducationAdditionalModal){
@@ -263,6 +270,76 @@ const ResumeForm = () => {
         setOpenCareerAdditionalModal(true);
     }
 
+    const handleAwardsAdditionalModal = e => {
+        if(e !== undefined){
+            e.preventDefault();
+        }
+        setOpenAwardsAdditionalModal(!openAwardsAdditionalModal);
+        if(openAwardsAdditionalModal){
+            setModifyAwardsForm(null)
+        }
+    };
+
+    const addAwards = awardsForm => {
+        awardsForm["index"] = formData.awardsList.length;
+        setFormData({
+            ...formData,
+            awardsList : formData.awardsList.concat(awardsForm),
+        })
+        handleAwardsAdditionalModal();
+    }
+
+    const removeAwards = (e,index) => {
+        e.preventDefault();
+        if(window.confirm("해당 수상내역을 삭제하시겠습니까?")){
+            setFormData({
+                ...formData,
+                awardsList : formData.awardsList.filter(awards => awards.index !== index)
+            })
+        }
+    };
+
+    const modifyAwards = (e,index) => {
+        e.preventDefault();
+        setModifyAwardsForm(formData.awardsList.find(awards => awards.index === index));
+        setOpenAwardsAdditionalModal(true);
+    }
+
+    const handExperienceAddiionalModal = e => {
+        if(e !== undefined){
+            e.preventDefault();
+        }
+        setOpenExperienceModal(!openExperienceModal);
+        if(openExperienceModal){
+
+        }
+    }
+
+    const addExperience = experienceForm => {
+        experienceForm["index"] = formData.experienceList.length;
+        setFormData({
+            ...formData,
+            experienceList : formData.experienceList.concat(experienceForm)
+        })
+        handExperienceAddiionalModal();
+    }
+
+    const removeExperience = (e,index) => {
+        e.preventDefault();
+        if(window.confirm("해당 관련활동 또는 사회경험을 삭제하시겠습니까?")){
+            setFormData({
+                ...formData,
+                experienceList : formData.experienceList.filter(experience => experience.index !== index)
+            })
+        }
+    }
+
+    const modifyExperience = (e,index) => {
+        e.preventDefault();
+        setModifyExperienceForm(formData.experienceList.find(experience => experience.index === index));
+        setOpenExperienceModal(true);
+    }
+
     return (
         <div className="resumeForm">
             <Row>
@@ -283,6 +360,12 @@ const ResumeForm = () => {
                         modifyCareer = {modifyCareer}
                         removeCareer = {removeCareer}
                         changePreferredData = {changePreferredData}
+                        handleAwardsAdditionalModal={handleAwardsAdditionalModal}
+                        modifyAwards={modifyAwards}
+                        removeAwards={removeAwards}
+                        handExperienceAddiionalModal={handExperienceAddiionalModal}
+                        modifyExperience={modifyExperience}
+                        removeExperience = {removeExperience}
                     />
                 </Col>
                 <Col md={3}>
@@ -292,6 +375,8 @@ const ResumeForm = () => {
             <EducationAdditionalModal isOpen={openEducationAdditionalModal} toggle={handleEducationAdditionalModal} addEducation={addEducation} modifyEducationForm={modifyEducationForm}/>
             <CertificateSearchModal isOpen={openCertificateSearchModal} toggle={handleCertificateSearchModal} index={certificateSearchIndex} changteCertificateData={changteCertificateData}/>
             <CareerAdditiaonalModal isOpen={openCareerAdditionalModal} toggle={handleCareerAdditionalModal} modifyCareerForm={modifyCareerForm} addCareer={addCareer}/>
+            <AwardsAdditionalModal isOpen={openAwardsAdditionalModal} toggle={handleAwardsAdditionalModal} modifyAwardsForm={modifyAwardsForm} addAwards={addAwards}/>
+            <ExperienceAdditionalModal isOpen={openExperienceModal} toggle={handExperienceAddiionalModal} modifyExperienceForm={modifyExperienceForm} addExperience={addExperience}/>
         </div>
     )
 }

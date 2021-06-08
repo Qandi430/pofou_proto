@@ -7,9 +7,31 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EducationContents from './EducationContent';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
 
-const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,formData,handleEducationAdditionalModal,removeEducation,modifyEducation,modifyEducationForm,addCertificateList,changteCertificateData,handleCertificateSearchModal,handleCareerAdditionalModal,modifyCareer,removeCareer,changePreferredData}) => {
-
+const ResumeFormContents = ({
+    openTitleInput
+    ,changeFormData
+    ,handleTitleInput
+    ,formData
+    ,handleEducationAdditionalModal
+    ,removeEducation
+    ,modifyEducation
+    ,modifyEducationForm
+    ,addCertificateList
+    ,changteCertificateData
+    ,handleCertificateSearchModal
+    ,handleCareerAdditionalModal
+    ,modifyCareer
+    ,removeCareer
+    ,changePreferredData
+    ,handleAwardsAdditionalModal
+    ,modifyAwards
+    ,removeAwards
+    ,handExperienceAddiionalModal
+    ,modifyExperience
+    ,removeExperience
+}) => {
     const getYearList = () => {
         let list = [];
         for(let i = 2021; i>=1900; i--){
@@ -253,15 +275,41 @@ const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,form
                 </div>
             </FormGroup>
             <FormGroup className="language">
-                <h6 className="formTitle">어학(의논 필요)</h6>
+                <h6 className="formTitle">어학(어학 시험관련 필요 여부)</h6>
                 <ul className="languageList"></ul>
             </FormGroup>
             <FormGroup className="awards">
-                <h6 className="formTitle">수상</h6>
-                <ul className="awardsList"></ul>
+                <h6 className="formTitle">수상 <button onClick={handleAwardsAdditionalModal}>추가 +</button></h6>
+                <div className="awardsList">
+                    {
+                        formData.awardsList.length > 0 ?
+                            formData.awardsList.map(
+                                (awards) => 
+                                    <div className="awardsContent">
+                                        <h4 className="awardsName">
+                                            {awards.awardsName} {awards.awardsPrize}
+                                        </h4>
+                                        <p className="awardsAgency">{awards.awardsAgency}</p>
+                                        <p className="awardsDate">{`${awards.awardsYear}년 ${awards.awardsMonth}월 수상`}</p>
+                                        <div className="content">{awards.awardsContent}</div>
+                                        <button className="btnModify" onClick={e => modifyAwards(e,awards.index)}>
+                                            <FontAwesomeIcon icon={faPen}/>
+                                        </button>
+                                        <button className="btnRemove" onClick={e => removeAwards(e,awards.index)}>
+                                            <FontAwesomeIcon icon={faTrashAlt}/>
+                                        </button>
+                                    </div>
+                            )
+                        :
+                        <div className="empty">
+                            등록된 수상 내역이 없습니다.
+                            <button onClick={handleAwardsAdditionalModal}>수상내역 등록하기</button>
+                        </div>
+                    }
+                </div>
             </FormGroup>
             <FormGroup className="abroads">
-                <h6 className="formTitle">해외 연수</h6>
+                <h6 className="formTitle">해외 연수(필요 여부?)</h6>
                 <ul className="abroadsList"></ul>
             </FormGroup>
             <FormGroup className="preferred">
@@ -383,6 +431,34 @@ const ResumeFormContents = ({openTitleInput,changeFormData,handleTitleInput,form
                         </dl>
                     </li>
                 </ul>
+            </FormGroup>
+            <FormGroup className="experience">
+                <h6 className="formTitle">관련활동 및 사회경험 <button onClick={handExperienceAddiionalModal}>추가 +</button></h6>
+                <div className="experienceList">
+                    {
+                        formData.experienceList.length > 0 ?
+                            formData.experienceList.map(
+                                experience => 
+                                    <div className="experienceContent" key={experience.index}>
+                                        <h4 className="experienceName">{experience.experienceName}</h4>
+                                        <p className="experienceInstitution">{experience.experienceInstitution}</p>
+                                        <p className="experiencePeriod">{`${moment(experience.experienceStartDate).format('YYYY.MM.DD')} - ${moment(experience.experienceEndDate).format('YYYY.MM.DD')}`}</p>
+                                        <p className="content">{experience.experienceContent}</p>
+                                        <button className="btnModify" onClick={e => modifyExperience(e,experience.index)}>
+                                            <FontAwesomeIcon icon={faPen}/>
+                                        </button>
+                                        <button className="btnRemove" onClick={e => removeExperience(e,experience.index)}>
+                                            <FontAwesomeIcon icon={faTrashAlt}/>
+                                        </button>
+                                    </div>
+                            )
+                        :
+                        <div className="empty">
+                            등록된 관련활동 및 사회경험이 없습니다.
+                            <button onClick={handExperienceAddiionalModal}>관련활동 또는 사회경험 등록하기</button>
+                        </div>
+                    }
+                </div>                            
             </FormGroup>
         </Form>
     )
