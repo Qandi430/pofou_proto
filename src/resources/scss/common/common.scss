@@ -2,6 +2,7 @@
 @import "~slick-carousel/slick/slick-theme.css";
 header{
     padding: 10px 0;
+    border-bottom: 1px solid #d9d9d9;
     .headerWrap{
         display: flex;
         align-items: center;
@@ -290,6 +291,73 @@ header{
       animation: shrink-bounce 200ms cubic-bezier(.4,.0,.23,1);
     }
     input[type='checkbox']:checked + label > span:before{
+      content: "";
+      position: absolute;
+      top: .6em;
+      left: .24em;
+      border-right: 2px solid transparent;
+      border-bottom: 2px solid transparent;
+      transform: rotate(45deg);
+      transform-origin: 0% 100%;
+      animation: checkbox-check 125ms 250ms cubic-bezier(.4,.0,.23,1) forwards;
+    }
+}
+
+.customRadio{
+    input[type='radio']{ height: 0; width: 0; display: none;}
+    
+    input[type='radio'] + label{
+      position: relative;
+      display: flex;
+      margin: .6em 0;
+      align-items: center;
+      color: #333;
+      transition: color 250ms cubic-bezier(.4,.0,.23,1);
+    }
+    input[type='radio'] + label > ins{
+      position: absolute;
+      display: block;
+      bottom: 0;
+      left: 1.4em;
+      height: 0;
+      width: 100%;
+      overflow: hidden;
+      text-decoration: none;
+      transition: height 300ms cubic-bezier(.4,.0,.23,1);
+    }
+    input[type='radio'] + label > ins > i{
+      position: absolute;
+      bottom: 0;
+      font-style: normal;
+      color: #2ac5c6;
+    }
+    input[type='radio'] + label > span{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 0.4em;
+      width: 1em;
+      height: 1em;
+      background: transparent;
+      border: 2px solid #9E9E9E;
+      border-radius: 50%;
+      cursor: pointer;  
+      transition: all 250ms cubic-bezier(.4,.0,.23,1);
+    }
+    
+    input[type='radio'] + label:hover, input[type='checkbox']:focus + label{
+      color: #999;
+    }
+    input[type='radio'] + label:hover > span, input[type='checkbox']:focus + label > span{
+      background: rgba(255,255,255,.1);
+    }
+    input[type='radio']:checked + label > ins{ height: 100%; }
+    
+    input[type='radio']:checked + label > span{
+      border: .5em solid #FFEB3B;
+      animation: shrink-bounce 200ms cubic-bezier(.4,.0,.23,1);
+    }
+    input[type='radio']:checked + label > span:before{
       content: "";
       position: absolute;
       top: .6em;

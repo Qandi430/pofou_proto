@@ -1,0 +1,158 @@
+.myPage{
+    .profile{
+        .profileTab{
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid #d9d9d9;
+            .pageTitle{
+                position: absolute;
+                top: 50%;
+                left: 20px;
+                transform: translate(0,-50%);
+                font-size: 1.2rem;
+                font-weight: bold;
+            }
+            .tabList{
+                display: flex;
+                width: 200px;
+                justify-content: space-between;
+                li{
+                    padding: 15px 5px;
+                    font-size: 1.1rem;
+                    border-bottom: 2px solid transparent;
+                    color: #999;
+                    transition: all 0.5s;
+                    cursor: pointer;
+                    &.on{
+                        color: #333;
+                        border-color: #f85272;;
+                    }
+                    &:hover{
+                        color: #333;
+                        border-color: #f85272;;
+                    }
+                }
+            }
+        }
+        .tabContents{
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 50px 0 ;
+            .contentsTitle{
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+            .formItem{
+                padding: 30px 0;
+                &+.formItem{
+                    border-top: 1px solid #d9d9d9;
+                }
+                .formTitle{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    button{
+                        padding: 0;
+                        border: 0;
+                        background-color: transparent;
+                        color: #f85272;
+                        font-size: 0.9rem;
+                    }
+                }
+                .form-group{
+                    margin-top: 15px;
+                    display: flex;
+                }
+                ul{
+                    margin-top: 15px;
+                    display: flex;
+                }
+                &.profileImage{
+                    .form-group{
+                        .imageWrap{
+                            max-width: 75px;
+                            img{
+                                max-width: 100%;
+                            }
+                        }
+                        .inputWrap{
+                            margin-left: 30px;
+                            .buttonWrap{
+                                display: flex;
+                                align-items: center;
+                                input{
+                                    display: none;
+                                }
+                                label{
+                                    border: 1px solid #d9d9d9;
+                                    border-radius: 30px;
+                                    padding: 10px;
+                                    cursor: pointer;
+                                    svg{
+                                        color: #f85272;
+                                        margin-right: 5px;
+                                    }
+                                }
+                                button{
+                                    margin-left: 15px;
+                                    padding: 0;
+                                    border:0;
+                                    background-color: transparent;
+                                    color: #666;
+                                }
+                                margin-bottom: 10px;
+                            }
+                        }
+                    }
+                }
+                &.profileGender{
+                    .form-group{
+                        > div{
+                            &+ div{
+                                margin-left: 10px;
+                            }
+                        }
+                    }
+                }
+                &.profileBirth{
+                    select{
+                        width: 100%;
+                        padding: .375rem .75rem;
+                        border: 1px solid #ced4da;
+                        border-radius: .25rem;
+                    }
+                }
+                &.profileWebAddress{
+                    ul{
+                        li{
+                            &+li{
+                                margin-left: 15px; 
+                            }
+                            .empty{
+                                opacity: 0.9;
+                            }
+                        }
+                    }
+                }
+            }
+            .btnSubmit{
+                border: 1px solid #f85272;
+                display: block;
+                margin: 30px auto 0; 
+                background-color: #f85272;
+                color: #fff;
+                font-size: 1.2rem;
+                padding: 10px 30px;
+                border-radius: 20px;
+                transition: all 0.5s;
+                &:hover{
+                    background-color: #fff;
+                    color: #f85272;
+                }
+            }
+        }
+    }
+}

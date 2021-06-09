@@ -26,7 +26,7 @@ const MyPageMenu = () => {
                     <li><Link to="/">진행중인 의뢰</Link></li>
                     <li><Link to="/">창작자 리스트</Link></li>
                     <li><Link to="/">결제 내역</Link></li>
-                    <li><Link to="/">개인정보 설정</Link></li>
+                    <li><Link to="/myPage/profile">개인정보 설정</Link></li>
                 </ul>
             </div>
             <div className="logoutMenu">
