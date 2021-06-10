@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import CategorySelectModal from '../../components/common/CategorySelectModal';
 import WebAddressModal from '../../components/common/WebAddressModal';
+import AccountForm from '../../components/myPage/profile/AccountForm';
 import ProfileForm from '../../components/myPage/profile/ProfileForm';
 
 const Profile = () => {
@@ -56,7 +57,7 @@ const Profile = () => {
                 <ul className="tabList">
                     <li className={currentTab === "profile" ? "on" : ""} onClick={() => handleCurrentTab("profile")}>프로필</li>
                     <li className={currentTab === "account" ? "on" : ""} onClick={() => handleCurrentTab("account")}>계정</li>
-                    <li className={currentTab === "alarm" ? "on" : ""} onClick={() => handleCurrentTab("alarm")}>알림</li>
+                    {/* <li className={currentTab === "alarm" ? "on" : ""} onClick={() => handleCurrentTab("alarm")}>알림</li> */}
                 </ul>
             </div>
             <div className="tabContents">
@@ -64,7 +65,7 @@ const Profile = () => {
                     (() => {
                         switch(currentTab){
                             case "account":
-                                return "account";
+                                return <AccountForm/>;
                             case "alarm" :
                                 return "alarm";
                             default :

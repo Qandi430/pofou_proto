@@ -24,7 +24,7 @@ const ProfileForm = ({profileForm,changeProfileForm,handleCategorySelectModal,ha
     }
 
     return(
-        <Form>
+        <Form className="profileForm">
             <h3 className="contentsTitle">나의 프로필 정보</h3>
             <div className="formItem profileImage">
                 <h6 className="formTitle">프로필 사진</h6>
