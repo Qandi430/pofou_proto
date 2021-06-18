@@ -1,0 +1,30 @@
+.portfolio{
+    .management{
+        .empty{
+            height: 600px;
+            width: 100%;
+            margin: 0 auto;
+            border: 1px solid #d9d9d9;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            svg{
+                margin-bottom: 15px;
+            }
+            a{
+                margin-top: 15px;
+                display: block;
+                border: 1px solid #f85272;
+                padding: 5px 20px;
+                border-radius: 20px;
+                color: #f85272;
+                transition: all 0.5s;
+                &:hover{
+                    background-color: #f85272;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}

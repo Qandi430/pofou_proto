@@ -1,9 +1,9 @@
 {
-    "member": [
-      {
-        "memberNumber" : 1,
-        "email": "test@test.com",
-        "password": "1234"
-      }
-    ]
-  }
+  "member": [
+    {
+      "memberNumber" : 1,
+      "email": "test@test.com",
+      "password": "1234"
+    }
+  ]
+}

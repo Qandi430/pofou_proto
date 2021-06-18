@@ -18,7 +18,7 @@ const MyPageMenu = () => {
                     <li><Link to="/upload">업로드</Link></li>
                     <li><Link to="/archive">창작물 저장소</Link></li>
                     <li><Link to="/resume/list">이력서/자기소개서</Link></li>
-                    <li><Link to="/">나의 포트폴리오</Link></li>
+                    <li><Link to="/portfolio/management">나의 포트폴리오</Link></li>
                 </ul>
             </div>
             <div className="personalMenu">

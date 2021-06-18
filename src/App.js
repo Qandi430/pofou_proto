@@ -10,6 +10,7 @@ import {CommonProvider} from './context/commonContext';
 import Archive from './pages/contents/Archive';
 import Resume from './pages/contents/Resume';
 import MyPage from './pages/myPage/MyPage';
+import Portfolio from './pages/myPage/Portfolio';
 
 function App({history}) {
   // console.log(history)
@@ -22,6 +23,7 @@ function App({history}) {
         <Route path="/archive" component={Archive}/>
         <Route path="/resume" component={Resume}/>
         <Route path="/myPage" component={MyPage}/>
+        <Route path="/portfolio" component={Portfolio}/>
         <Route path="/" component={MainPage}/>
       </Switch>
       </CommonProvider>
