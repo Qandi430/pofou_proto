@@ -29,9 +29,7 @@ class CommonProvider extends Component{
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-           
         if (nextProps.history !== undefined) {
-            console.log(nextProps.history);
             if(prevState.history === undefined || nextProps.history.location.pathname !== prevState.history.location.pathname){
                 return { history: nextProps.history };      
             }

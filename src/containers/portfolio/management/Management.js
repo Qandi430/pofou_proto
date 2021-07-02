@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Container } from 'reactstrap';
+
+import TemplateList from './TemplateList';
 
 const Management = () => {
     return (
         <div className="management">
-            <Container className="empty">
+            {/* <Container className="empty">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                 width="100px" viewBox="0 0 458.48 480" style={{enableBackground:"new 0 0 458.48 480"}}>
                 <defs>
@@ -123,7 +123,8 @@ const Management = () => {
                 </svg>
                 아직 제작된 포트폴리오가 없습니다.
                 <Link to="/portfolio/design">포트폴리오 만들기</Link>
-            </Container>
+            </Container> */}
+            <TemplateList/>
         </div>
     )
 }
