@@ -21,6 +21,21 @@
                 font-weight: bold;
                 line-height: 5vw;
                 color: #fff;
+                position: relative;
+                &.designMode{
+                    border: 1px solid #f00,
+                }
+                button{
+                    padding: 0;
+                    border:0; 
+                    background-color: transparent;
+                    color: #f00;
+                    position: absolute;
+                    top: -10px;
+                    right: -10px;
+                    line-height: 0;
+                    font-size: 1.8rem;
+                }
             }
         }
     }
@@ -236,6 +251,59 @@
                     }
                     img{
                         max-width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#titleConfigModal{
+    .modal-body{
+        .titleConfigTab{
+            display: flex;
+            li{
+                flex: 1;
+                text-align: center;
+                padding: 10px 0;
+                font-size: 1.2rem;
+                border: 1px solid #d9d9d9;
+                transition: all 0.5s;
+                cursor: pointer;
+                &+li{
+                    border-left: 0;
+                }
+                &.on{
+                    background-color: #333;
+                    color: #fff;
+                }
+            }
+        }
+        .tabContents{
+            &.text{
+                .form-group{
+                    margin-top: 10px;
+                    .alignButtonWrap{
+                        display: flex;
+                        button{
+                            background-color: transparent;
+                            padding: 5px 10px;
+                            border-top: 1px solid #d9d9d9;
+                            border-bottom: 1px solid #d9d9d9;
+                            &.on{
+                                background-color: #d9d9d9;
+                            }
+                            &:first-child{
+                                border-left: 1px solid #d9d9d9;
+                                border-right: 1px solid #d9d9d9;
+                                border-radius: 5px 0 0 5px;
+                            }
+                            &:last-child{
+                                border-left: 1px solid #d9d9d9;
+                                border-right: 1px solid #d9d9d9;
+                                border-radius: 0 5px 5px 0;
+                            }
+                        }
                     }
                 }
             }

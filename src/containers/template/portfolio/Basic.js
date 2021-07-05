@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import Main from '../../../components/template/portfolio/basic/Main';
 import About from '../../../components/template/portfolio/basic/About';
 import WorkGrid from '../../../components/template/portfolio/basic/WorkGrid';
@@ -10,9 +10,15 @@ import detail2 from '../../../resources/images/main/detail02.jpeg';
 import detail3 from '../../../resources/images/main/detail03.jpeg';
 import profile from '../../../resources/images/main/profile.jpeg';
 
-const Basic = () => {
-
-    const data = {
+const Basic = ({design}) => {
+    const [data, setData] = useState({
+        main : {
+            text : "Welcome to <br/> My Portfolio",
+            color : "#ffffff",
+            fontFamilly : "",
+            textAlign : "left",
+            image : "",
+        },
         title: "이력서",
         name : "",
         birthYear : "",
@@ -88,7 +94,7 @@ const Basic = () => {
             militaryClasses : "",
         },
         experienceList : [],
-    };
+    })
 
 const selectedItem = {
     title : "꿈을꿔봐요",
@@ -129,13 +135,26 @@ const selectedItem = {
 };
 
     const [openWorkDeatilModal, setOpenWorkDeatilModal] = useState(false);
+    const [designMode, setDesignMode] = useState(false);
+
+    useEffect(() => {
+        setDesignMode(design);
+    }, [design]);
+
     const toggleWorkDetailModal = () => {
         setOpenWorkDeatilModal(!openWorkDeatilModal);
     }
 
+    const setTitleForm = form => {
+        setData({
+            ...data,
+            main : form
+        })
+    }
+
     return (
         <div className="template portfolio basic">
-            <Main/>
+            <Main designMode={designMode} data={data} setTitleForm={setTitleForm}/>
             <About data={data}/>
             <WorkGrid toggleWorkDetailModal={toggleWorkDetailModal}/>
             <Contact/>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const DesignHeader = () => {
     return (
@@ -8,7 +9,8 @@ const DesignHeader = () => {
                 <button>사이트 설정</button>
             </div>
             <div className="headerRight">
-                
+                <button>저장 하기</button>
+                <Link to="/portfolio/management">편집 끝내기</Link>
             </div>
         </header>
     )
