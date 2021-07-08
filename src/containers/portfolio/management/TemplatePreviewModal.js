@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, ModalBody, ModalFooter, ModalHeader, Button } from 'reactstrap';
-import Basic from '../../../containers/template/portfolio/Basic';
+import Basic from '../../../pages/template/portfolio/Portfolio';
 
 const TemplatePreviewModal = ({isOpen,toggle}) => {
     return (

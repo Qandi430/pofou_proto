@@ -10,7 +10,7 @@ const Archive = React.lazy(() => import('../contents/Archive'));
 const Resume = React.lazy(() => import('../contents/Resume'));
 const MyPage = React.lazy(() => import('../myPage/MyPage'));
 const Portfolio = React.lazy(() => import('../myPage/Portfolio'));
-const Basic = React.lazy(() => import('../../containers/template/portfolio/Basic'));
+const Basic = React.lazy(() => import('../../pages/template/portfolio/Portfolio'));
 const MainPage = React.lazy(() => import('../main/MainPage'));
 
 

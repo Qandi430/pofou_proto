@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import MainImage from '../../../../resources/images/template/portfolio/basic/basicMainImage.jpg';
 
-const Main = ({designMode,data,setTitleForm,toggleTitleConfigModal}) => {
+const Main = ({designMode,data,toggleTitleConfigModal}) => {
 
     return (
         <div className="main" style={{backgroundImage : `url(${MainImage})`}}>

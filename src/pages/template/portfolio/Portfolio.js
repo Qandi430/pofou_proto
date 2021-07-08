@@ -1,12 +1,7 @@
 import React,{useState} from 'react';
-import DesignHeader from '../../../components/portfolio/management/design/DesignHeader';
-import TitleConfigModal from '../../../components/template/portfolio/basic/TitleConfigModal';
-import SkillConfigModal from '../../../components/template/portfolio/basic/SkillConfigModal';
-import PrivacyConfigModal from '../../../components/template/portfolio/basic/PrivacyConfigModal';
+import Basic from '../../../containers/template/portfolio/Basic';
 
-const Basic = React.lazy(() => import('../../../containers/template/portfolio/Basic'));
-
-const Design = () => {
+const Portfolio = () => {
 
     const [data, setData] = useState({
         main : {
@@ -134,73 +129,11 @@ const Design = () => {
         },
     });
 
-    const [titleConfigTarget,setTitleConfigTarget] = useState("");
-    const [openSkillConfigModal,setOpenSkillConfigModal] = useState(false);
-    const [openPrivacyConfigModal,setOpenPrivacyConfigModal] = useState(false);
-
-    const setTitleForm = form => {
-        setData({
-            ...data,
-            main : form
-        })
-    }
-
-    const toggleTitleConfigModal = (type) => {
-        if(typeof type !== "string"){
-            setTitleConfigTarget("");
-        }else{
-            
-            setTitleConfigTarget(type);
-        }
-    }
-
-    const changeTitle = (target,form) => {
-        form["text"] = form["text"].replace(/\n/g, '<br/>');
-        let newData = data;
-        newData[target].title = form
-        setData(newData)
-    }
-
-    const toggleSkillConfigModal = () => {
-        setOpenSkillConfigModal(!openSkillConfigModal);
-    }
-
-    const changeSkill = (form) => {
-        setData({
-            ...data,
-            about :{
-                ...data.about,
-                skill : form
-            }
-        })
-    }
-
-    const togglePrivacyConfigModal = () => {
-        setOpenPrivacyConfigModal(!openPrivacyConfigModal);
-    }
-
-    const changePrivacy = (form) => {
-        console.log(form)
-        setData({
-            ...data,
-            about : {
-                ...data.about,
-                privacy : form
-            }
-        })
-    }
-    
-    return (
-        <div className="design">
-            <DesignHeader/>
-            <div className="designBody">
-                <Basic design data={data} setTitleForm={setTitleForm} toggleTitleConfigModal={toggleTitleConfigModal} toggleSkillConfigModal={toggleSkillConfigModal} togglePrivacyConfigModal={togglePrivacyConfigModal}/>
-            </div>
-            <TitleConfigModal data={data} isOpen={titleConfigTarget !== ""} toggle={toggleTitleConfigModal} target={titleConfigTarget} changeTitle={changeTitle}/>
-            <SkillConfigModal isOpen={openSkillConfigModal} toggle={toggleSkillConfigModal} data={data.about.skill} changeSkill={changeSkill}/>
-            <PrivacyConfigModal isOpen={openPrivacyConfigModal} toggle={togglePrivacyConfigModal} data={data.about.privacy} changePrivacy={changePrivacy}/>
+    return(
+        <div className="portfolio">
+            <Basic data={data} />
         </div>
     )
 }
 
-export default Design;
+export default Portfolio;
