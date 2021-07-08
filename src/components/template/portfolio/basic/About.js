@@ -2,7 +2,10 @@ import { Container,Row,Col } from 'reactstrap';
 import React from 'react';
 import profileImage from '../../../../resources/images/template/profile.jpg';
 import SkillBar from 'react-skillbars';
-const About = ({data}) => {
+import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const About = ({designMode,data,toggleTitleConfigModal,toggleSkillConfigModal,togglePrivacyConfigModal}) => {
 
     const convertValueToName = (type,name) => {
         if(type === "educationType"){
@@ -74,33 +77,95 @@ const About = ({data}) => {
     }
 
     return (
-        <div className="about">
+        <div className={`about ${designMode ? "designMode" : ""}`}>
             <Container>
-                <h3 className="title">
-                    ABOUT
+                <h3 className={`title`} style={{color : `${data.title.color}`,textAlign:`${data.title.textAlign}`}}>
+                    <span dangerouslySetInnerHTML={{__html: data.title.text }}/>
+                    {
+                        designMode &&
+                        <button onClick={() => toggleTitleConfigModal("about")}>
+                            <FontAwesomeIcon icon={faCog}/>
+                        </button>
+                    }
                 </h3>
                 <Row className="contentsWrap">
                     <Col md="3" className="privacy">
-                        <div className="profileImage">
-                            <img src={profileImage} alt="" className="img-fluid"/>
+                        <div className="profileImage" style={{position:"relative"}}>
+                            {
+                                designMode ? 
+                                <div>
+                                    <img src={profileImage} alt="" className="img-fluid"/>
+                                    <label htmlFor="profileInput"><FontAwesomeIcon icon={faCog}/></label>
+                                    <input type="file" id="profileInput" style={{display:"none"}}/>
+                                </div>
+                                : 
+                                <img src={profileImage} alt="" className="img-fluid"/>
+                            }
+                            
                         </div>
                         <div className="privacyList">
-                            <dl className="name">
-                                <dt>이름</dt>
-                                <dd>이승재</dd>
-                            </dl>
-                            <dl className="name">
-                                <dt>생년월일</dt>
-                                <dd>1990.04.30 (만 31세)</dd>
-                            </dl>
-                            <dl className="name">
-                                <dt>성별</dt>
-                                <dd>남</dd>
-                            </dl>
-                            <dl className="name">
-                                <dt>휴대전화번호</dt>
-                                <dd>010.6476.3871</dd>
-                            </dl>
+                            {
+                                data.privacy.info.name !== "" && data.privacy.displayName &&
+                                <dl className="name">
+                                    <dt>이름</dt>
+                                    <dd>{data.privacy.info.name}</dd>
+                                </dl>
+                            }
+                            {
+                                (data.privacy.info.birthYear !== "" && data.privacy.info.birthMonth !== "" && data.privacy.info.birthDay !== "") && data.privacy.displayBirthDate &&
+                                <dl className="name">
+                                    <dt>생년월일</dt>
+                                    <dd>{`${data.privacy.info.birthYear}.${data.privacy.info.birthMonth}.${data.privacy.info.birthDay}`} (만 31세)</dd>
+                                </dl>
+                            }
+                            {
+                                data.privacy.info.gender !== "" && data.privacy.displayGender &&
+                                <dl className="name">
+                                    <dt>성별</dt>
+                                    <dd>{data.privacy.info.gender === "M" ? "남" : "여"}</dd>
+                                </dl>
+                            }
+                            {
+                                data.privacy.info.gender !== "" && data.privacy.displayGender &&
+                                <dl className="name">
+                                    <dt>성별</dt>
+                                    <dd>{data.privacy.info.gender === "M" ? "남" : "여"}</dd>
+                                </dl>
+                            }
+                            {
+                                data.privacy.info.phone !== "" && data.privacy.displayPhone &&
+                                <dl className="name">
+                                    <dt>전화번호</dt>
+                                    <dd>{data.privacy.info.phone}</dd>
+                                </dl>
+                            }
+                            {
+                                data.privacy.info.mobile !== "" && data.privacy.displayMobile &&
+                                <dl className="name">
+                                    <dt>휴대전화번호</dt>
+                                    <dd>{data.privacy.info.mobile}</dd>
+                                </dl>
+                            }
+                            {
+                                data.privacy.info.email !== "" && data.privacy.displayEmail &&
+                                <dl className="name">
+                                    <dt>이메일</dt>
+                                    <dd>{data.privacy.info.email}</dd>
+                                </dl>
+                            }
+                            {
+                                data.privacy.info.address !== "" && data.privacy.displayAddress &&
+                                <dl className="name">
+                                    <dt>주소</dt>
+                                    <dd>{data.privacy.info.address}</dd>
+                                </dl>
+                            }
+                            {
+                                designMode  &&
+                                <button onClick={togglePrivacyConfigModal}>
+                                    <FontAwesomeIcon icon={faCog}/>
+                                </button>
+                            }
                         </div>
                     </Col>
                     <Col md={{size: 3, offset : 1}} className="education">
@@ -134,10 +199,17 @@ const About = ({data}) => {
                                         </li>
                                 )
                             }
+                            
                         </ul>
                     </Col>
                     <Col md={{size: 4, offset : 1}} className="skill">
-                        <SkillBar  skills={data.skillList} height={20}/>
+                        <div className="skilListWrap">
+                            <SkillBar  skills={data.skill.skillList} height={20}/>
+                            {
+                                designMode &&
+                                <button onClick={toggleSkillConfigModal}><FontAwesomeIcon icon={faCog}/></button>
+                            }
+                        </div>
                     </Col>
                 </Row>
             </Container>
