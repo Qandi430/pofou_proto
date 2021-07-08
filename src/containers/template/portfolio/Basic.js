@@ -108,9 +108,6 @@ const Basic = ({design}) => {
                 ],
             },
         },
-        title: "이력서",
-        
-        
         certificateList : [],
         carrerList : [],
         languageList: [],
@@ -128,6 +125,24 @@ const Basic = ({design}) => {
             militaryClasses : "",
         },
         experienceList : [],
+        work : {
+            title : {
+                text : "WORK - Grid",
+                color : "#333333",
+                fontFamilly : "",
+                textAlign : "left",
+                image : "",
+            },
+        },
+        contact : {
+            title : {
+                text : "CONTACT",
+                color : "#333333",
+                fontFamilly : "",
+                textAlign : "left",
+                image : "",
+            },
+        },
     })
 
     const selectedItem = {
@@ -232,8 +247,8 @@ const Basic = ({design}) => {
         <div className="template portfolio basic">
             <Main designMode={designMode} data={data.main} setTitleForm={setTitleForm} toggleTitleConfigModal={toggleTitleConfigModal}/>
             <About designMode={designMode} data={data.about} toggleTitleConfigModal={toggleTitleConfigModal} toggleSkillConfigModal={toggleSkillConfigModal} togglePrivacyConfigModal={togglePrivacyConfigModal}/>
-            <WorkGrid toggleWorkDetailModal={toggleWorkDetailModal}/>
-            <Contact/>
+            <WorkGrid designMode={designMode} data={data.work} toggleTitleConfigModal={toggleTitleConfigModal} toggleWorkDetailModal={toggleWorkDetailModal}/>
+            <Contact designMode={designMode} data={data.contact} toggleTitleConfigModal={toggleTitleConfigModal}/>
             <WorkDetailModal isOpen={openWorkDeatilModal} toggle={toggleWorkDetailModal} item={selectedItem}/>
             <TitleConfigModal data={data} isOpen={titleConfigTarget !== ""} toggle={toggleTitleConfigModal} target={titleConfigTarget} changeTitle={changeTitle}/>
             <SkillConfigModal isOpen={openSkillConfigModal} toggle={toggleSkillConfigModal} data={data.about.skill} changeSkill={changeSkill}/>

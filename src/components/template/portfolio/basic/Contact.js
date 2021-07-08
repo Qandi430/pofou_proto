@@ -1,15 +1,21 @@
 
-import { faFileDownload, faPhoneAlt,faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faFileDownload, faPhoneAlt,faEnvelope,faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import {Container, Form, FormGroup, Label,Input,Col,Row,Button} from 'reactstrap';
 
-const Contact = () => {
+const Contact = ({designMode,data,toggleTitleConfigModal}) => {
     return(
-        <div className="contact">
+        <div className={`contact ${designMode ? "designMode" : ""}`}>
             <Container>
-                <h3 className="title">
-                    Contact
+                <h3 className={`title`} style={{color : `${data.title.color}`,textAlign:`${data.title.textAlign}`}}>
+                    <span dangerouslySetInnerHTML={{__html: data.title.text }}/>
+                    {
+                        designMode &&
+                        <button onClick={() => toggleTitleConfigModal("contact")}>
+                            <FontAwesomeIcon icon={faCog}/>
+                        </button>
+                    }
                 </h3>
                 <Row>
                     <Col md="6" className="contactList">

@@ -5,14 +5,21 @@ import thumb2 from '../../../../resources/images/main/thumb02.jpeg';
 import thumb3 from '../../../../resources/images/main/thumb03.jpeg';
 import thumb4 from '../../../../resources/images/main/thumb04.jpeg';
 import thumb5 from '../../../../resources/images/main/thumb05.jpeg';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
-const WorkGrid = ({toggleWorkDetailModal}) => {
+const WorkGrid = ({toggleWorkDetailModal,data,designMode,toggleTitleConfigModal}) => {
     return(
-        <div className="work grid">
+        <div className={`work grid ${designMode ? "designMode" : ""}`}>
             <Container>
-                <h3 className="title">
-                    WORK - Grid
+                <h3 className={`title`} style={{color : `${data.title.color}`,textAlign:`${data.title.textAlign}`}}>
+                    <span dangerouslySetInnerHTML={{__html: data.title.text }}/>
+                    {
+                        designMode &&
+                        <button onClick={() => toggleTitleConfigModal("work")}>
+                            <FontAwesomeIcon icon={faCog}/>
+                        </button>
+                    }
                 </h3>
                 <Row>
                     <Col md="3" className="item">
