@@ -3,13 +3,21 @@ import DesignHeader from '../../../components/portfolio/management/design/Design
 import TitleConfigModal from '../../../components/template/portfolio/basic/TitleConfigModal';
 import SkillConfigModal from '../../../components/template/portfolio/basic/SkillConfigModal';
 import PrivacyConfigModal from '../../../components/template/portfolio/basic/PrivacyConfigModal';
+import AllConfigModal from '../../../components/portfolio/management/design/AllConfigModal';
 
 const Basic = React.lazy(() => import('../../../containers/template/portfolio/Basic'));
 
 const Design = () => {
 
     const [data, setData] = useState({
+        config : {
+            backgroundColor: "#ebebeb",
+            fontFamily : "Noto Sans KR",
+        },
         main : {
+            setting : {
+                display : true,
+            },
             title : {
                 text : "Welcome to <br/> My Portfolio",
                 color : "#ffffff",
@@ -19,6 +27,9 @@ const Design = () => {
             }
         },
         about : {
+            setting : {
+                display : true,
+            },
             title : {
                 text : "About",
                 color : "#333333",
@@ -115,6 +126,9 @@ const Design = () => {
         },
         experienceList : [],
         work : {
+            setting : {
+                display : true,
+            },
             title : {
                 text : "WORK - Grid",
                 color : "#333333",
@@ -124,6 +138,9 @@ const Design = () => {
             },
         },
         contact : {
+            setting : {
+                display : true,
+            },
             title : {
                 text : "CONTACT",
                 color : "#333333",
@@ -137,6 +154,7 @@ const Design = () => {
     const [titleConfigTarget,setTitleConfigTarget] = useState("");
     const [openSkillConfigModal,setOpenSkillConfigModal] = useState(false);
     const [openPrivacyConfigModal,setOpenPrivacyConfigModal] = useState(false);
+    const [openAllConfigModal,setOpenAllConfigModal] = useState(false);
 
     const setTitleForm = form => {
         setData({
@@ -189,16 +207,44 @@ const Design = () => {
             }
         })
     }
+
+    const setPageDisplay = (pageName) => {
+
+        console.log(pageName)
+
+        setData({
+            ...data,
+            [pageName] : {
+                ...data[pageName],
+                setting : {
+                    ...data[pageName].setting,
+                    display : !data[pageName].setting.display
+                }
+            }
+        })
+    }
+
+    const toggleAllConfigModal = () => {
+        setOpenAllConfigModal(!openAllConfigModal);
+    }
+
+    const changeConfig = configForm => {
+        setData({
+            ...data,
+            config : configForm
+        })
+    }
     
     return (
         <div className="design">
-            <DesignHeader/>
+            <DesignHeader data={data} setPageDisplay={setPageDisplay} toggleAllConfigModal={toggleAllConfigModal}/>
             <div className="designBody">
                 <Basic design data={data} setTitleForm={setTitleForm} toggleTitleConfigModal={toggleTitleConfigModal} toggleSkillConfigModal={toggleSkillConfigModal} togglePrivacyConfigModal={togglePrivacyConfigModal}/>
             </div>
             <TitleConfigModal data={data} isOpen={titleConfigTarget !== ""} toggle={toggleTitleConfigModal} target={titleConfigTarget} changeTitle={changeTitle}/>
             <SkillConfigModal isOpen={openSkillConfigModal} toggle={toggleSkillConfigModal} data={data.about.skill} changeSkill={changeSkill}/>
             <PrivacyConfigModal isOpen={openPrivacyConfigModal} toggle={togglePrivacyConfigModal} data={data.about.privacy} changePrivacy={changePrivacy}/>
+            <AllConfigModal isOpen={openAllConfigModal} toggle={toggleAllConfigModal} data={data.config} changeConfig={changeConfig}/>
         </div>
     )
 }

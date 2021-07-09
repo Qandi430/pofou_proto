@@ -15,8 +15,6 @@ const Basic = ({design,data,setTitleForm,toggleTitleConfigModal,toggleSkillConfi
     const [openWorkDeatilModal, setOpenWorkDeatilModal] = useState(false);
     const [designMode, setDesignMode] = useState(false);
     
-    
-
     const selectedItem = {
         title : "꿈을꿔봐요",
         registrationDate : '6일전',
@@ -66,13 +64,24 @@ const Basic = ({design,data,setTitleForm,toggleTitleConfigModal,toggleSkillConfi
     
 
     return (
-        <div className="template portfolio basic">
-            <Main designMode={designMode} data={data.main} setTitleForm={setTitleForm} toggleTitleConfigModal={toggleTitleConfigModal}/>
-            <About designMode={designMode} data={data.about} toggleTitleConfigModal={toggleTitleConfigModal} toggleSkillConfigModal={toggleSkillConfigModal} togglePrivacyConfigModal={togglePrivacyConfigModal}/>
-            <WorkGrid designMode={designMode} data={data.work} toggleTitleConfigModal={toggleTitleConfigModal} toggleWorkDetailModal={toggleWorkDetailModal}/>
-            <Contact designMode={designMode} data={data.contact} toggleTitleConfigModal={toggleTitleConfigModal}/>
+        <div className="template portfolio basic" style={{fontFamily :`${data.config.fontFamily}`,backgroundColor:`${data.config.backgroundColor}`}}>
+            {
+                data.main.setting.display &&
+                <Main designMode={designMode} data={data.main} setTitleForm={setTitleForm} toggleTitleConfigModal={toggleTitleConfigModal}/>
+            }
+            {
+                data.about.setting.display &&
+                <About designMode={designMode} data={data.about} toggleTitleConfigModal={toggleTitleConfigModal} toggleSkillConfigModal={toggleSkillConfigModal} togglePrivacyConfigModal={togglePrivacyConfigModal}/>
+            }
+            {
+                data.work.setting.display &&
+                <WorkGrid designMode={designMode} data={data.work} toggleTitleConfigModal={toggleTitleConfigModal} toggleWorkDetailModal={toggleWorkDetailModal}/>
+            }
+            {
+                data.contact.setting.display &&
+                <Contact designMode={designMode} data={data.contact} toggleTitleConfigModal={toggleTitleConfigModal}/>
+            }
             <WorkDetailModal isOpen={openWorkDeatilModal} toggle={toggleWorkDetailModal} item={selectedItem}/>
-            
         </div>
     )
 }

@@ -1,14 +1,209 @@
 .portfolio{
     .design{
         .designHeader{
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background-color: #fff;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0;
+            z-index: 20;
             button,a{
                 padding: 10px;
                 background-color: transparent;
                 border: 0;
+                &.btnConfigMenu,&.btnConfigSite{
+                    width: 300px;
+                    border-right: 1px solid #d9d9d9;
+                    position: relative;
+                    z-index: 30;
+                    background-color: #fff;
+                    &.on{
+                        background-color: turquoise;
+                    }
+                }
+            }
+            .configMenu{
+                width: 300px;
+                position: absolute;
+                top: -1000%;
+                background-color: #fff;
+                border: 1px solid #d9d9d9;
+                transition: top 0.5s;
+                ul{
+                    li{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 5px 15px;
+                        &+li{
+                            border-top: 1px solid #d9d9d9;
+                        }
+                        button{
+                            color: #999;
+                            font-size: 0.8rem;
+                            position: relative;
+                            .customTooltip{
+                                pointer-events: none;
+                                opacity: 0;
+                                position: absolute;
+                                background-color: #333;
+                                color: #fff;
+                                bottom: -22px;
+                                padding:5px 10px;
+                                width: 50px;
+                                left: 50%;
+                                z-index: 10;
+                                transform: translate(-50%,0);
+                                border-radius: 5px;
+                                &::after{
+                                    position: absolute;
+                                    content: "";
+                                    display: block;
+                                    width: 10px;
+                                    height: 10px;
+                                    background-color: #333;
+                                    top: -5px;
+                                    left: 50%;
+                                    transform: translate(-50%,0) rotate(45deg);
+                                }
+                            }
+                            &:hover{
+                                color: #333;
+                                .customTooltip{
+                                    opacity: 1;
+                                }
+                            }
+                        }
+                    }
+                }
+                >.btnWrap{
+                    width: 100%;
+                    display: flex;
+                    border-top: 1px solid #d9d9d9;
+                    button{
+                        flex: 1;
+                        &+button{
+                            border-left: 1px solid #d9d9d9;
+                        }
+                    }
+                }
+                &.on{
+                    top: 100%;
+                }
+            }
+        }
+    }
+}
+
+#allConfigModal{
+    .modal-body{
+        .form-group{
+            align-items: center;
+            padding: 10px 0;
+            &+.form-group{
+                margin-top: 10px;
+                border-top: 1px solid #d9d9d9;
+            }
+            &.fontFamily{
+                .dropdown-toggle{
+                    width: 100%;
+                    text-align: left;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    background-color: transparent;
+                    color: #333;
+                    border:0;
+                    border-bottom: 1px solid #333;
+                    border-radius: 0;
+                    &:active,&focus{
+                        outline: none;
+                    }
+                }
+                .dropdown-menu{
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+#titleConfigModal{
+    .modal-body{
+        .titleConfigTab{
+            display: flex;
+            li{
+                flex: 1;
+                text-align: center;
+                padding: 10px 0;
+                font-size: 1.2rem;
+                border: 1px solid #d9d9d9;
+                transition: all 0.5s;
+                cursor: pointer;
+                &+li{
+                    border-left: 0;
+                }
+                &.on{
+                    background-color: #333;
+                    color: #fff;
+                }
+            }
+        }
+        .tabContents{
+            &.text{
+                .form-group{
+                    margin-top: 10px;
+                    .alignButtonWrap{
+                        display: flex;
+                        button{
+                            background-color: transparent;
+                            padding: 5px 10px;
+                            border-top: 1px solid #d9d9d9;
+                            border-bottom: 1px solid #d9d9d9;
+                            &.on{
+                                background-color: #d9d9d9;
+                            }
+                            &:first-child{
+                                border-left: 1px solid #d9d9d9;
+                                border-right: 1px solid #d9d9d9;
+                                border-radius: 5px 0 0 5px;
+                            }
+                            &:last-child{
+                                border-left: 1px solid #d9d9d9;
+                                border-right: 1px solid #d9d9d9;
+                                border-radius: 0 5px 5px 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#privacyConfigModal{
+    table{
+        thead{
+            tr{
+                th{
+                    &:last-child{
+                        text-align: center;
+                    }
+                }
+            }
+        }
+        tbody{
+            tr{
+                td{
+                    vertical-align: middle;
+                    label{
+                        margin: auto;
+                    }
+                }
             }
         }
     }
