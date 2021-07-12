@@ -1,10 +1,19 @@
 import React,{useState} from 'react';
 import Basic from '../../../containers/template/portfolio/Basic';
+import Basic2 from '../../../containers/template/portfolio/Basic2';
+import '../../../resources/scss/template/portfolio/portfolio.scss';
 
 const Portfolio = () => {
 
     const [data, setData] = useState({
+        config : {
+            backgroundColor: "#ebebeb",
+            fontFamily : "Noto Sans KR",
+        },
         main : {
+            setting : {
+                display : true,
+            },
             title : {
                 text : "Welcome to <br/> My Portfolio",
                 color : "#ffffff",
@@ -14,6 +23,9 @@ const Portfolio = () => {
             }
         },
         about : {
+            setting : {
+                display : true,
+            },
             title : {
                 text : "About",
                 color : "#333333",
@@ -110,6 +122,9 @@ const Portfolio = () => {
         },
         experienceList : [],
         work : {
+            setting : {
+                display : true,
+            },
             title : {
                 text : "WORK - Grid",
                 color : "#333333",
@@ -119,6 +134,9 @@ const Portfolio = () => {
             },
         },
         contact : {
+            setting : {
+                display : true,
+            },
             title : {
                 text : "CONTACT",
                 color : "#333333",
@@ -131,7 +149,8 @@ const Portfolio = () => {
 
     return(
         <div className="portfolio">
-            <Basic data={data} />
+            {/* <Basic data={data} /> */}
+            <Basic2/>
         </div>
     )
 }
