@@ -1,0 +1,25 @@
+.skillList{
+    display: flex;
+    align-items: flex-end;
+    >div{
+        width: 100%;
+        position: relative;
+        >div{
+            margin-bottom: 10px;
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+        >button{
+            padding: 0;
+            border:0; 
+            background-color: transparent;
+            color: #f00;
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            line-height: 0;
+            font-size: 1.8rem;
+        }
+    }
+}

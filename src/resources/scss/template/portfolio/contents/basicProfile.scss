@@ -1,0 +1,24 @@
+.basicProfile{
+    .profileImage{
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: auto;
+    }
+    .privacyList{
+        margin-top: 15px;
+        dl{
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            &+dl{
+                margin-top: 5px;
+            }
+            dt{
+                font-weight: bold;
+                padding-right: 10px;
+            }
+        }
+    }
+}
