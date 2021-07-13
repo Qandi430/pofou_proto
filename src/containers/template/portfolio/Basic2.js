@@ -1,7 +1,16 @@
 import React,{useState} from 'react';
 import Block from '../../../components/template/portfolio/Block';
+import WorkDetailModal from '../../../components/template/portfolio/basic/WorkdDetailModal';
 import MainImage from '../../../resources/images/template/portfolio/basic/basicMainImage.jpg';
 import ProfileImage from '../../../resources/images/template/profile.jpg'
+import thumb1 from '../../../resources/images/main/thumb01.gif';
+import thumb2 from '../../../resources/images/main/thumb02.jpeg';
+import thumb3 from '../../../resources/images/main/thumb03.jpeg';
+import thumb4 from '../../../resources/images/main/thumb04.jpeg';
+import thumb5 from '../../../resources/images/main/thumb05.jpeg';
+import detail1 from '../../../resources/images/main/detail01.jpeg';
+import detail2 from '../../../resources/images/main/detail02.jpeg';
+import detail3 from '../../../resources/images/main/detail03.jpeg';
 
 const Basic2 = () => {
 
@@ -151,18 +160,152 @@ const Basic2 = () => {
                         ],
                     }
                 ],
+            },
+            {
+                index : 3,
+                id : "",
+                name : "",
+                category : "title",
+                paddingTop : 100,
+                paddingBottom : 0,
+                container : true,
+                contents : [
+                    {
+                        index : 0,
+                        type : "title",
+                        id : "basicTitle",
+                        title : "Work",
+                        subTitle : "",
+                        contents : "",
+                        media : "",
+                        color : "#333333",
+                        textAlign : "left",
+                        fontFamilly : "Noto Sans KR",
+                        fontSize : 3,
+                        fontWeighr : "bold",
+                    }
+                ],
+            },
+            {
+                index : 4,
+                id : "",
+                name : "",
+                category : "work",
+                paddingTop : 0,
+                paddingBottom : 0,
+                container : true,
+                grid : 4,
+                contents : [
+                    {
+                        index : 0,
+                        type : "work",
+                        id : "basicGrid",
+                        workList : [
+                            {
+                                index : 0,
+                                title : "title1",
+                                thumbnail : thumb1,
+                            },
+                            {
+                                index : 1,
+                                title : "title2",
+                                thumbnail : thumb2,
+                            },
+                            {
+                                index : 2,
+                                title : "title3",
+                                thumbnail : thumb3,
+                            },
+                            {
+                                index : 3,
+                                title : "title4",
+                                thumbnail : thumb4,
+                            },
+                            {
+                                index : 4,
+                                title : "title5",
+                                thumbnail : thumb5,
+                            },
+                        ]
+                    }
+                ],
+            },
+            {
+                index : 5,
+                id : "",
+                name : "",
+                category : "title",
+                paddingTop : 100,
+                paddingBottom : 0,
+                container : true,
+                contents : [
+                    {
+                        index : 0,
+                        type : "title",
+                        id : "basicTitle",
+                        title : "Contact",
+                        subTitle : "",
+                        contents : "",
+                        media : "",
+                        color : "#333333",
+                        textAlign : "left",
+                        fontFamilly : "Noto Sans KR",
+                        fontSize : 3,
+                        fontWeighr : "bold",
+                    }
+                ],
             }
         ],
-    })
+    });
+
+    const selectedItem = {
+        title : "꿈을꿔봐요",
+        registrationDate : '6일전',
+        categoryList : [
+            '그래픽 디자인',
+            '일러스트레이션'
+        ],
+        viewCnt : 312,
+        like : 17,
+        commentList : [
+
+        ],
+        contentList : [
+            {
+                content : `<img src='${detail1}'/>`,
+            },
+            {
+                content : `<img src='${detail2}'/>`,
+            },
+            {
+                content : `<img src='${detail3}'/>`,
+            },
+        ],
+        hashtagList : [
+            "어린이",
+            "리플렛",
+            "디자인",
+            "일러스트",
+            "그래픽",
+            "꿈",
+            "도형",
+        ],
+    };
+
+    const [openWorkDetailModal,setOpenWorkDetailModal] = useState(false);
+    const toggleWorkDetailModal = () => {
+        setOpenWorkDetailModal(!openWorkDetailModal);
+    }
 
     return (
         <div className="portfolio" style={{fontFamily :`${data.config.fontFamily}`,backgroundColor:`${data.config.backgroundColor}`}}>
             {
                 data.blockList.map(
                     block => 
-                        <Block data={block} key={block.index}/>
+                        <Block data={block} key={block.index} toggleWorkDetailModal={toggleWorkDetailModal}/>
                 )
             }
+            <WorkDetailModal isOpen={openWorkDetailModal} toggle={toggleWorkDetailModal} item={selectedItem}/>
         </div>
     )
 }
