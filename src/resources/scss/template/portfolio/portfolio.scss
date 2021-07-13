@@ -1,5 +1,3 @@
-@import "./image/images.scss";
-@import "./contents/contents.scss";
 .portfolio{
     .block{
         display: flex;
@@ -27,3 +25,6 @@
         }
     }
 }
+@import "./image/images.scss";
+@import "./contents/contents.scss";
+@import "./title/title.scss";

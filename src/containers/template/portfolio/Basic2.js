@@ -35,14 +35,39 @@ const Basic2 = () => {
                 index : 1,
                 id : "",
                 name : "",
+                category : "title",
+                paddingTop : 100,
+                paddingBottom : 0,
+                container : true,
+                contents : [
+                    {
+                        index : 0,
+                        type : "title",
+                        id : "basicTitle",
+                        title : "About",
+                        subTitle : "",
+                        contents : "",
+                        media : "",
+                        color : "#333333",
+                        textAlign : "left",
+                        fontFamilly : "Noto Sans KR",
+                        fontSize : 3,
+                        fontWeighr : "bold",
+                    }
+                ],
+            },
+            {
+                index : 2,
+                id : "",
+                name : "",
                 category : "contents",
                 grid : 3,
                 container : true,
-                paddingTop : 100,
-                paddingBottom : 100,
+                paddingTop : 30,
+                paddingBottom : 0,
                 contents : [
                     {
-                        index : 1,
+                        index : 0,
                         type : "contents",
                         id : "basicProfile",
                         privacy : {
@@ -113,7 +138,7 @@ const Basic2 = () => {
                         ],
                     },
                     {
-                        index : 1,
+                        index : 2,
                         type : "contents",
                         id : "skillList",
                         skillList : [
