@@ -7,6 +7,8 @@ const BasicHistory = React.lazy(() => import('./contents/BasicHistory'));
 const SkillList = React.lazy(() => import('./contents/SkillList'));
 const BasicTitle = React.lazy(() => import('./title/BasicTitle'));
 const BasicGrid = React.lazy(() => import('./work/BasicGrid'));
+const BasicContactList = React.lazy(() => import('./contact/BasicContactList'));
+const BasicContactForm = React.lazy(() => import('./contact/BasicContactForm'));
 
 const blockList = [
     {id : "mainImage01",component : MainImage01},
@@ -15,6 +17,8 @@ const blockList = [
     {id : "skillList", component : SkillList},
     {id : "basicTitle", component : BasicTitle},
     {id : "basicGrid", component : BasicGrid},
+    {id : "basicContactList", component : BasicContactList},
+    {id : "basicContactForm", component : BasicContactForm},
 ]
 
 const Block = ({data,toggleWorkDetailModal}) => {

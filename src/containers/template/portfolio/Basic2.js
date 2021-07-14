@@ -254,8 +254,30 @@ const Basic2 = () => {
                         fontWeighr : "bold",
                     }
                 ],
-            }
+            },
+            {
+                index : 6,
+                name : "",
+                category : "contact",
+                paddingTop : 30,
+                paddingBottom : 100,
+                container : true,
+                grid : 2,
+                contents : [
+                    {
+                        index : 0,
+                        type : "contact",
+                        id : "basicContactList",
+                    },
+                    {
+                        index : 1,
+                        type : "contact",
+                        id : "basicContactForm",
+                    },
+                ],
+            },
         ],
+        
     });
 
     const selectedItem = {

@@ -17,9 +17,29 @@
                 padding-right: calc(var(--bs-gutter-x)/ 2);
                 padding-left: calc(var(--bs-gutter-x)/ 2);
                 margin-top: var(--bs-gutter-y);
+                &.grid1{
+                    flex: 0 0 auto;
+                    width: 100%;
+                }
+                &.grid2{
+                    flex: 0 0 auto;
+                    width: 50%;
+                }
                 &.grid3{
                     flex: 0 0 auto;
                     width: 33.3333333333%;
+                }
+                &.grid4{
+                    flex: 0 0 auto;
+                    width: 25%;
+                }
+                &.grid5{
+                    flex: 0 0 auto;
+                    width: 20%;
+                }
+                &.grid6{
+                    flex: 0 0 auto;
+                    width: 16.6666%;
                 }
             }
         }
@@ -29,3 +49,4 @@
 @import "./contents/contents.scss";
 @import "./title/title.scss";
 @import "./work/work.scss";
+@import "./contact/contact.scss";
