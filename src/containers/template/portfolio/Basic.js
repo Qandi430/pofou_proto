@@ -4,7 +4,7 @@ import About from '../../../components/template/portfolio/basic/About';
 import WorkGrid from '../../../components/template/portfolio/basic/WorkGrid';
 import Contact from '../../../components/template/portfolio/basic/Contact';
 import '../../../resources/scss/template/portfolio/basic/basic.scss';
-import WorkDetailModal from '../../../components/template/portfolio/basic/WorkdDetailModal';
+import WorkDetailModal from '../../../components/template/portfolio/WorkdDetailModal';
 import detail1 from '../../../resources/images/main/detail01.jpeg';
 import detail2 from '../../../resources/images/main/detail02.jpeg';
 import detail3 from '../../../resources/images/main/detail03.jpeg';

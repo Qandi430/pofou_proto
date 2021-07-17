@@ -1,5 +1,8 @@
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Route } from 'react-router-dom';
+import { Container } from 'reactstrap';
 
 const MainImage01 = React.lazy(() => import('./image/MainImage01'));
 const BasicProfile = React.lazy(() => import('./contents/BasicProfile'));
@@ -21,32 +24,61 @@ const blockList = [
     {id : "basicContactForm", component : BasicContactForm},
 ]
 
-const Block = ({data,toggleWorkDetailModal}) => {
+const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock}) => {
     return (
-        <div className={`block ${data.category} ${data.container ? "container" : ""}`} style={{paddingTop : `${data.paddingTop? `${data.paddingTop}px` : 0}`,paddingBottom : `${data.paddingBottom ? `${data.paddingBottom}px` : 0}`}}>
+        <div className={`block ${data.category} ${configMode ? "configMode" : ""}`} style={{paddingTop : `${data.paddingTop? `${data.paddingTop}px` : 0}`,paddingBottom : `${data.paddingBottom ? `${data.paddingBottom}px` : 0}`}}>
             {
                 data.grid !== undefined && data.grid >1 ?
-                    <div className="gridWrap">
+                    data.container ? 
+                        <Container>
+                            <div className="gridWrap">
+                                {
+                                    data.contents.map(
+                                        contents => {
+                                            const obj = blockList.find(block => block.id === contents.id);
+                                            return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={contents.id}/>
+                                        }       
+                                    )
+                                }
+                            </div>
+                        </Container>
+                        :
+                        <div className="gridWrap">
+                            {
+                                data.contents.map(
+                                    contents => {
+                                        const obj = blockList.find(block => block.id === contents.id);
+                                        return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={contents.id}/>
+                                    }       
+                                )
+                            }
+                        </div>
+                :
+                data.container ?
+                    <Container>
                         {
                             data.contents.map(
                                 contents => {
                                     const obj = blockList.find(block => block.id === contents.id);
-                                    console.log(obj)
                                     return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={contents.id}/>
                                 }       
-                            )
+                            )        
                         }
-                    </div>
-                :
-                data.contents.map(
-                    contents => {
-                        const obj = blockList.find(block => block.id === contents.id);
-                        console.log(obj)
-                        return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={contents.id}/>
-                    }       
-                )
+                    </Container>
+                    :        
+                    data.contents.map(
+                        contents => {
+                            const obj = blockList.find(block => block.id === contents.id);
+                            return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={contents.id}/>
+                        }       
+                    )
             }
-            
+            {
+                configMode &&
+                <button className="addBlock" onClick={() => toggleAddBlock(data.index)}>
+                    <div className="icon"><FontAwesomeIcon icon={faPlus}/></div>
+                </button>
+            }
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import Block from '../../../components/template/portfolio/Block';
-import WorkDetailModal from '../../../components/template/portfolio/basic/WorkdDetailModal';
+import WorkDetailModal from '../../../components/template/portfolio/WorkdDetailModal';
 import MainImage from '../../../resources/images/template/portfolio/basic/basicMainImage.jpg';
 import ProfileImage from '../../../resources/images/template/profile.jpg'
 import thumb1 from '../../../resources/images/main/thumb01.gif';
@@ -44,7 +44,7 @@ const Basic2 = () => {
                 index : 1,
                 id : "",
                 name : "",
-                category : "title",
+                category : "title", 
                 paddingTop : 100,
                 paddingBottom : 0,
                 container : true,
@@ -276,8 +276,7 @@ const Basic2 = () => {
                     },
                 ],
             },
-        ],
-        
+        ], 
     });
 
     const selectedItem = {

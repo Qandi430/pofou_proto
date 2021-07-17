@@ -24,7 +24,20 @@ const TemplateList = () => {
                         <div className="itemWrap">
                             <div className="imageWrap">
                                 <div className="btnWrap">
-                                    <Button className="btnCreate" tag={Link} to="/portfolio/design">개설하기</Button>
+                                    <Button className="btnCreate" tag={Link} to="/portfolio/design/Basic">개설하기</Button>
+                                    <Button className="btnPreview" onClick={toggleTemplatePreview}>미리보기</Button>
+                                </div>
+                                <img src={Basic} alt="" />
+                            </div>
+                            <p>#기본#깔끔</p>
+                            <h5>Basic</h5>
+                        </div>
+                    </Col>
+                    <Col md="4" className="item">
+                        <div className="itemWrap">
+                            <div className="imageWrap">
+                                <div className="btnWrap">
+                                    <Button className="btnCreate" tag={Link} to="/portfolio/config?type=Basic2">개설하기</Button>
                                     <Button className="btnPreview" onClick={toggleTemplatePreview}>미리보기</Button>
                                 </div>
                                 <img src={Basic} alt="" />

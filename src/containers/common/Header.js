@@ -7,7 +7,7 @@ import { createCommonConsumer } from '../../context/commonContext';
 
 const Header = ({history,location,match}) => {
     return (
-        <header style={{display : `${location.pathname.indexOf("/portfolio/design") > -1 ? "none" : "block"}`}}>
+        <header style={{display : `${location.pathname.indexOf("/portfolio/design") > -1 || location.pathname.indexOf("/portfolio/config") > -1  ? "none" : "block"}`}}>
             <Container className="headerWrap">
                 <h1 className="logo">
                     <Link to="/">POFOU</Link>
