@@ -1,6 +1,6 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
@@ -24,9 +24,26 @@ const blockList = [
     {id : "basicContactForm", component : BasicContactForm},
 ]
 
-const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock}) => {
+const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfigBlock}) => {
+    const [style,setStyle] = useState({
+        paddingTop : 0,
+        paddingBottom : 0,
+    });
+
+    useEffect(() => {
+        let newStyle = {};
+        newStyle["paddingTop"] = data.paddingTop? `${data.paddingTop}px` : 0;
+        newStyle["paddingBottom"] = data.paddingBottom? `${data.paddingBottom}px` : 0;
+        newStyle["backgroundColor"] = data.backgroundColor ? data.backgroundColor : "transparent";
+        if(data.backgroundImage !== null){
+            newStyle["backgroundImage"] = `url(${data.backgroundImage})`;
+        }
+        setStyle(newStyle);
+    },[data]);
+
     return (
-        <div className={`block ${data.category} ${configMode ? "configMode" : ""}`} style={{paddingTop : `${data.paddingTop? `${data.paddingTop}px` : 0}`,paddingBottom : `${data.paddingBottom ? `${data.paddingBottom}px` : 0}`}}>
+        <div className={`block ${data.category} ${configMode ? "configMode" : ""}`} 
+             style={style}>
             {
                 data.grid !== undefined && data.grid >1 ?
                     data.container ? 
@@ -72,6 +89,12 @@ const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock}) => {
                             return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={contents.id}/>
                         }       
                     )
+            }
+            {
+                configMode &&
+                <button className="btnConfig" onClick={() => selectConfigBlock(data)}>
+                    <FontAwesomeIcon icon={faCog}/>
+                </button>
             }
             {
                 configMode &&

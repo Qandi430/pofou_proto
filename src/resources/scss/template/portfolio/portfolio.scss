@@ -44,6 +44,19 @@
                 }
             }
         }
+        > .btnConfig{
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: skyblue;
+            color: #fff;
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: 0.5s;
+        }
         > .addBlock{
             position: absolute;
             bottom: -15px;
@@ -75,6 +88,11 @@
                 left: 0;
                 transform: translate(0,-50%);
                 z-index: 2;
+            }
+        }
+        &:hover{
+            > .btnConfig{
+                opacity: 1;
             }
         }
     }

@@ -123,4 +123,145 @@
             }
         }
     }
+    .configBlockSideBar{
+        position: fixed;
+        z-index: 999;
+        top: 0;
+        right: -100%;
+        align-items: center;
+        width: 350px;
+        height: 100vh;
+        background-color: #fff;
+        box-shadow: -10px 0px 10px rgba(0,0,0,0.5);
+        transition: all 0.5s;
+        &.on{
+            right: 0;
+        }
+        > .blockInfo{
+            background-color: #4789e7;
+            color: #fff;
+            padding: 10px;
+            > .blockTitle{
+                padding: 0 5px;
+                display: flex;
+                align-items: flex-end;
+                > h6{
+                    font-size: 1.2rem;
+                }
+                > p{
+                    font-size: 0.85rem;
+                    font-weight: 300;
+                    margin-left: 10px;
+                }
+                >button{
+                    margin-left: auto;
+                    background-color: transparent;
+                    color: #fff;
+                    font-size: 1.4rem;
+                }
+            }
+            > .configTab{
+                margin-top: 15px;
+                ul{
+                    display: flex;
+                    li{
+                        cursor: pointer;
+                        padding: 10px 5px;
+                    }
+                }
+            }
+        }
+        > .configBox{
+            > div{
+                display: none;
+                &.on{
+                    display: block;
+                }
+                >.basicStyle{
+                    >div{
+                        border-bottom: 1px solid #d9d9d9;
+                        padding: 10px;
+                        h5{
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            font-size: 1rem;
+                            cursor: pointer;
+                        }
+                        .panel{
+                            .panelWrap{
+                                margin-top:50px; 
+                            }
+                            dl{
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                dt{
+                                    flex: 0 0 30%;
+                                    color: #696c71;
+                                }
+                                dd{
+                                    flex: 0 0 70%;
+                                }
+                                &+dl{
+                                    margin-top: 30px;
+                                }
+                            }
+                        }
+                        &.padding{
+                            dl{
+                                dd{
+                                    display: flex;
+                                    span{
+                                        flex: 0 0 20%;
+                                        color: #4789e7;
+                                    }
+                                    input{
+                                        flex: 0 0 80%;
+                                    }
+                                }
+                            }
+                        }
+                        &.background{
+                            dl{
+                                &.color{
+                                    dd{
+                                        position: relative;
+                                        display: flex;
+                                        align-items: center;
+                                        >label{
+                                            width: 25px;
+                                            height: 25px;
+                                            border-radius: 50%;
+                                            border: 1px solid #d9d9d9;
+                                        }
+                                        input[type=color]{
+                                            visibility: hidden;
+                                            position: absolute;
+                                            left:0;
+                                        }
+                                        .customCheckbox{
+                                            margin-left: 15px;
+                                        }
+                                    }
+                                }
+                                &.image{
+                                    dd{
+                                        label{
+                                            border: 1px solid #d9d9d9;
+                                            padding: 10px;
+                                            border-radius: 5px;
+                                        }
+                                        input{
+                                            display: none;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

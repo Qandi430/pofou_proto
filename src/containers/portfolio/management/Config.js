@@ -12,8 +12,9 @@ import thumb5 from '../../../resources/images/main/thumb05.jpeg';
 import detail1 from '../../../resources/images/main/detail01.jpeg';
 import detail2 from '../../../resources/images/main/detail02.jpeg';
 import detail3 from '../../../resources/images/main/detail03.jpeg';
-import AddBlockSideBar from './AddBlockSideBar';
+import AddBlockSideBar from '../../../components/portfolio/management/config/AddBlockSideBar';
 import '../../../resources/scss/myPage/config.scss';
+import ConfigBlockSideBar from '../../../components/portfolio/management/config/ConfigBlockSideBar';
 
 const Config = () => {
     const [openWorkDetailModal,setOpenWorkDetailModal] = useState(false);
@@ -32,6 +33,9 @@ const Config = () => {
                 category : "image",
                 grid : 1,
                 container : false,
+                paddingTop : 0,
+                paddingBottom : 0,
+                backgroundColor: "transparent",
                 contents : [
                     {
                         index : 0,
@@ -52,6 +56,7 @@ const Config = () => {
                 paddingTop : 100,
                 paddingBottom : 0,
                 container : true,
+                backgroundColor: "transparent",
                 contents : [
                     {
                         index : 0,
@@ -78,6 +83,7 @@ const Config = () => {
                 container : true,
                 paddingTop : 30,
                 paddingBottom : 0,
+                backgroundColor: "transparent",
                 contents : [
                     {
                         index : 0,
@@ -173,6 +179,7 @@ const Config = () => {
                 paddingTop : 100,
                 paddingBottom : 0,
                 container : true,
+                backgroundColor: "transparent",
                 contents : [
                     {
                         index : 0,
@@ -199,6 +206,7 @@ const Config = () => {
                 paddingBottom : 0,
                 container : true,
                 grid : 4,
+                backgroundColor: "transparent",
                 contents : [
                     {
                         index : 0,
@@ -242,6 +250,7 @@ const Config = () => {
                 paddingTop : 100,
                 paddingBottom : 0,
                 container : true,
+                backgroundColor: "transparent",
                 contents : [
                     {
                         index : 0,
@@ -267,6 +276,7 @@ const Config = () => {
                 paddingBottom : 100,
                 container : true,
                 grid : 2,
+                backgroundColor: "transparent",
                 contents : [
                     {
                         index : 0,
@@ -282,6 +292,7 @@ const Config = () => {
             },
         ], 
     });
+    const [configBlock,setConfigBlock] = useState(null);
 
     const selectedItem = {
         title : "꿈을꿔봐요",
@@ -331,9 +342,11 @@ const Config = () => {
                 paddingTop : 30,
                 paddingBottom : 30,
                 container : true,
-            });
+            }); 
+            document.body.classList.add('fixedBody');
         }else{
             setAddBlock(null);
+            document.body.classList.remove('fixedBody');
         }
     }
 
@@ -350,6 +363,32 @@ const Config = () => {
         )
         data.blockList.splice(addBlock.index,0,addBlock);
         setAddBlock(null);
+        document.body.classList.remove('fixedBody');
+    }
+
+    const selectConfigBlock = block => {
+        console.log(block);
+        if(block !== undefined){
+            setConfigBlock(block);
+        }else{
+            setConfigBlock(null);
+        }
+    }
+
+    const modifyData = (name,value) =>{
+        setConfigBlock({
+            ...configBlock,
+            [name] : value
+        });
+        setData({
+            ...data,
+            blockList : 
+                data.blockList.map(
+                    d => d.index === configBlock.index ?
+                    ({...configBlock,[name]:value})
+                    : d
+                )
+        });
     }
 
     return (
@@ -359,12 +398,13 @@ const Config = () => {
                 {
                     data.blockList.map(
                         block => 
-                            <Block data={block} key={block.index} toggleWorkDetailModal={toggleWorkDetailModal} configMode toggleAddBlock={toggleAddBlock}/>
+                            <Block data={block} key={block.index} toggleWorkDetailModal={toggleWorkDetailModal} configMode toggleAddBlock={toggleAddBlock} selectConfigBlock={selectConfigBlock}/>
                     )
                 }
                 <WorkDetailModal isOpen={openWorkDetailModal} toggle={toggleWorkDetailModal} item={selectedItem}/>
             </div>
             <AddBlockSideBar addBlock={addBlock} toggleAddBlock={toggleAddBlock} addNewBlock={addNewBlock}/>
+            <ConfigBlockSideBar selectConfigBlock={selectConfigBlock} configBlock={configBlock} modifyData={modifyData}/>
         </div>
     )
 }

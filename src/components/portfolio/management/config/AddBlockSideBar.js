@@ -1,19 +1,19 @@
 import { faCheck, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React,{useEffect, useState} from 'react';
-import BasicTitleImage from '../../../resources/images/template/portfolio/block/title/basicTitle.jpg';
-import BasicContentsImage from '../../../resources/images/template/portfolio/block/contents/basicContents.jpg';
-import BasicWorkImage from '../../../resources/images/template/portfolio/block/work/basicWork.jpg';
-import BasicContactImage from '../../../resources/images/template/portfolio/block/contact/basicContact.jpg';
-import thumb1 from '../../../resources/images/main/thumb01.gif';
-import thumb2 from '../../../resources/images/main/thumb02.jpeg';
-import thumb3 from '../../../resources/images/main/thumb03.jpeg';
-import thumb4 from '../../../resources/images/main/thumb04.jpeg';
-import thumb5 from '../../../resources/images/main/thumb05.jpeg';
-import defaultProfile from '../../../resources/images/contents/resume/default_profile.png';
+import BasicTitleImage from '../../../../resources/images/template/portfolio/block/title/basicTitle.jpg';
+import BasicContentsImage from '../../../../resources/images/template/portfolio/block/contents/basicContents.jpg';
+import BasicWorkImage from '../../../../resources/images/template/portfolio/block/work/basicWork.jpg';
+import BasicContactImage from '../../../../resources/images/template/portfolio/block/contact/basicContact.jpg';
+import thumb1 from '../../../../resources/images/main/thumb01.gif';
+import thumb2 from '../../../../resources/images/main/thumb02.jpeg';
+import thumb3 from '../../../../resources/images/main/thumb03.jpeg';
+import thumb4 from '../../../../resources/images/main/thumb04.jpeg';
+import thumb5 from '../../../../resources/images/main/thumb05.jpeg';
+import defaultProfile from '../../../../resources/images/contents/resume/default_profile.png';
+import Block from '../../../template/portfolio/Block';
 
-import Block from '../../../components/template/portfolio/Block';
-const BasicTitle  = React.lazy(() => import('../../../components/template/portfolio/title/BasicTitle'));
+const BasicTitle  = React.lazy(() => import('../../../template/portfolio/title/BasicTitle'));
 
 const AddBlockSideBar = ({addBlock,toggleAddBlock,addNewBlock}) => {
     const [currentCategory,setCurrentCategory] = useState({
