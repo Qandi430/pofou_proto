@@ -375,20 +375,17 @@ const Config = () => {
         }
     }
 
-    const modifyData = (name,value) =>{
-        setConfigBlock({
-            ...configBlock,
-            [name] : value
-        });
-        setData({
-            ...data,
-            blockList : 
-                data.blockList.map(
-                    d => d.index === configBlock.index ?
-                    ({...configBlock,[name]:value})
-                    : d
-                )
-        });
+    const modifyBlock = block => {
+        if(block !== null ){
+            setConfigBlock(block);
+            setData({
+                ...data,
+                blockList : 
+                    data.blockList.map(
+                        d => d.index === block.index ? block : d
+                    )
+            })
+        }
     }
 
     return (
@@ -404,7 +401,7 @@ const Config = () => {
                 <WorkDetailModal isOpen={openWorkDetailModal} toggle={toggleWorkDetailModal} item={selectedItem}/>
             </div>
             <AddBlockSideBar addBlock={addBlock} toggleAddBlock={toggleAddBlock} addNewBlock={addNewBlock}/>
-            <ConfigBlockSideBar selectConfigBlock={selectConfigBlock} configBlock={configBlock} modifyData={modifyData}/>
+            <ConfigBlockSideBar selectConfigBlock={selectConfigBlock} configBlock={configBlock} modifyBlock={modifyBlock}/>
         </div>
     )
 }

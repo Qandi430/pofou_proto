@@ -261,6 +261,82 @@
                         }
                     }
                 }
+                >.gridBlock{
+                    padding: 10px;
+                    dl{
+                        display: flex;
+                        align-items: center;
+                        flex-wrap: wrap;
+                        &.contentsGrid{
+                            dt{
+                                flex: 0 0 40%;
+                            }
+                            dd{
+                                flex: 0 0 60%;
+                                display: flex;
+                                span{
+                                    flex: 0 0 20%;
+                                    color: #4789e7;
+                                }
+                                input{
+                                    flex: 0 0 80%;
+                                }
+                            }
+                        }
+                        &.contentsList{
+                            margin-top: 30px;
+                            dt{
+                                flex: 0 0 100%;
+                                display: flex;
+                                justify-content: space-between;
+                                svg{
+                                    font-size: 0.8rem;
+                                    transition: color 0.5s;
+                                    &:hover{
+                                        color: #4789e7;
+                                    }
+                                }
+                            }
+                            dd{
+                                flex: 0 0 100%;
+                                margin-top: 15px;
+                                .sortBox{
+                                    background-color: #f6f7f9;
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    align-items: flex-start;
+                                    align-content: flex-start;
+                                    height: 150px;
+                                    overflow-y: scroll;
+                                    padding: 5px;
+                                    .content{
+                                        padding: 5px;
+                                        text-align: center;
+                                        font-size: 0.8rem;
+                                        transition: all 0.5s;
+                                        > div{
+                                            cursor: pointer;
+                                            padding: 5px;
+                                            background-color: #EBEFF0;
+                                            border: 2px solid #DBDBDB;
+                                            transition: all 0.5s;
+                                        }
+                                        &.on{
+                                            > div{
+                                                border-color: #4789e7;
+                                            }
+                                        }
+                                    }
+                                }
+                                >button{
+                                    display: block;
+                                    margin-top: 10px;
+                                    margin-left: auto;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
