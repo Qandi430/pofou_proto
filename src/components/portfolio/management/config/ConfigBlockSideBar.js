@@ -1,9 +1,10 @@
-import { faChevronRight, faFolderOpen, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faFolderOpen, faPlus, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Collapse, Input } from 'reactstrap';
 import React,{useEffect, useState} from 'react';
 import transparentImage from '../../../../resources/images/common/transparent.png';
 import { ReactSortable } from 'react-sortablejs';
+import ContentsList from './ContentsList';
 
 const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
 
@@ -11,11 +12,16 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
     const [openBasicStyle,setBasicStyle] = useState("");
     const [selectedContent,setSelectedContent] = useState(null);
     const [configForm,setConfigForm] = useState(null);
+    const [openContentsList,setOpenContentsList] = useState("");
 
     useEffect(() => {
         if(configBlock !== null){
             setConfigForm(configBlock);
+        }else{
+            setConfigForm(null);
+            setOpenContentsList("");
         }
+        
     },[configBlock]);
     
     useEffect(() => {
@@ -81,6 +87,26 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
             contents : configForm.contents.filter(c => c.index !== selectedContent.index)
         })
         modifyBlock(newForm);
+    }
+
+    const toggleContentsList = category => {
+        if(typeof category !== "string"){
+            setOpenContentsList("");
+        }else{
+            setOpenContentsList(category);
+        }
+    }
+
+    const addContents = contents => {
+        
+        contents["index"] = configForm.contents.length;
+        const newForm = ({
+            ...configForm,
+            contents : configForm.contents.concat(contents),
+        })
+
+        modifyBlock(newForm);
+        setOpenContentsList("");
     }
 
     return (
@@ -157,7 +183,7 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
                                                 )
                                             }
                                         </ReactSortable>
-                                        <button>추가</button>
+                                        <button onClick={() => toggleContentsList(configForm !== null ? configForm.category : "")}><FontAwesomeIcon icon={faPlus}/> 추가</button>
                                     </dd>
                                 </dl>
                             </div>
@@ -247,6 +273,7 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
                         Effect
                     </div>
             </div>
+            <ContentsList open={openContentsList} toggle={toggleContentsList} addContents={addContents}/>
         </div>
     )
 }

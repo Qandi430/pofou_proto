@@ -367,7 +367,6 @@ const Config = () => {
     }
 
     const selectConfigBlock = block => {
-        console.log(block);
         if(block !== undefined){
             setConfigBlock(block);
         }else{
