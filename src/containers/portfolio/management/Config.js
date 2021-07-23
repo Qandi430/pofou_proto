@@ -40,6 +40,7 @@ const Config = () => {
                     {
                         index : 0,
                         type : "image",
+                        name : "기본배경+타이틀",
                         id : "mainImage01",
                         title : "Welcome to<br/>My Portfolio",
                         subTitle : "",
@@ -62,6 +63,7 @@ const Config = () => {
                         index : 0,
                         type : "title",
                         id : "basicTitle",
+                        name : "기본 타이틀",
                         title : "About",
                         subTitle : "",
                         contents : "",
@@ -87,8 +89,9 @@ const Config = () => {
                 contents : [
                     {
                         index : 0,
-                        type : "contents",
+                        type : "profile",
                         id : "basicProfile",
+                        name : "기본 프로필",
                         privacy : {
                             displayName : true,
                             displayBirthDate : true,
@@ -116,6 +119,7 @@ const Config = () => {
                         index : 1,
                         type : "contents",
                         id : "basicHistory",
+                        name : "기본 히스토리",
                         educationList : [
                             {
                                 index : 0,
@@ -160,6 +164,7 @@ const Config = () => {
                         index : 2,
                         type : "contents",
                         id : "skillList",
+                        name : "스킬 리스트",
                         skillList : [
                             {type : "Java", level : 85},
                             {type : "Javascript", level : 80},
@@ -212,6 +217,7 @@ const Config = () => {
                         index : 0,
                         type : "work",
                         id : "basicGrid",
+                        name : "기본 그리드",
                         workList : [
                             {
                                 index : 0,
@@ -282,11 +288,13 @@ const Config = () => {
                         index : 0,
                         type : "contact",
                         id : "basicContactList",
+                        name : "기본 연락처 리스트"
                     },
                     {
                         index : 1,
                         type : "contact",
                         id : "basicContactForm",
+                        name : "기본 연락처 폼",
                     },
                 ],
             },

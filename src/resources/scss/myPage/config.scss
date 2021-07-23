@@ -172,13 +172,189 @@
             }
         }
         > .configBox{
+            height: calc(100vh - 95px);
+            overflow-y:scroll;
+            background-color: #ffffff;
             > div{
                 display: none;
                 &.on{
                     display: block;
                 }
-                >.basicStyle{
-                    >div{
+                &.basicTab{
+                    >.basicStyle{
+                        >div{
+                            border-bottom: 1px solid #d9d9d9;
+                            padding: 10px;
+                            h5{
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                font-size: 1rem;
+                                cursor: pointer;
+                            }
+                            .panel{
+                                .panelWrap{
+                                    margin-top:50px; 
+                                }
+                                dl{
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+                                    dt{
+                                        flex: 0 0 30%;
+                                        color: #696c71;
+                                    }
+                                    dd{
+                                        flex: 0 0 70%;
+                                    }
+                                    &+dl{
+                                        margin-top: 30px;
+                                    }
+                                }
+                            }
+                            &.padding{
+                                dl{
+                                    dd{
+                                        display: flex;
+                                        span{
+                                            flex: 0 0 20%;
+                                            color: #4789e7;
+                                        }
+                                        input{
+                                            flex: 0 0 80%;
+                                        }
+                                    }
+                                }
+                            }
+                            &.background{
+                                dl{
+                                    &.color{
+                                        dd{
+                                            position: relative;
+                                            display: flex;
+                                            align-items: center;
+                                            >label{
+                                                width: 25px;
+                                                height: 25px;
+                                                border-radius: 50%;
+                                                border: 1px solid #d9d9d9;
+                                            }
+                                            input[type=color]{
+                                                visibility: hidden;
+                                                position: absolute;
+                                                left:0;
+                                            }
+                                            .customCheckbox{
+                                                margin-left: 15px;
+                                            }
+                                        }
+                                    }
+                                    &.image{
+                                        dd{
+                                            label{
+                                                border: 1px solid #d9d9d9;
+                                                padding: 10px;
+                                                border-radius: 5px;
+                                            }
+                                            input{
+                                                display: none;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    >.gridBlock{
+                        padding: 10px;
+                        dl{
+                            display: flex;
+                            align-items: center;
+                            flex-wrap: wrap;
+                            &.contentsGrid{
+                                dt{
+                                    flex: 0 0 40%;
+                                }
+                                dd{
+                                    flex: 0 0 60%;
+                                    display: flex;
+                                    span{
+                                        flex: 0 0 20%;
+                                        color: #4789e7;
+                                    }
+                                    input{
+                                        flex: 0 0 80%;
+                                    }
+                                }
+                            }
+                            &.contentsList{
+                                margin-top: 30px;
+                                dt{
+                                    flex: 0 0 100%;
+                                    display: flex;
+                                    justify-content: space-between;
+                                    svg{
+                                        font-size: 0.8rem;
+                                        transition: color 0.5s;
+                                        &:hover{
+                                            color: #4789e7;
+                                        }
+                                    }
+                                }
+                                dd{
+                                    flex: 0 0 100%;
+                                    margin-top: 15px;
+                                    .sortBox{
+                                        background-color: #f6f7f9;
+                                        display: flex;
+                                        flex-wrap: wrap;
+                                        align-items: flex-start;
+                                        align-content: flex-start;
+                                        height: 150px;
+                                        overflow-y: scroll;
+                                        padding: 5px;
+                                        .content{
+                                            padding: 5px;
+                                            text-align: center;
+                                            font-size: 0.8rem;
+                                            transition: all 0.5s;
+                                            > div{
+                                                cursor: pointer;
+                                                padding: 5px;
+                                                background-color: #EBEFF0;
+                                                border: 2px solid #DBDBDB;
+                                                transition: all 0.5s;
+                                            }
+                                            &.on{
+                                                > div{
+                                                    border-color: #4789e7;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    >button{
+                                        display: block;
+                                        margin-top: 10px;
+                                        margin-left: auto;
+                                        padding: 5px 15px;
+                                        border-radius: 5px;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        background-color: skyblue;
+                                        color: #fff;
+                                        svg{
+                                            font-size: 0.7rem;
+                                            margin-right: 5px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.detailTab{
+                    > .detailItem{
                         border-bottom: 1px solid #d9d9d9;
                         padding: 10px;
                         h5{
@@ -190,7 +366,7 @@
                         }
                         .panel{
                             .panelWrap{
-                                margin-top:50px; 
+                                margin-top:20px; 
                             }
                             dl{
                                 display: flex;
@@ -204,145 +380,7 @@
                                     flex: 0 0 70%;
                                 }
                                 &+dl{
-                                    margin-top: 30px;
-                                }
-                            }
-                        }
-                        &.padding{
-                            dl{
-                                dd{
-                                    display: flex;
-                                    span{
-                                        flex: 0 0 20%;
-                                        color: #4789e7;
-                                    }
-                                    input{
-                                        flex: 0 0 80%;
-                                    }
-                                }
-                            }
-                        }
-                        &.background{
-                            dl{
-                                &.color{
-                                    dd{
-                                        position: relative;
-                                        display: flex;
-                                        align-items: center;
-                                        >label{
-                                            width: 25px;
-                                            height: 25px;
-                                            border-radius: 50%;
-                                            border: 1px solid #d9d9d9;
-                                        }
-                                        input[type=color]{
-                                            visibility: hidden;
-                                            position: absolute;
-                                            left:0;
-                                        }
-                                        .customCheckbox{
-                                            margin-left: 15px;
-                                        }
-                                    }
-                                }
-                                &.image{
-                                    dd{
-                                        label{
-                                            border: 1px solid #d9d9d9;
-                                            padding: 10px;
-                                            border-radius: 5px;
-                                        }
-                                        input{
-                                            display: none;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                >.gridBlock{
-                    padding: 10px;
-                    dl{
-                        display: flex;
-                        align-items: center;
-                        flex-wrap: wrap;
-                        &.contentsGrid{
-                            dt{
-                                flex: 0 0 40%;
-                            }
-                            dd{
-                                flex: 0 0 60%;
-                                display: flex;
-                                span{
-                                    flex: 0 0 20%;
-                                    color: #4789e7;
-                                }
-                                input{
-                                    flex: 0 0 80%;
-                                }
-                            }
-                        }
-                        &.contentsList{
-                            margin-top: 30px;
-                            dt{
-                                flex: 0 0 100%;
-                                display: flex;
-                                justify-content: space-between;
-                                svg{
-                                    font-size: 0.8rem;
-                                    transition: color 0.5s;
-                                    &:hover{
-                                        color: #4789e7;
-                                    }
-                                }
-                            }
-                            dd{
-                                flex: 0 0 100%;
-                                margin-top: 15px;
-                                .sortBox{
-                                    background-color: #f6f7f9;
-                                    display: flex;
-                                    flex-wrap: wrap;
-                                    align-items: flex-start;
-                                    align-content: flex-start;
-                                    height: 150px;
-                                    overflow-y: scroll;
-                                    padding: 5px;
-                                    .content{
-                                        padding: 5px;
-                                        text-align: center;
-                                        font-size: 0.8rem;
-                                        transition: all 0.5s;
-                                        > div{
-                                            cursor: pointer;
-                                            padding: 5px;
-                                            background-color: #EBEFF0;
-                                            border: 2px solid #DBDBDB;
-                                            transition: all 0.5s;
-                                        }
-                                        &.on{
-                                            > div{
-                                                border-color: #4789e7;
-                                            }
-                                        }
-                                    }
-                                }
-                                >button{
-                                    display: block;
-                                    margin-top: 10px;
-                                    margin-left: auto;
-                                    padding: 5px 15px;
-                                    border-radius: 5px;
-                                    display: flex;
-                                    justify-content: center;
-                                    align-items: center;
-                                    background-color: skyblue;
-                                    color: #fff;
-                                    svg{
-                                        font-size: 0.7rem;
-                                        margin-right: 5px;
-                                    }
+                                    margin-top: 15px;
                                 }
                             }
                         }

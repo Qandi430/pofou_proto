@@ -12,6 +12,7 @@ const contentsList = [
     {   block : "contents",
         id : "basicProfile",
         image : BasicProfileImage,
+        name : "기본 프로필",
         privacy : {
             displayName : true,
             displayBirthDate : true,
@@ -39,6 +40,7 @@ const contentsList = [
         block : "contents",
         id : "basicHistory",
         image : BasicHistoryImage,
+        name : "기본 히스토리",
         educationList : [
             {
                 index : 0,
@@ -82,16 +84,19 @@ const contentsList = [
     {
         block : "contents",
         id : "skillList",
+        name : "스킬 리스트",
         image:SkillListImage
     },
     {
         block : "contact",
         id : "bscicContactList",
+        name : "기본 연락처 리스트",
         image : BasicContactListImage
     },
     {
         block : "contact",
         id : "basicContactForm",
+        name : "기본 연락처 폼",
         image : BasicContactFormImage
     },
 ];
