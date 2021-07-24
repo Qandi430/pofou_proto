@@ -175,13 +175,41 @@
             height: calc(100vh - 95px);
             overflow-y:scroll;
             background-color: #ffffff;
+            .panel{
+                .panelWrap{
+                    margin-top:50px; 
+                }
+                dl{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    dt{
+                        flex: 0 0 30%;
+                        color: #696c71;
+                    }
+                    dd{
+                        flex: 0 0 70%;
+                    }
+                    &+dl{
+                        margin-top: 30px;
+                    }
+                }
+            }
             > div{
-                display: none;
-                &.on{
-                    display: block;
+                // border-bottom: 1px solid #d9d9d9;
+                >h5{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 1.1rem;
+                    // font-weight: bold;
+                    cursor: pointer;
+                    padding: 10px;
+                    background-color: skyblue;
+                    color: #fff;
                 }
                 &.basicTab{
-                    >.basicStyle{
+                    .basicStyle{
                         >div{
                             border-bottom: 1px solid #d9d9d9;
                             padding: 10px;
@@ -192,26 +220,7 @@
                                 font-size: 1rem;
                                 cursor: pointer;
                             }
-                            .panel{
-                                .panelWrap{
-                                    margin-top:50px; 
-                                }
-                                dl{
-                                    display: flex;
-                                    justify-content: space-between;
-                                    align-items: center;
-                                    dt{
-                                        flex: 0 0 30%;
-                                        color: #696c71;
-                                    }
-                                    dd{
-                                        flex: 0 0 70%;
-                                    }
-                                    &+dl{
-                                        margin-top: 30px;
-                                    }
-                                }
-                            }
+                            
                             &.padding{
                                 dl{
                                     dd{
@@ -265,7 +274,7 @@
                             }
                         }
                     }
-                    >.gridBlock{
+                    .gridBlock{
                         padding: 10px;
                         dl{
                             display: flex;
@@ -354,7 +363,7 @@
                     }
                 }
                 &.detailTab{
-                    > .detailItem{
+                    .detailItem{
                         border-bottom: 1px solid #d9d9d9;
                         padding: 10px;
                         h5{

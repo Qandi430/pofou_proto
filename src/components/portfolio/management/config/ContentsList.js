@@ -85,7 +85,15 @@ const contentsList = [
         block : "contents",
         id : "skillList",
         name : "스킬 리스트",
-        image:SkillListImage
+        image:SkillListImage,
+        skillList : [
+            {type : "괴력", level : 85},
+            {type : "분신술", level : 80},
+            {type : "소환술", level : 60},
+            {type : "환술", level : 70},
+            {type : "퇴마술", level : 40},
+            {type : "변신술", level : 30},
+        ],
     },
     {
         block : "contact",
