@@ -162,17 +162,26 @@ const Config = () => {
                     },
                     {
                         index : 2,
-                        type : "contents",
+                        type : "skillList",
                         id : "skillList",
                         name : "스킬 리스트",
-                        skillList : [
-                            {type : "Java", level : 85},
-                            {type : "Javascript", level : 80},
-                            {type : "React", level : 60},
-                            {type : "SQL", level : 70},
-                            {type : "Photoshop", level : 40},
-                            {type : "Illustrator", level : 30},
-                        ],
+                        skill : {
+                            colors: {
+                                "bar": "#3498db",
+                                "title": {
+                                    "text": "#fff",
+                                    "background": "#2980b9"
+                                }
+                            },
+                            list : [
+                                {type : "Java", level : 85},
+                                {type : "Javascript", level : 80},
+                                {type : "React", level : 60},
+                                {type : "SQL", level : 70},
+                                {type : "Photoshop", level : 40},
+                                {type : "Illustrator", level : 30},
+                            ]
+                        },
                     }
                 ],
             },

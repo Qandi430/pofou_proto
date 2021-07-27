@@ -220,6 +220,7 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
                                 </dl>
                             </div>
                         }
+                        
                         <div className="basicStyle">
                             <div className="padding">
                                 <h5 onClick={() => toggleBasicStyle("padding")}>여백 <FontAwesomeIcon icon={faChevronRight}/></h5>
@@ -290,12 +291,12 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="blockInfo">
+                            {/* <div className="blockInfo">
                                 <h5 onClick={() => toggleBasicStyle("blockInfo")}>블럭 이름 <FontAwesomeIcon icon={faChevronRight}/></h5>
                                 <div className={`panel ${openBasicStyle === "blockInfo" ? "on":""}`}>
                                     블럭이름 필요 있을까?
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

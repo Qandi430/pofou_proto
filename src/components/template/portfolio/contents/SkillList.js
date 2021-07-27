@@ -1,11 +1,12 @@
 import React from 'react';
 import SkillBar from 'react-skillbars';
 
-const SkillList = ({grid,skillList}) => {
+const SkillList = ({grid,skill}) => {
+    console.log(skill)
     return(
         <div  className={`contents skillList grid${grid}`}>
             <div className="skilListWrap">
-                <SkillBar  skills={skillList} height={20}/>
+                <SkillBar colors={skill.colors}  skills={skill.list} height={20}/>
             </div>
         </div>
     )

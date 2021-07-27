@@ -10,6 +10,7 @@ import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 
 const contentsList = [
     {   block : "contents",
+        type : "profile",
         id : "basicProfile",
         image : BasicProfileImage,
         name : "기본 프로필",
@@ -38,6 +39,7 @@ const contentsList = [
     },
     {
         block : "contents",
+        type : "profile",
         id : "basicHistory",
         image : BasicHistoryImage,
         name : "기본 히스토리",
@@ -83,6 +85,7 @@ const contentsList = [
     },
     {
         block : "contents",
+        type : "profile",
         id : "skillList",
         name : "스킬 리스트",
         image:SkillListImage,
@@ -97,12 +100,14 @@ const contentsList = [
     },
     {
         block : "contact",
+        type : "contactList",
         id : "bscicContactList",
         name : "기본 연락처 리스트",
         image : BasicContactListImage
     },
     {
         block : "contact",
+        type : "contactForm",
         id : "basicContactForm",
         name : "기본 연락처 폼",
         image : BasicContactFormImage
