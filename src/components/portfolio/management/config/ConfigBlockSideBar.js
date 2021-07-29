@@ -1,17 +1,16 @@
-import { faChevronRight, faFolderOpen, faPlus, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faFolderOpen,  faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Collapse, Input } from 'reactstrap';
 import React,{useEffect, useState} from 'react';
 import transparentImage from '../../../../resources/images/common/transparent.png';
-import { ReactSortable } from 'react-sortablejs';
 import ContentsList from './ContentsList';
 import DetailItem from './DetailItem';
+import GridBlockConfig from './GridBlockConfig';
+import TitleBlockConfig from './TitleBlockConfig';
 
 const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
 
     const [currentTab,setCurrentTab] = useState(["basic"]);
     const [openBasicStyle,setBasicStyle] = useState("");
-    const [selectedContent,setSelectedContent] = useState(null);
     const [configForm,setConfigForm] = useState(null);
     const [openContentsList,setOpenContentsList] = useState("");
     const [openDetailItemList,setOpenDetailItemList] = useState([]);
@@ -23,31 +22,28 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
             setCurrentTab(["basic"]);
             setOpenContentsList("");
         }
-        
     },[configBlock]);
     
     useEffect(() => {
-        const panelList = document.getElementsByClassName('panel');
-        for(let i = 0; i< panelList.length; i++){
-            if(panelList[i].classList.contains("panelParent")){
-                
-            };
-            if(panelList[i].classList.contains("on")){
-                let height = panelList[i].scrollHeight;
-                let childPanel = panelList[i].getElementsByClassName("panel");
-                for(let j = 0; j < childPanel.length; j ++){
-                    if(childPanel[j].classList.contains("on")) height += childPanel[j].scrollHeight;
+        setTimeout(() => {
+            const panelList = document.getElementsByClassName('panel');
+            for(let i = 0; i< panelList.length; i++){
+                if(panelList[i].classList.contains("on")){
+                    let height = panelList[i].scrollHeight;
+                    let childPanel = panelList[i].getElementsByClassName("panel");
+                    for(let j = 0; j < childPanel.length; j ++){
+                        if(childPanel[j].classList.contains("on")) height += childPanel[j].scrollHeight;
+                    }
+                    panelList[i].style.maxHeight = height + "px";
+                }else{
+                    panelList[i].style.maxHeight = null;
                 }
-                panelList[i].style.maxHeight = height + "px";
-            }else{
-                panelList[i].style.maxHeight = null;
             }
-        }
+        }, 100);
     },[configBlock,currentTab,openBasicStyle,openDetailItemList]);
 
 
     const toggleTab = name =>{
-        console.log(name,currentTab)
         if(currentTab.indexOf(name) > -1){
             setCurrentTab(
                 currentTab.filter(tab => tab !== name)
@@ -66,13 +62,6 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
             setBasicStyle(name);
         }
     }
-    const selectContent = index => {
-        if(selectedContent !== null && selectedContent.index === index){
-            setSelectedContent(null);
-        }else{
-            setSelectedContent(configForm.contents.find(c => c.index === index));
-        }
-    }
 
     const changeFormData = (name,value) => {
         const newForm = {
@@ -80,26 +69,6 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
             [name] : value,
         }
 
-        modifyBlock(newForm);
-    }
-
-    const sortContents = newList => {
-        const newForm = {
-            ...configForm,
-            contents : newList
-        }
-        modifyBlock(newForm);
-    }
-
-    const removeContent = () => {
-        if(selectedContent === null){
-            alert("선택된 컨텐츠가 없습니다.");
-            return false;
-        }
-        const newForm = {
-            ...configForm,
-            contents : configForm.contents.filter(c => c.index !== selectedContent.index)
-        }
         modifyBlock(newForm);
     }
 
@@ -136,7 +105,6 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
     }
 
     const modifyContents = (contents) => {
-        console.log(contents);
         const newForm = {
             ...configForm,
             contents : configForm.contents.map(
@@ -192,35 +160,12 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
                     <div className={`panel panelParent ${currentTab.indexOf("basic")  > -1 ? "on" : ""}`}>
                         {
                             ((configBlock !== null && configForm !== null) && (configForm.category === "contents" || configForm.category === "contact")) &&
-                            <div className="gridBlock">
-                                <dl className="contentsGrid">
-                                    <dt>컨텐츠 가로 개수</dt>
-                                    <dd>
-                                        <span>{configForm !== null && configForm.grid}</span>
-                                        <input type="range" min="1" max="6" value={configForm !== null && configForm.grid} onChange={e => changeFormData("grid",e.target.value)}/>
-                                    </dd>
-                                </dl>
-                                <dl className="contentsList">
-                                    <dt>컨텐츠 리스트 <button onClick={removeContent}><FontAwesomeIcon icon={faTrashAlt}/></button></dt>
-                                    <dd>
-                                        <ReactSortable className="sortBox" list={configForm.contents} setList={list => sortContents(list)}>
-                                            {
-                                                configForm.contents.map(
-                                                    content=>
-                                                        <div className={`content ${selectedContent !== null && selectedContent.index === content.index ? "on" : ""}`} onClick={() => selectContent(content.index)} key={content.index} style={{flex: `0 0 ${100/configBlock.grid}%`}}>
-                                                            <div className="item">
-                                                                {content.index+1}
-                                                            </div>
-                                                        </div>
-                                                )
-                                            }
-                                        </ReactSortable>
-                                        <button onClick={() => toggleContentsList(configForm !== null ? configForm.category : "")}><FontAwesomeIcon icon={faPlus}/> 추가</button>
-                                    </dd>
-                                </dl>
-                            </div>
+                            <GridBlockConfig configForm={configForm} toggleContentsList={toggleContentsList} modifyBlock={modifyBlock}/>
                         }
-                        
+                        {
+                            ((configBlock !== null && configForm !== null) && (configForm.category === "title")) &&
+                            <TitleBlockConfig configForm={configForm} modifyBlock={modifyBlock}/>
+                        }
                         <div className="basicStyle">
                             <div className="padding">
                                 <h5 onClick={() => toggleBasicStyle("padding")}>여백 <FontAwesomeIcon icon={faChevronRight}/></h5>

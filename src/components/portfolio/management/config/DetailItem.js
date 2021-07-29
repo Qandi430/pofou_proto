@@ -18,6 +18,10 @@ const DetailItem = ({openDetailItemList,toggleOpenDetailItem,contents,modifyCont
                         contents.type === "skillList" &&
                             <SkillForm contents={contents} modifyContents={modifyContents}/>
                     }
+                    {
+                        contents.type === "title" &&
+                            <TitleForm/>
+                    }
                 </div>
             </div>
         </div>
@@ -164,6 +168,14 @@ const SkillForm = ({contents,modifyContents}) => {
                 }
             </ReactSortable>
             <button className="btnAdd" onClick={addSkill}><FontAwesomeIcon icon={faPlus}/> 추가</button>
+        </div>
+    )
+};
+
+const TitleForm = () => {
+    return (
+        <div>
+            asdf
         </div>
     )
 }

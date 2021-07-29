@@ -2,7 +2,6 @@ import React from 'react';
 import SkillBar from 'react-skillbars';
 
 const SkillList = ({grid,skill}) => {
-    console.log(skill)
     return(
         <div  className={`contents skillList grid${grid}`}>
             <div className="skilListWrap">

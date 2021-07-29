@@ -39,7 +39,7 @@ const Config = () => {
                 contents : [
                     {
                         index : 0,
-                        type : "image",
+                        type : "background_title",
                         name : "기본배경+타이틀",
                         id : "mainImage01",
                         title : "Welcome to<br/>My Portfolio",
@@ -64,14 +64,15 @@ const Config = () => {
                         type : "title",
                         id : "basicTitle",
                         name : "기본 타이틀",
+                        titleType : "text",
                         title : "About",
                         subTitle : "",
                         contents : "",
                         media : "",
                         color : "#333333",
                         textAlign : "left",
-                        fontFamilly : "Noto Sans KR",
-                        fontSize : 3,
+                        fontFamily : "Noto Sans KR",
+                        fontSize : 3.0,
                         fontWeighr : "bold",
                     }
                 ],
@@ -117,7 +118,7 @@ const Config = () => {
                     },
                     {
                         index : 1,
-                        type : "contents",
+                        type : "histoty",
                         id : "basicHistory",
                         name : "기본 히스토리",
                         educationList : [

@@ -39,7 +39,7 @@ const contentsList = [
     },
     {
         block : "contents",
-        type : "profile",
+        type : "history",
         id : "basicHistory",
         image : BasicHistoryImage,
         name : "기본 히스토리",
@@ -85,18 +85,27 @@ const contentsList = [
     },
     {
         block : "contents",
-        type : "profile",
+        type : "skillList",
         id : "skillList",
         name : "스킬 리스트",
         image:SkillListImage,
-        skillList : [
-            {type : "괴력", level : 85},
-            {type : "분신술", level : 80},
-            {type : "소환술", level : 60},
-            {type : "환술", level : 70},
-            {type : "퇴마술", level : 40},
-            {type : "변신술", level : 30},
-        ],
+        skill : {
+            colors: {
+                "bar": "#3498db",
+                "title": {
+                    "text": "#fff",
+                    "background": "#2980b9"
+                }
+            },
+            list : [
+                {type : "Java", level : 85},
+                {type : "Javascript", level : 80},
+                {type : "React", level : 60},
+                {type : "SQL", level : 70},
+                {type : "Photoshop", level : 40},
+                {type : "Illustrator", level : 30},
+            ]
+        },
     },
     {
         block : "contact",
