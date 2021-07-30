@@ -1,13 +1,15 @@
-import { faChevronRight, faFolderOpen,  faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCopy, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faArrowsAltV, faChevronRight, faFolderOpen,  faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React,{useEffect, useState} from 'react';
 import transparentImage from '../../../../resources/images/common/transparent.png';
 import ContentsList from './ContentsList';
 import DetailItem from './DetailItem';
 import GridBlockConfig from './GridBlockConfig';
+import ImageBlockConfig from './ImageBlockConfig';
 import TitleBlockConfig from './TitleBlockConfig';
 
-const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
+const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock,removeBlock,toggleSortBlockModal}) => {
 
     const [currentTab,setCurrentTab] = useState(["basic"]);
     const [openBasicStyle,setBasicStyle] = useState("");
@@ -166,6 +168,10 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
                             ((configBlock !== null && configForm !== null) && (configForm.category === "title")) &&
                             <TitleBlockConfig configForm={configForm} modifyBlock={modifyBlock}/>
                         }
+                        {
+                            ((configBlock !== null && configForm !== null) && (configForm.category === "image")) &&
+                            <ImageBlockConfig configForm={configForm} modifyBlock={modifyBlock}/>
+                        }
                         <div className="basicStyle">
                             <div className="padding">
                                 <h5 onClick={() => toggleBasicStyle("padding")}>여백 <FontAwesomeIcon icon={faChevronRight}/></h5>
@@ -264,6 +270,20 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock}) => {
                 </div>
             </div>
             <ContentsList open={openContentsList} toggle={toggleContentsList} addContents={addContents}/>
+            <div className="blockFooter">
+                <button onClick={toggleSortBlockModal}>
+                    <FontAwesomeIcon icon={faArrowsAltV}/>
+                    블럭이동
+                </button>
+                <button onClick={copyBlock}>
+                    <FontAwesomeIcon icon={faCopy}/>
+                    블럭복제
+                </button>
+                <button onClick={removeBlock}>
+                    <FontAwesomeIcon icon={faTrashAlt}/>
+                    블럭삭제
+                </button>
+            </div>
         </div>
     )
 }

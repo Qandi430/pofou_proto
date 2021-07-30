@@ -15,6 +15,7 @@ import detail3 from '../../../resources/images/main/detail03.jpeg';
 import AddBlockSideBar from '../../../components/portfolio/management/config/AddBlockSideBar';
 import '../../../resources/scss/myPage/config.scss';
 import ConfigBlockSideBar from '../../../components/portfolio/management/config/ConfigBlockSideBar';
+import SortBlockModal from '../../../components/portfolio/management/config/SortBlockModal';
 
 const Config = () => {
     const [openWorkDetailModal,setOpenWorkDetailModal] = useState(false);
@@ -36,6 +37,7 @@ const Config = () => {
                 paddingTop : 0,
                 paddingBottom : 0,
                 backgroundColor: "transparent",
+                backgroundImage : MainImage,
                 contents : [
                     {
                         index : 0,
@@ -46,7 +48,23 @@ const Config = () => {
                         subTitle : "",
                         contents : "",
                         media : MainImage,
-                    }
+                    },
+                    // {
+                    //     index : 0,
+                    //     type : "title",
+                    //     id : "basicTitle",
+                    //     name : "기본 타이틀",
+                    //     titleType : "text",
+                    //     title : "About",
+                    //     subTitle : "",
+                    //     contents : "",
+                    //     media : "",
+                    //     color : "#333333",
+                    //     textAlign : "left",
+                    //     fontFamily : "Noto Sans KR",
+                    //     fontSize : 3.0,
+                    //     fontWeighr : "bold",
+                    // }
                 ]
             },
             {
@@ -311,7 +329,7 @@ const Config = () => {
         ], 
     });
     const [configBlock,setConfigBlock] = useState(null);
-
+    const [openSortBlockModal,setOpenSortBlockModal] = useState(false);
     const selectedItem = {
         title : "꿈을꿔봐요",
         registrationDate : '6일전',
@@ -403,6 +421,41 @@ const Config = () => {
                     )
             })
         }
+    };
+
+    const copyBlock = () => {
+        const newBlock = {...configBlock,index : configBlock.index + 1};
+        data.blockList.forEach(
+            block => {
+                block.index = block.index >= newBlock.index ? block.index + 1 : block.index
+            }
+        )
+        data.blockList.splice(newBlock.index,0,newBlock);
+        setConfigBlock(null);
+    }
+
+    const removeBlock = () => {
+        if(window.confirm("블럭을 삭제하면 변경된 내용이 함께 삭제됩니다.\n삭제하시겠습니까?")){
+            data.blockList = data.blockList.filter(block => block.index !== configBlock.index);
+            setData({
+                ...data,
+                blockList : data.blockList.map((block,index)=> ({...block,index : index}))
+            });
+            setConfigBlock(null);
+        }
+    };
+
+    const toggleSortBlockModal = () => {
+        setOpenSortBlockModal(!openSortBlockModal);
+    }
+
+    const saveSortBlock = blockList => {
+        setData({
+            ...data,
+            blockList : blockList.map((block,index)=> ({...block,index : index}))
+        });
+        setOpenSortBlockModal(false);
+        setConfigBlock(null);
     }
 
     return (
@@ -418,7 +471,8 @@ const Config = () => {
                 <WorkDetailModal isOpen={openWorkDetailModal} toggle={toggleWorkDetailModal} item={selectedItem}/>
             </div>
             <AddBlockSideBar addBlock={addBlock} toggleAddBlock={toggleAddBlock} addNewBlock={addNewBlock}/>
-            <ConfigBlockSideBar selectConfigBlock={selectConfigBlock} configBlock={configBlock} modifyBlock={modifyBlock}/>
+            <ConfigBlockSideBar selectConfigBlock={selectConfigBlock} configBlock={configBlock} modifyBlock={modifyBlock} copyBlock={copyBlock} removeBlock={removeBlock} toggleSortBlockModal={toggleSortBlockModal}/>
+            <SortBlockModal isOpen={openSortBlockModal} toggle={toggleSortBlockModal} data={data} saveSortBlock={saveSortBlock}/>
         </div>
     )
 }

@@ -141,6 +141,7 @@
             background-color: #4789e7;
             color: #fff;
             padding: 10px;
+            height: 45px;
             > .blockTitle{
                 padding: 0 5px;
                 display: flex;
@@ -172,9 +173,10 @@
             }
         }
         > .configBox{
-            height: calc(100vh - 95px);
+            height: calc(100vh - 125px);
             overflow-y:scroll;
             background-color: #ffffff;
+            padding-bottom: 10px;
             .panel{
                 .panelWrap{
                     margin-top:50px; 
@@ -485,6 +487,22 @@
                             }
                         }
                     }
+                    &.imageBlock{
+                        dl{
+                            &.image{
+                                dd{
+                                    label{
+                                        border: 1px solid #d9d9d9;
+                                        padding: 10px;
+                                        border-radius: 5px;
+                                    }
+                                    input{
+                                        display: none;
+                                    }
+                                }   
+                            }
+                        }
+                    }
                 }
                 &.detailTab{
                     .detailItem{
@@ -550,6 +568,25 @@
                             }
                         }
                     }
+                }
+            }
+        }
+        .blockFooter{
+            display: flex;
+            >button{
+                flex: 0 0 33.333%;
+                height: 80px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background-color: transparent;
+                border-top: 1px solid #d9d9d9;
+                &+button{
+                    border-left: 1px solid #d9d9d9;
+                }
+                svg{
+                    margin-bottom: 5px;   
                 }
             }
         }
@@ -625,6 +662,56 @@
                         box-shadow:inset -5px 0px 5px rgba(0,0,0,0.5);
                     }
                 }
+            }
+        }
+    }
+}
+
+#sortBlockModal{
+    .modal-body{
+        padding: 100px 0;
+        .sortBlockHeader{
+            position: fixed;
+            padding: 10px 30px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .headerTitle{
+                display: flex;
+                align-items: flex-end;
+                letter-spacing: 0.4rem;
+                h5{
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    margin-right: 10px;
+                }
+                p{
+                    font-size: 0.9rem;
+                }
+            }
+            .headerButton{
+                button{
+                    padding: .375rem 1.75rem;
+                    &+button{
+                        margin-left: 15px;
+                    }
+                }
+            }
+        }
+        .sortItemWrap{
+            zoom: 30%;
+            width: 30%;
+            margin: 0 auto;
+            cursor: pointer;
+            box-shadow: 4px 0px 0px #999, 0px 4px 0px #ccc, 8px 4px 0px #999, 4px 8px 0px #ccc, 12px 8px 0px #999, 8px 12px 0px #ccc, 16px 12px 0px #999, 12px 16px 0px #ccc, 20px 16px 0px #999, 16px 20px 0px #ccc, 24px 20px 0px #999, 20px 24px 0px #ccc, 28px 24px 0px #999, 24px 28px 0px #ccc, 32px 28px 0px #999, 28px 32px 0px #ccc, 36px 32px 0px #999, 32px 36px 0px #ccc;;
+            &+.sortItemWrap{
+                margin-top: 100px;
+            }
+            >.block{
+                pointer-events: none;
             }
         }
     }
