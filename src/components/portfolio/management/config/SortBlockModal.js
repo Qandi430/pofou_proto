@@ -37,8 +37,8 @@ const SortBlockModal = ({isOpen,toggle,data,saveSortBlock}) => {
                     {
                         blockList.map(
                             block => 
-                                <div className="sortItemWrap">
-                                    <Block data={block} key={block.index}/>
+                                <div className="sortItemWrap" key={block.index}>
+                                    <Block data={block}/>
                                 </div>
                         )
                     }
