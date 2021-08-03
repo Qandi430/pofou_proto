@@ -3,7 +3,7 @@ import { faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactSortable } from 'react-sortablejs';
 
-const GridBlockConfig = ({configForm,toggleContentsList,modifyBlock}) => {
+const GridBlockConfig = ({configForm,toggleContentsList,modifyBlock,saveHistory}) => {
 
     const [selectedContent,setSelectedContent] = useState(null);
 
@@ -13,6 +13,7 @@ const GridBlockConfig = ({configForm,toggleContentsList,modifyBlock}) => {
             [name] : value,
         }
         modifyBlock(newForm);
+        saveHistory(name);
     }
 
     const selectContent = index => {
@@ -24,11 +25,20 @@ const GridBlockConfig = ({configForm,toggleContentsList,modifyBlock}) => {
     }
 
     const sortContents = newList => {
+
         const newForm = {
             ...configForm,
             contents : newList
         }
         modifyBlock(newForm);
+        
+        for(let i = 0; i<configForm.contents.length; i++){
+            if(configForm.contents[i].index !== newList[i].index){
+                saveHistory("sortContents");
+                break;
+            }
+            // console.log(configForm.contents[i],newList[i]);
+        }
     }
 
     const removeContent = () => {
@@ -41,6 +51,7 @@ const GridBlockConfig = ({configForm,toggleContentsList,modifyBlock}) => {
             contents : configForm.contents.filter(c => c.index !== selectedContent.index)
         }
         modifyBlock(newForm);
+        saveHistory("removeContents");
     }
 
     return(

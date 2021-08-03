@@ -4,7 +4,13 @@ import {Input} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const DetailItem = ({openDetailItemList,toggleOpenDetailItem,contents,modifyContents}) => {
+const DetailItem = ({openDetailItemList,toggleOpenDetailItem,contents,modifyContents,saveHistory}) => {
+
+    const modifyDetailItem = (contents) => {
+        modifyContents(contents);
+        saveHistory("modifyContents");
+    }
+
     return(
         <div className={`detailItem`}>
             <h5 onClick={() => toggleOpenDetailItem(contents.index)}>{`${contents.index+1}. ${contents.name}`}</h5>
@@ -12,11 +18,11 @@ const DetailItem = ({openDetailItemList,toggleOpenDetailItem,contents,modifyCont
                 <div className="panelWrap">
                     {
                         contents.type === "profile" &&
-                            <ProfileForm contents={contents} modifyContents={modifyContents}/>
+                            <ProfileForm contents={contents} modifyContents={modifyDetailItem}/>
                     }
                     {
                         contents.type === "skillList" &&
-                            <SkillForm contents={contents} modifyContents={modifyContents}/>
+                            <SkillForm contents={contents} modifyContents={modifyDetailItem}/>
                     }
                     {
                         contents.type === "title" &&

@@ -1,4 +1,55 @@
 .config{
+    padding-top: 38px;
+    .configHeader{
+        position: fixed;
+        display: flex;
+        z-index: 99;
+        background-color: #556273;
+        width: 100%;
+        top: 0;
+        left: 0;
+        justify-content: space-between;
+        padding: 0;
+        button{
+            background-color: transparent;
+            padding: 10px 20px;
+            height: 38px;
+            color: #fff;
+            border-left: 1px solid #333;
+            font-size: 0.8rem;
+            position: relative;
+            >.historyBox{
+                position: absolute;
+                top: 100%;
+                left: 0;
+                padding: 10px;
+                background-color: #fff;
+                border: 1px solid #333;
+                width: 16.3vw;
+                display: none;
+                &.on{
+                    display: block;
+                }
+                >ul{
+                    >li{
+                        text-align: left;
+                        padding: 5px 0;
+                        svg{
+                            margin-right: 5px;
+                        }
+                        color: #333;
+                        &.blank{
+                            height: 150px;    
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
     .addBlockSideBar{
         opacity: 0;
         pointer-events: none;

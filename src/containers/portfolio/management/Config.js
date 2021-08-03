@@ -330,6 +330,8 @@ const Config = () => {
     });
     const [configBlock,setConfigBlock] = useState(null);
     const [openSortBlockModal,setOpenSortBlockModal] = useState(false);
+    const [modifyHistory,setModifyHistory] = useState([]);
+    const [debounceTimer,setDebounceTimer] = useState(0);
     const selectedItem = {
         title : "꿈을꿔봐요",
         registrationDate : '6일전',
@@ -399,6 +401,7 @@ const Config = () => {
         )
         data.blockList.splice(addBlock.index,0,addBlock);
         setAddBlock(null);
+        saveHistory("addBlock");
         document.body.classList.remove('fixedBody');
     }
 
@@ -431,6 +434,7 @@ const Config = () => {
             }
         )
         data.blockList.splice(newBlock.index,0,newBlock);
+        saveHistory("copyBlock");
         setConfigBlock(null);
     }
 
@@ -441,6 +445,7 @@ const Config = () => {
                 ...data,
                 blockList : data.blockList.map((block,index)=> ({...block,index : index}))
             });
+            saveHistory("removeBlock");
             setConfigBlock(null);
         }
     };
@@ -454,13 +459,38 @@ const Config = () => {
             ...data,
             blockList : blockList.map((block,index)=> ({...block,index : index}))
         });
+        saveHistory("sortBlock");
         setOpenSortBlockModal(false);
         setConfigBlock(null);
     }
 
+    const saveHistory = (history) => {
+        console.log(history)
+        if(debounceTimer){
+            console.log("clear timer");
+            clearTimeout(debounceTimer);
+        }
+
+        const newTimer = setTimeout(() => {
+            try{
+                modifyHistory.unshift({index : modifyHistory.length,data : JSON.parse(JSON.stringify(data)),history : history,time : new Date()})
+            }catch(e){
+                console.error('error',e);
+            }
+        },500);
+        setDebounceTimer(newTimer);
+        // modifyHistory.unshift({index : modifyHistory.length,data : JSON.parse(JSON.stringify(data)),history : history,time : new Date()})
+    }
+
+    const revertHistory = (index) => {
+        const selectedHistory = modifyHistory.find(history => history.index === index);
+        setData(selectedHistory.data);
+        setModifyHistory(modifyHistory.filter(history => history.index <= index));
+    }
+
     return (
         <div className="config">
-            <ConfigHeader />
+            <ConfigHeader modifyHistory={modifyHistory} revertHistory={revertHistory}/>
             <div className="configBody">
                 {
                     data.blockList.map(
@@ -471,7 +501,7 @@ const Config = () => {
                 <WorkDetailModal isOpen={openWorkDetailModal} toggle={toggleWorkDetailModal} item={selectedItem}/>
             </div>
             <AddBlockSideBar addBlock={addBlock} toggleAddBlock={toggleAddBlock} addNewBlock={addNewBlock}/>
-            <ConfigBlockSideBar selectConfigBlock={selectConfigBlock} configBlock={configBlock} modifyBlock={modifyBlock} copyBlock={copyBlock} removeBlock={removeBlock} toggleSortBlockModal={toggleSortBlockModal}/>
+            <ConfigBlockSideBar selectConfigBlock={selectConfigBlock} configBlock={configBlock} modifyBlock={modifyBlock} copyBlock={copyBlock} removeBlock={removeBlock} toggleSortBlockModal={toggleSortBlockModal} saveHistory={saveHistory}/>
             <SortBlockModal isOpen={openSortBlockModal} toggle={toggleSortBlockModal} data={data} saveSortBlock={saveSortBlock}/>
         </div>
     )

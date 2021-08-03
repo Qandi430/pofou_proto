@@ -51,9 +51,9 @@ const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfi
                             <div className="gridWrap">
                                 {
                                     data.contents.map(
-                                        contents => {
+                                        (contents,index) => {
                                             const obj = blockList.find(block => block.id === contents.id);
-                                            return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={contents.index}/>
+                                            return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
                                         }       
                                     )
                                 }
@@ -63,9 +63,9 @@ const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfi
                         <div className="gridWrap">
                             {
                                 data.contents.map(
-                                    contents => {
+                                    (contents,index) => {
                                         const obj = blockList.find(block => block.id === contents.id);
-                                        return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={contents.index}/>
+                                        return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
                                     }       
                                 )
                             }
@@ -75,18 +75,18 @@ const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfi
                     <Container>
                         {
                             data.contents.map(
-                                contents => {
+                                (contents,index) => {
                                     const obj = blockList.find(block => block.id === contents.id);
-                                    return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={contents.index}/>
+                                    return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
                                 }       
                             )        
                         }
                     </Container>
                     :        
                     data.contents.map(
-                        contents => {
+                        (contents,index) => {
                             const obj = blockList.find(block => block.id === contents.id);
-                            return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={contents.index}/>
+                            return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
                         }       
                     )
             }

@@ -9,13 +9,14 @@ import GridBlockConfig from './GridBlockConfig';
 import ImageBlockConfig from './ImageBlockConfig';
 import TitleBlockConfig from './TitleBlockConfig';
 
-const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock,removeBlock,toggleSortBlockModal}) => {
+const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock,removeBlock,toggleSortBlockModal,saveHistory}) => {
 
     const [currentTab,setCurrentTab] = useState(["basic"]);
     const [openBasicStyle,setBasicStyle] = useState("");
     const [configForm,setConfigForm] = useState(null);
     const [openContentsList,setOpenContentsList] = useState("");
     const [openDetailItemList,setOpenDetailItemList] = useState([]);
+    const [timer,setTimer] = useState(0);
     useEffect(() => {
         if(configBlock !== null){
             setConfigForm(configBlock);
@@ -66,12 +67,14 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock
     }
 
     const changeFormData = (name,value) => {
+        
         const newForm = {
             ...configForm,
             [name] : value,
         }
 
         modifyBlock(newForm);
+        saveHistory(name);
     }
 
     const toggleContentsList = category => {
@@ -92,6 +95,7 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock
 
         modifyBlock(newForm);
         setOpenContentsList("");
+        saveHistory("addContents");
     }
 
     const toggleOpenDetailItem = index => {
@@ -162,7 +166,7 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock
                     <div className={`panel panelParent ${currentTab.indexOf("basic")  > -1 ? "on" : ""}`}>
                         {
                             ((configBlock !== null && configForm !== null) && (configForm.category === "contents" || configForm.category === "contact")) &&
-                            <GridBlockConfig configForm={configForm} toggleContentsList={toggleContentsList} modifyBlock={modifyBlock}/>
+                            <GridBlockConfig configForm={configForm} toggleContentsList={toggleContentsList} modifyBlock={modifyBlock} saveHistory={saveHistory}/>
                         }
                         {
                             ((configBlock !== null && configForm !== null) && (configForm.category === "title")) &&
@@ -257,7 +261,7 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock
                         {
                             configForm !== null &&
                                 configForm.contents.map(
-                                    contents => <DetailItem key={contents.index} contents={contents} openDetailItemList={openDetailItemList} toggleOpenDetailItem={toggleOpenDetailItem} modifyContents={modifyContents}/>
+                                    contents => <DetailItem saveHistory={saveHistory} key={contents.index} contents={contents} openDetailItemList={openDetailItemList} toggleOpenDetailItem={toggleOpenDetailItem} modifyContents={modifyContents}/>
                                 )
                         }
                     </div>
