@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import ConfigHeader from '../../../components/portfolio/management/config/ConfigHeader';
 import Block from '../../../components/template/portfolio/Block';
 import WorkDetailModal from '../../../components/template/portfolio/WorkdDetailModal';
@@ -17,7 +17,7 @@ import '../../../resources/scss/myPage/config.scss';
 import ConfigBlockSideBar from '../../../components/portfolio/management/config/ConfigBlockSideBar';
 import SortBlockModal from '../../../components/portfolio/management/config/SortBlockModal';
 
-const Config = () => {
+const Config = ({location}) => {
     const [openWorkDetailModal,setOpenWorkDetailModal] = useState(false);
     const [addBlock,setAddBlock] = useState(null);
     const [data,setData] = useState({
@@ -487,6 +487,12 @@ const Config = () => {
         setData(selectedHistory.data);
         setModifyHistory(modifyHistory.filter(history => history.index <= index));
     }
+
+    useEffect(() => {
+        window.addEventListener('keydown', (event) => {
+            
+        });
+    },[location]);
 
     return (
         <div className="config">

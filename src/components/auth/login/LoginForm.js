@@ -37,13 +37,13 @@ const LoginForm = ({history,isLogin,loginAction}) => {
     return (
         <Form className="loginForm" onSubmit={submitLoginForm}>
             <FormGroup>
-                <input className={email === "" ? '' : 'focus'} type="email" name="loginEmail" value={email} onChange={e => chnageLoginForm(e)}/>
-                <Label>이메일 아이디</Label>
+                <input className={email === "" ? '' : 'focus'} id="loginEmail" type="email" name="loginEmail" value={email} onChange={e => chnageLoginForm(e)}/>
+                <Label htmlFor="loginEmail">이메일 아이디</Label>
                 <div className="line"></div>
             </FormGroup>
             <FormGroup>
-                <input className={password === "" ? '' : 'focus'} type="password" name="loginPassword" value={password} onChange={e => chnageLoginForm(e)}/>
-                <Label>패스워드</Label>
+                <input className={password === "" ? '' : 'focus'} id="loginPassword" type="password" name="loginPassword" value={password} onChange={e => chnageLoginForm(e)}/>
+                <Label htmlFor="loginPassword">패스워드</Label>
                 <div className="line"></div>
             </FormGroup>
             <Button>로그인</Button>

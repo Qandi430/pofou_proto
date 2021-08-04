@@ -86,13 +86,12 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock
     }
 
     const addContents = contents => {
-        
-        contents["index"] = configForm.contents.length;
+        let newContents = JSON.parse(JSON.stringify(contents));
+        newContents["index"] = configForm.contents.length;
         const newForm = {
             ...configForm,
-            contents : configForm.contents.concat(contents),
+            contents : configForm.contents.concat(newContents),
         }
-
         modifyBlock(newForm);
         setOpenContentsList("");
         saveHistory("addContents");
