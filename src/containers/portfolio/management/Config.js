@@ -465,14 +465,13 @@ const Config = ({location}) => {
     }
 
     const saveHistory = (history) => {
-        console.log(history)
         if(debounceTimer){
             console.log("clear timer");
             clearTimeout(debounceTimer);
         }
-
         const newTimer = setTimeout(() => {
             try{
+                console.log(history,data);
                 modifyHistory.unshift({index : modifyHistory.length,data : JSON.parse(JSON.stringify(data)),history : history,time : new Date()})
             }catch(e){
                 console.error('error',e);
@@ -482,21 +481,42 @@ const Config = ({location}) => {
         // modifyHistory.unshift({index : modifyHistory.length,data : JSON.parse(JSON.stringify(data)),history : history,time : new Date()})
     }
 
+    useEffect(() => {
+        saveHistory("logStart");
+    },[]);
+
     const revertHistory = (index) => {
+        console.log("start revertHistory",index,modifyHistory,modifyHistory.length);
+        if(index === "back"){
+            console.log("back",modifyHistory,modifyHistory.length);
+            index = modifyHistory.length - 2 < 0 ? 0 : modifyHistory.length - 2;
+        }
         const selectedHistory = modifyHistory.find(history => history.index === index);
         setData(selectedHistory.data);
-        setModifyHistory(modifyHistory.filter(history => history.index <= index));
+        setModifyHistory(JSON.parse(JSON.stringify(modifyHistory.filter(history => history.index <= index))));
     }
 
+    const handleKeyDown = (event) => {
+        if((event.metaKey && event.key === "z") || (event.ctrlKey && event.key === "z")){
+            revertHistory("back");
+        }
+    };
+    
     useEffect(() => {
-        window.addEventListener('keydown', (event) => {
-            
-        });
-    },[location]);
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [modifyHistory]);
+    
+    const checkModifyHistory = () => {
+        console.log(modifyHistory,modifyHistory.length);
+    }
 
     return (
         <div className="config">
             <ConfigHeader modifyHistory={modifyHistory} revertHistory={revertHistory}/>
+            <button onClick={checkModifyHistory}>테스트</button>
             <div className="configBody">
                 {
                     data.blockList.map(

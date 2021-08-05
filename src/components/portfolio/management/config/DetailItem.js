@@ -155,8 +155,8 @@ const SkillForm = ({contents,modifyContents}) => {
             <dl>
                 <dt>스킬바 색상</dt>
                 <dd>
-                    <label htmlFor="skillTitleColor" style={{backgroundColor:`${contents.skill.colors.bar}`}} /> 
-                    <input type="color" id="skillTitleColor" value={contents.skill.colors.bar} onChange={e => changeColors("bar",e.target.value)}/>
+                    <label htmlFor="skillBarColor" style={{backgroundColor:`${contents.skill.colors.bar}`}} /> 
+                    <input type="color" id="skillBarColor" value={contents.skill.colors.bar} onChange={e => changeColors("bar",e.target.value)}/>
                 </dd>
             </dl>
             <ReactSortable list={contents.skill.list} setList={newList => setList(newList)} style={{padding: "5px 10px"}}>
