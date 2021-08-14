@@ -55,5 +55,6 @@
   },
   "devDependencies": {
     "@types/sortablejs": "^1.10.7"
-  }
+  },
+  "proxy": "http://localhost:3001"
 }

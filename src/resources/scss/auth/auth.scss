@@ -128,7 +128,7 @@
                     position: relative;
                     padding-top: 30px;
                     &.form-group{
-                        margin-top: 15px;
+                        margin-top: 30px;
                     }
                     label{
                         position: absolute;
@@ -144,14 +144,20 @@
                         border: 0;
                         border-bottom: 1px solid #d9d9d9;
                         position: relative;   
-                        &:focus{
+                        &:focus,&.focus{
                             outline: none;
                             &~.line{
                                 transform: scale(1);
                             }
                             &~label{
-                                transform: translateY(-15px) scale(0.8);
+                                transform: translateY(-25px) scale(0.8);
                                 color: turquoise;
+                                font-weight: bold;
+                            }
+                            &:not(:focus){
+                                &~label{
+                                    color:#999;
+                                }
                             }
                         }
                     }
@@ -166,7 +172,66 @@
                         transform-origin: center;
                         transform: scaleX(0);
                         transition: transform 0.5s;
-                    }   
+                    }
+                    .btnEmailAuth{
+                        position: absolute;
+                        right:  0;
+                        background-color: transparent;
+                        padding: 8px 16px;
+                        border: 1px solid #d9d9d9;
+                        border-radius: 20px;
+                        font-size: 0.8rem;
+                        bottom: 5px;
+                        transition: all 0.5s;
+                        display: none;
+                        &.on{
+                            display: block;
+                        }
+                        &:hover{
+                            background-color: turquoise;
+                            color: #fff;
+                            border-color: turquoise;
+                        }
+                    }
+                    > p{
+                        position: absolute;
+                        top: 100%;
+                        padding-top: 5px;
+                        font-size: 0.7rem;
+                        color: #ed2727;
+                        display: none;
+                        &.on{
+                            display: block;
+                        }
+                        &.valid{
+                            color:#16afb0;
+                        }
+                    }
+                    .btnBox{
+                        position: absolute;
+                        right: 0;
+                        bottom: 5px;
+                        display: flex;
+                        align-items: center;
+                        .timer{
+                            font-size: 0.8rem;
+                            color: #ed2727;
+                        }
+                        button{
+                            background-color: transparent;
+                            padding: 8px 16px;
+                            border: 1px solid #d9d9d9;
+                            border-radius: 20px;
+                            font-size: 0.8rem;
+                            transition: all 0.5s;
+                            margin-left: 5px;
+                            &:hover{
+                                background-color: turquoise;
+                                color: #fff;
+                                border-color: turquoise;
+                            }
+                        }
+                    }
                 }
                 > button{
                     margin-top: 30px;
