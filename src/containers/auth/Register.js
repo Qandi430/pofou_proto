@@ -120,9 +120,11 @@ const Register = () => {
             document.getElementById("registerAgreement").focus();
             return false;
         }
-        alert("회원가입 진행");
         const {data} = await register(registrationForm);
         console.log(data);
+        if(data){
+            window.location.href = "/";
+        }
     }
 
     return(
