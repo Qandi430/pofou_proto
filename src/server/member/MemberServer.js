@@ -12,8 +12,18 @@ const register = (registerForm) => (
     axios.post("/member/register",registerForm)
 );
 
+const login = (email,password) => (
+    axios.post("/member/login",{"email":email,"password":password})
+);
+
+const logout = () => (
+    axios.get("/member/logout")
+)
+
 export {
     emailAuthentication,
     checkAuthNumber,
     register,
+    login,
+    logout,
 }

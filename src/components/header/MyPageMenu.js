@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { createCommonConsumer } from '../../context/commonContext';
 
-const MyPageMenu = () => {
+const MyPageMenu = ({logoutAction}) => {
     return (
         <div className="myPageMenu">
             <div className="profile">
@@ -30,10 +31,10 @@ const MyPageMenu = () => {
                 </ul>
             </div>
             <div className="logoutMenu">
-                <button className="btnLogout">로그아웃</button>
+                <button className="btnLogout" onClick={logoutAction}>로그아웃</button>
             </div>
         </div>
     )
 }
 
-export default MyPageMenu;
+export default createCommonConsumer(MyPageMenu);

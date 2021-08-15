@@ -65,7 +65,7 @@ const PersonalNavigation = ({isLogin,history}) => {
                             : <Link className="btnRegist" to="/auth/register">회원가입</Link>
                     }
                     {
-                        openMyPageMenu &&
+                        (isLogin && openMyPageMenu) &&
                         <MyPageMenu/>
                     }
                 </li>            
