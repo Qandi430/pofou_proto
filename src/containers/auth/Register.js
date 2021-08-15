@@ -53,7 +53,7 @@ const Register = () => {
             }else{
                 setRegistrationForm({
                     ...registrationForm,
-                    emailAuth : "duflicate"
+                    emailAuth : "duplicate"
                 }); 
             }
         }
