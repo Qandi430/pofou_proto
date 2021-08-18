@@ -42,6 +42,7 @@ class CommonProvider extends Component{
     actions = {
         loginAction : (email,password) => this.loginAction(email,password),        
         logoutAction : () => this.logoutAction(),
+        setMember : token => this.setMember(token),
     };
 
     //login action
@@ -54,7 +55,14 @@ class CommonProvider extends Component{
             alert(data.reason);
         }else{
             await this.setMember(data.token);
-            window.location.href = "/";
+            console.log(this.state.loginMember);
+            if(this.state.loginMember.memberType === "none"){
+                // window.location.href = "";
+                this.props.history.push("/auth/selectMemberType");
+            }else{
+                // window.location.href = "/";
+                this.props.history.push("/");
+            }
         }
         // this.setState({
         //     isLogin : true
@@ -73,7 +81,7 @@ class CommonProvider extends Component{
         this.setState({
             isLogin : true,
             loginMember : {
-                ...loginMember,
+                ...loginMember.member,
                 ipAddress : ipv4
             }
         })
@@ -127,6 +135,8 @@ function createCommonConsumer(WrappedComponent){
                             isLogin = {state.isLogin}
                             loginAction = {actions.loginAction}
                             logoutAction = {actions.logoutAction}
+                            loginMember = {state.loginMember}
+                            setMember = {actions.setMember}
                             {...props}
                         />
                     )

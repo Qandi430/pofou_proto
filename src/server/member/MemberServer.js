@@ -20,10 +20,15 @@ const logout = () => (
     axios.get("/member/logout")
 )
 
+const selectMemberType = (selectMemberTypeForm) => (
+    axios.put("/member/setMemberType",selectMemberTypeForm)
+)
+
 export {
     emailAuthentication,
     checkAuthNumber,
     register,
     login,
     logout,
+    selectMemberType,
 }

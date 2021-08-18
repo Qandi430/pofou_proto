@@ -32,7 +32,7 @@ const LayoutWrap = ({location,match,history}) => {
             <Header location={location} match={match} history={history}/>
             <Switch>
                 <Route path="/upload" component={UploadPage}/>
-                <Route path="/auth" component={AuthPage}/>
+                <Route path="/auth" component={AuthPage} location={location}/>
                 <Route path="/archive" component={Archive}/>
                 <Route path="/resume" component={Resume}/>
                 <Route path="/myPage" component={MyPage}/>

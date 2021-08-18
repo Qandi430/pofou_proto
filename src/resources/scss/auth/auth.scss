@@ -1,20 +1,26 @@
 .auth{
     width: 100vw;
-    height: calc(100vh - 39px);
-    background-image: url('../../images/auth/authBg.jpg');
-    display: flex;
-    justify-content: flex-end;
-    > div{
-        flex: 0 0 55%;
-        background: rgba(255,255,255,1);
-        height: 100%;
+    &:not(.selectMemberType){
+        background-image: url('../../images/auth/authBg.jpg');
         display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
+        justify-content: flex-end;
+        height: calc(100vh - 39px);
+        >div{
+            flex: 0 0 55%;
+            background: rgba(255,255,255,1);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            >*{
+                width: 100%;
+                max-width: 380px;
+            }
+        }
+    }
+    > div{
         > *{
-            width: 100%;
-            max-width: 380px;
             &.pageTitle{
                 font-size: 2rem;
                 font-weight: bold;
@@ -343,6 +349,156 @@
             span{
                 text-decoration: underline;
                 font-weight: bold;
+            }
+        }
+    }
+    &.selectMemberType{
+        background-color: #f5f5f5;
+        min-height: calc(100vh - 39px);
+        .selectMemberTypeWrap{
+            width: 100%;
+            max-width: 990px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            .selectMemberTypeTitle{
+                flex: 0 0 29%;
+                // width: 30%;
+                padding-top: 5vh;
+                h1.logo{
+                    font-size: 2rem;
+                    font-weight: bold;
+                }
+                h2{
+                    font-size: 1.6rem;
+                    margin-top: 1.6em;
+                    line-height: 1.4;
+                    >b{
+                        font-weight: bold;
+                        display: block;
+                    }
+                }
+                p{
+                    margin-top: 2em;
+                    font-size: 0.9rem;
+                    color:#777777;
+                }
+            }
+            .selectMemberTypeForm{
+                background-color: #fff;
+                padding: 30px;
+                flex: 0 0 69%;
+                // width: 50%;
+                .memberTypeTab{
+                    display: flex;
+                    justify-content: space-between;
+                    .tabBtn{
+                        display: flex;
+                        height: 150px;
+                        flex: 0 0 48%;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        border: 1px solid #d9d9d9;
+                        border-radius: 0.5em;
+                        cursor: pointer;
+                        transition: all 0.5s;
+                        .icon{
+                            width: 50px;
+                            height: 50px;
+                            background-color: #f5f5f5;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 50%;
+                            margin-bottom: 15px;
+                            transition: all 0.5s;
+                        }
+                        .name{
+                            transition: all 0.5s;
+                        }
+                        &.on,&:hover{
+                            border-color: #2ac5c6;
+                            background-color: rgba(42, 197, 198, 0.1);
+                            .icon{
+                                background-color: #2ac5c6;
+                                color: #fff;
+                            }
+                            .name{
+                                color: #2ac5c6;
+                            }
+                        }
+                    }
+                }
+                .tabContents{
+                    .notice{
+                        margin-top: 15px;
+                        b{
+                            font-weight: bold;
+                        }
+                    }
+                    form{
+                        .form-group{
+                            margin-top: 50px;
+                            .inputTitle{
+                                font-weight: bold;
+                                margin-bottom: 15px;
+                            }
+                            .inputBox{
+                                display: flex;
+                                align-items: center;
+                                input[type=text]{
+                                    // display: block;
+                                    width: 100%;
+                                    border: 0;
+                                    border-bottom: 1px solid #d9d9d9;
+                                }
+                                input[type=radio]{
+                                    &+label{
+                                        margin-left: 5px;
+                                        &+input[type=radio]{
+                                            margin-left: 15px;
+                                        }
+                                    }
+                                }
+                                ul{
+                                    flex-wrap: wrap;
+                                    display: flex;
+                                    li{
+                                        flex : 0 0 30%;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .btnBox{
+                    margin-top: 15px;
+                    padding-top: 15px;
+                    border-top: 1px solid #d9d9d9;
+                    p{
+                        color: #999;
+                        span{
+                            color: #2ac5c6;
+                            cursor: pointer;
+                        }
+                    }
+                    button{
+                        width: 100%;
+                        padding: 10px ;
+                        border-radius: 30px;
+                        color: #fff;
+                        margin-top: 50px;
+                        &.disable{
+                            background-color: #999999;
+                            cursor: not-allowed;
+                        }
+                        &.able{
+                            background-color: #2ac5c6;
+                            
+                        }
+                    }
+                }
             }
         }
     }
