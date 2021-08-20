@@ -24,6 +24,10 @@ const selectMemberType = (selectMemberTypeForm) => (
     axios.put("/member/setMemberType",selectMemberTypeForm)
 )
 
+const checkUrl = (url) => (
+    axios.get("/member/checkUrl",{params:{url:url}})
+)
+
 export {
     emailAuthentication,
     checkAuthNumber,
@@ -31,4 +35,5 @@ export {
     login,
     logout,
     selectMemberType,
+    checkUrl,
 }

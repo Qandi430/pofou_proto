@@ -108,8 +108,7 @@ class CommonProvider extends Component{
             }
         }
         return null; // null 을 리턴하면 따로 업데이트 할 것은 없다라는 의미
-
-      }
+    }
     
 
     render(){

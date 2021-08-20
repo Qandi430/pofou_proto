@@ -1,27 +1,22 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import ArchiveProfile from '../../containers/contents/archive/ArchiveProfile';
 import ArchiveTab from '../../containers/contents/archive/ArchiveTab';
 import '../../resources/scss/contents/archive.scss';
+import axios from 'axios';
+import { createCommonConsumer } from '../../context/commonContext';
+import { ArchiveProvider } from '../../context/archiveContext';
+import ArchiveBackground from '../../containers/contents/archive/ArchiveBackground';
 
-const Archive = () => {
+const Archive = ({loginMember,history}) => {
     return (
-        <div className="archive">
-            <div className="archiveBackground" style={{backgroundColor:"#000000"}}>
-                <label htmlFor="archiveBgFile" className="addBg">
-                    <span className="circle">
-                        <FontAwesomeIcon icon={faPlus}/>
-                    </span>
-                    <h5>배경 사진 업로드</h5>
-                    <p>권장 사이즈 2560 * 376px</p>
-                </label>
-                <input type="file" id="archiveBgFile" style={{display:"none"}}/>
+        <ArchiveProvider loginMember={loginMember} history={history}>
+            <div className="archive">
+                <ArchiveBackground/>
+                <ArchiveProfile/>
+                <ArchiveTab/>
             </div>
-            <ArchiveProfile/>
-            <ArchiveTab/>
-        </div>
+        </ArchiveProvider>
     )
 }
 
-export default Archive;
+export default createCommonConsumer(Archive);

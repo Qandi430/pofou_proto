@@ -1,10 +1,10 @@
 import { faUserCog, faUserEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React,{useEffect, useState} from 'react';
-import { Form, FormGroup,Input,Label } from 'reactstrap';
+import { Form, FormGroup,Input,Label,Dropdown,DropdownToggle,DropdownMenu,DropdownItem } from 'reactstrap';
 import { createCommonConsumer } from '../../context/commonContext';
 import { getCategoryCodeList } from '../../server/common/CommonServer';
-import { selectMemberType } from '../../server/member/MemberServer';
+import { checkUrl, selectMemberType } from '../../server/member/MemberServer';
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
 
@@ -15,6 +15,8 @@ const SelectMemberType = ({isLogin,loginMember,setMember,history}) => {
         memberType : "normal",
         name : "",
         mobile : "",
+        url : "",
+        urlStatus : "irregular",
         gender : "N",
         keyword1 : "",
         keyword2 : "",
@@ -24,7 +26,10 @@ const SelectMemberType = ({isLogin,loginMember,setMember,history}) => {
     const [formStatus,setFormStatus] = useState({
         submitAble : false,
         alertMessage : "",
-    });    
+    });
+
+    const [urlPrepend,setUrlPrepend] = useState("pofou.com/archive/");
+    const [openUrlPrepend,setOpenUrlPrepend] = useState(false);
 
     const [keywordList,setKeywordList] = useState([]);
 
@@ -75,6 +80,22 @@ const SelectMemberType = ({isLogin,loginMember,setMember,history}) => {
             })
             return;
         }
+        
+        if(memberTypeForm.url ===""){
+            setFormStatus({
+                submitAble: false,
+                alertMessage : "URL을 입력해 주세요.",
+            })
+        }
+
+        if(memberTypeForm.urlStatus !== "pass"){
+            setFormStatus({
+                submitAble : false,
+                alertMessage : "정확한 URL을 입력해 주세요.",
+            })
+            return;
+        }
+
         if(memberTypeForm.keyword1 === "" && memberTypeForm.keyword2 === "" ){
             setFormStatus({
                 submitAble : false,
@@ -108,6 +129,7 @@ const SelectMemberType = ({isLogin,loginMember,setMember,history}) => {
 
 
     const changeMemberTypeForm = (name,value) => {
+        
         if(name === "keyword"){
             if(memberTypeForm.keyword1 === ""){
                 name = "keyword1";
@@ -126,7 +148,7 @@ const SelectMemberType = ({isLogin,loginMember,setMember,history}) => {
         }
         setMemberTypeForm({
             ...memberTypeForm,
-            [name] : value
+            [name] : value,
         })
     };
 
@@ -143,6 +165,38 @@ const SelectMemberType = ({isLogin,loginMember,setMember,history}) => {
             await setMember(data.token);
             history.push("/");
         }
+    }
+    
+    const blurOnUrl = async (url) => {
+        console.log(url)
+        let urlStatus = "";
+        const urlRegexp = /[0-9a-zA-Z_-]{4,16}$/; 
+        
+        if(urlRegexp.test(url)){
+            const {data} = await checkUrl(url);
+            console.log(data);
+            if(data){
+                urlStatus = "pass";
+            }else{
+                urlStatus = "duplicate";
+            }
+        }else{
+            urlStatus = "irregular";
+        }
+
+        setMemberTypeForm({
+            ...memberTypeForm,
+            urlStatus : urlStatus
+        })
+    }
+
+    const toggleUrlPrepend = () => {
+        setOpenUrlPrepend(!openUrlPrepend)
+    }
+
+    const changeUrlPrepend = (prepend) => {
+        console.log(prepend)
+        setUrlPrepend(prepend)
     }
 
     return(
@@ -191,6 +245,29 @@ const SelectMemberType = ({isLogin,loginMember,setMember,history}) => {
                             </FormGroup>
                         }
                         <FormGroup>
+                            <h5 className="inputTitle">개인 URL</h5>
+                            <div className="inputBox">
+                                <dl>
+                                    <dt>
+                                    <Dropdown isOpen={openUrlPrepend} toggle={toggleUrlPrepend}>
+                                        <DropdownToggle caret>{urlPrepend}</DropdownToggle>
+                                        <DropdownMenu>
+                                            <DropdownItem onClick={() => changeUrlPrepend("/pofou.com/archive")}>/pofou.com/archive</DropdownItem>
+                                            <DropdownItem onClick={() => changeUrlPrepend("/pofou.com/resume")}>/pofou.com/resume</DropdownItem>
+                                            <DropdownItem onClick={() => changeUrlPrepend("/pofou.com/portfolio")}>/pofou.com/portfolio</DropdownItem>
+                                        </DropdownMenu>
+                                    </Dropdown>
+                                    </dt>
+                                    <dd>
+                                        <input type="text" placeholder="영문,숫자,대시,언더바(최소 4자, 최대20자)" value={memberTypeForm.url} onChange={e => changeMemberTypeForm("url",e.target.value)} onBlur={e => blurOnUrl(e.target.value)}/>
+                                    </dd>
+                                </dl>
+                                <p style={{display:`${memberTypeForm.url !== "" && memberTypeForm.urlStatus !== "pass" ? "block" : "none"}`}}>
+                                    {memberTypeForm.urlStatus === "irregular" ? "영문, 숫자, 대시, 언더바만 사용하여 4자 이상 20자 이내로 입력해주세요." : memberTypeForm.urlStatus === "duplicate" ? "이미 사용중인 URL입니다." : ""}
+                                </p>
+                            </div>
+                        </FormGroup>
+                        <FormGroup>
                             <h5 className="inputTitle">성별</h5>
                             <div className="inputBox">
                                 <Input type="radio" id="genderM" name="gender" value="M" defaultChecked={memberTypeForm.gender === "M"} onChange={e => changeMemberTypeForm("gender",e.target.value)}/>
@@ -219,94 +296,6 @@ const SelectMemberType = ({isLogin,loginMember,setMember,history}) => {
                                             )
                                         )
                                     }
-                                    {/* <li className="customCheckbox">
-                                        <input id='category1' type='checkbox' value="Graphic Design" checked={memberTypeForm.keyword1 === "Graphic Design" || memberTypeForm.keyword2 === "Graphic Design" } onChange={e => changeMemberTypeForm("keyword",e.target.value)} />
-                                        <label htmlFor='category1'>
-                                            <span></span>
-                                            그래픽 디자인
-                                            <ins><i>그래픽 디자인</i></ins>
-                                        </label>
-                                    </li>
-                                    <li className="customCheckbox">
-                                        <input id='category2' type='checkbox'  value="Branding/Edit" checked={memberTypeForm.keyword1 === "Branding/Edit" || memberTypeForm.keyword2 === "Branding/Edit" } onChange={e => changeMemberTypeForm("keyword",e.target.value)} />
-                                        <label htmlFor='category2'>
-                                            <span></span>
-                                            브랜딩/편집
-                                            <ins><i>브랜딩/편집</i></ins>
-                                        </label>
-                                    </li>
-                                    <li className="customCheckbox">
-                                        <input id='category3' type='checkbox'  value="Video/Motion Graphic" checked={memberTypeForm.keyword1 === "Video/Motion Graphic" || memberTypeForm.keyword2 === "Video/Motion Graphic" } onChange={e => changeMemberTypeForm("keyword",e.target.value)}/>
-                                        <label htmlFor='category3'>
-                                            <span></span>
-                                            영상/모션 그래픽
-                                            <ins><i>영상/모션 그래픽</i></ins>
-                                        </label>
-                                    </li>
-                                    <li className="customCheckbox">
-                                        <input id='category4' type='checkbox' value="UI/UX" checked={memberTypeForm.keyword1 === "UI/UX" || memberTypeForm.keyword2 === "UI/UX" } onChange={e => changeMemberTypeForm("keyword",e.target.value)}/>
-                                        <label htmlFor='category4'>
-                                            <span></span>
-                                            UI/UX
-                                            <ins><i>UI/UX</i></ins>
-                                        </label>
-                                    </li>
-                                    <li className="customCheckbox">
-                                        <input id='category5' type='checkbox' value="Illustration" checked={memberTypeForm.keyword1 === "Illustration" || memberTypeForm.keyword2 === "Illustration" } onChange={e => changeMemberTypeForm("keyword",e.target.value)}/>
-                                        <label htmlFor='category5'>
-                                            <span></span>
-                                            일러스트레이션
-                                            <ins><i>일러스트레이션</i></ins>
-                                        </label>
-                                    </li>
-                                    <li className="customCheckbox">
-                                        <input id='category6' type='checkbox' value="Digital Art" checked={memberTypeForm.keyword1 === "Digital Art" || memberTypeForm.keyword2 === "Digital Art" } onChange={e => changeMemberTypeForm("keyword",e.target.value)}/>
-                                        <label htmlFor='category6'>
-                                            <span></span>
-                                            디지털 아트
-                                            <ins><i>디지털 아트</i></ins>
-                                        </label>
-                                    </li>
-                                    <li className="customCheckbox">
-                                        <input id='category7' type='checkbox' value="Typography" checked={memberTypeForm.keyword1 === "Typography" || memberTypeForm.keyword2 === "Typography" } onChange={e => changeMemberTypeForm("keyword",e.target.value)}/>
-                                        <label htmlFor='category7'>
-                                            <span></span>
-                                            타이포그래피
-                                            <ins><i>타이포그래피</i></ins>
-                                        </label>
-                                    </li>
-                                    <li className="customCheckbox">
-                                        <input id='category8' type='checkbox' />
-                                        <label htmlFor='category8'>
-                                            <span></span>
-                                            산업 디자인
-                                            <ins><i>산업 디자인</i></ins>
-                                        </label>
-                                    </li>
-                                    <li className="customCheckbox">
-                                        <input id='category9' type='checkbox' />
-                                        <label htmlFor='category9'>
-                                            <span></span>
-                                            포토그래피
-                                            <ins><i>포토그래피</i></ins>
-                                        </label>
-                                    </li>
-                                    <li className="customCheckbox">
-                                        <input id='category10' type='checkbox' />
-                                        <label htmlFor='category10'>
-                                            <span></span>
-                                            파인아트
-                                            <ins><i>파인아트</i></ins>
-                                        </label>
-                                    </li>
-                                    <li className="customCheckbox">
-                                        <input id='category11' type='checkbox' />
-                                        <label htmlFor='category11'>
-                                            <span></span>
-                                            공예
-                                            <ins><i>공예</i></ins>
-                                        </label>
-                                    </li> */}
                                 </ul>
                             </div>
                         </FormGroup>

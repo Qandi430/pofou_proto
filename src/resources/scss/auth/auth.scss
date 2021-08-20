@@ -447,6 +447,7 @@
                             .inputBox{
                                 display: flex;
                                 align-items: center;
+                                flex-wrap: wrap;
                                 input[type=text]{
                                     // display: block;
                                     width: 100%;
@@ -467,6 +468,49 @@
                                     li{
                                         flex : 0 0 30%;
                                     }
+                                }
+                                dl{
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    width: 100%;
+                                    flex: 0 0 100%;
+                                    border-bottom: 1px solid #d9d9d9;
+                                    padding-bottom: 5px;
+                                    dt{
+                                        flex: 0 0 35%;
+                                        border-right: 1px solid #d9d9d9;
+                                        .dropdown{
+                                            .dropdown-toggle{
+                                                background-color: transparent;
+                                                border: 0;
+                                                color: #333;
+                                                width: 100%;
+                                                display: flex;
+                                                justify-content: space-between;
+                                                align-items: center;
+                                                font-weight: bold;
+                                            }
+                                            .dropdown-menu{
+                                                width: 100%;
+                                                .dropdown-item{
+                                                    padding-top: 10px;
+                                                    padding-bottom: 10px;
+                                                    transition: background-color 0.5s;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    dd{
+                                        flex: 0 0 60%;
+                                        input[type=text]{
+                                            border: 0;
+                                        }
+                                    }
+                                }
+                                p{
+                                    margin-top: 5px;
+                                    color: #ed2727;
                                 }
                             }
                         }

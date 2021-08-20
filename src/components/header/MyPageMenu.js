@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { createCommonConsumer } from '../../context/commonContext';
 
-const MyPageMenu = ({logoutAction}) => {
+const MyPageMenu = ({logoutAction,loginMember}) => {
     return (
         <div className="myPageMenu">
             <div className="profile">
@@ -17,7 +17,7 @@ const MyPageMenu = ({logoutAction}) => {
             <div className="contentsMenu">
                 <ul>
                     <li><Link to="/upload">업로드</Link></li>
-                    <li><Link to="/archive">창작물 저장소</Link></li>
+                    <li><Link to={`/archive/${loginMember.url}`}>창작물 저장소</Link></li>
                     <li><Link to="/resume/list">이력서/자기소개서</Link></li>
                     <li><Link to="/portfolio/management">나의 포트폴리오</Link></li>
                 </ul>
