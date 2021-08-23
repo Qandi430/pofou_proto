@@ -59,6 +59,8 @@ header{
                             border-radius: 50%;
                             background: #e8e8e8;
                             font-weight: bold;
+                            background-repeat: no-repeat;
+                            background-size: cover;
                         }
                     }
                     a{
@@ -131,6 +133,8 @@ header{
                                     justify-content: center;
                                     align-items: center;
                                     border-radius: 50%;
+                                    background-repeat: no-repeat;
+                                    background-size: cover;
                                 }
                                 > .profileInfo{
                                     margin-left: 5px;

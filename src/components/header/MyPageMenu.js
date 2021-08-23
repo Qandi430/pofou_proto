@@ -6,12 +6,15 @@ const MyPageMenu = ({logoutAction,loginMember}) => {
     return (
         <div className="myPageMenu">
             <div className="profile">
-                <div className="profileImage noImage">
-                    D
+                <div className="profileImage noImage" style={ loginMember !== null && loginMember.profileImage !== null ? {backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${loginMember.profileImage})`} : {backgroundColor:"#e8e8e8"}}>
+                    {
+                        loginMember !== null && loginMember.profileImage !== null ?
+                        "" : loginMember.member === null ? "P" : loginMember.email.split("")[0].toUpperCase()
+                    }
                 </div>
                 <div className="profileInfo">
-                    <h6 className="name">이승재</h6>
-                    <p className="grade">클라이언트 회원</p>
+                    <h6 className="name">{loginMember !== null && loginMember.name !== "" ? loginMember.name : ""}</h6>
+                    <p className="grade">{loginMember !== null && loginMember.memberType !== "" ? loginMember.memberType === "client" ? "클라이언트 회원" : "창작자 회원" : ""}</p>
                 </div>
             </div>
             <div className="contentsMenu">

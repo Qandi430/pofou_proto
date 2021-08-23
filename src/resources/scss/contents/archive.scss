@@ -42,8 +42,18 @@
         .profileWrap{
             display: flex;
             margin-top: 50px;
+            .profileImage{
+                width: 90px;
+                height: 90px;
+                margin-right: 30px;
+                border-radius: 50%;
+                overflow: hidden;
+                > img{
+                    max-width: 100%;
+                }
+            }
             .profileInfo{
-                margin-left: 30px;
+                
                 > * {
                     & + *{
                         margin-top: 10px;

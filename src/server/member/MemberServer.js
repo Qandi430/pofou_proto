@@ -28,6 +28,10 @@ const checkUrl = (url) => (
     axios.get("/member/checkUrl",{params:{url:url}})
 )
 
+const updateProfile = (form) => (
+    axios.put("/member/updateProfile",form)
+)
+
 export {
     emailAuthentication,
     checkAuthNumber,
@@ -36,4 +40,5 @@ export {
     logout,
     selectMemberType,
     checkUrl,
+    updateProfile,
 }

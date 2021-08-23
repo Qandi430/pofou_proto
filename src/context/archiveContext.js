@@ -2,7 +2,7 @@ import React, { createContext, Component } from 'react';
 import { getArchive, saveBackgroundImage, uploadBackgroundImage } from '../server/archive/ArchiveServer';
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
-import { singleFileUpload } from '../server/common/CommonServer';
+import { getCategoryCodeList, singleFileUpload } from '../server/common/CommonServer';
 
 const Context  = createContext();
 
@@ -14,8 +14,24 @@ class ArchiveProvider extends Component{
         this.state = {
             editMode : false,
             url : "",
-            archive : null,
+            archive : {
+                backgroundImage : null,
+                keyword1 : "",
+                keyword2 : "",
+                memberNumber : "",
+                sns : {
+                    homepage : "",
+                    facebook : "",
+                    twitter : "",
+                    instagram : "",
+                    tumplr : "",
+                    vimeo : "",
+                    youtube : "",
+                    pinterest : "",
+                },
+            },
             loginMember : null,
+            keywordList : [],
         };
     }
 
@@ -36,6 +52,9 @@ class ArchiveProvider extends Component{
                 loginMember : loginMember.member
             })
         }
+        if(this.state.keywordList.length === 0){
+            this.setKeywordList();
+        }
     }
 
     componentDidUpdate(prevProps,prevState){
@@ -47,10 +66,21 @@ class ArchiveProvider extends Component{
             });
             this.getArchiveInfo(urlSeparte[urlSeparte.length -1]);
         }   
+        if(this.state.keywordList.length === 0){
+            this.setKeywordList();
+        }
     }
 
     actions = {
         changeBackgroundImage : e => this.changeBackgroundImage(e),
+    }
+
+    setKeywordList = async () => {
+        const {data} = await getCategoryCodeList();
+        this.setState({
+            ...this.state,
+            keywordList : data
+        })
     }
 
     getArchiveInfo = async (url) => {
@@ -123,6 +153,7 @@ function createArchiveConsumer(WrappedComponent){
                             archive = {state.archive}
                             editMode = {state.editMode}
                             changeBackgroundImage = {actions.changeBackgroundImage}
+                            keywordList = {state.keywordList}
                             {...props}
                         />
                     )

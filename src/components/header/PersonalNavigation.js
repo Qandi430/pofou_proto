@@ -7,7 +7,7 @@ import { createCommonConsumer } from '../../context/commonContext';
 import AlarmMenu from './AlarmMenu';
 import MyPageMenu from './MyPageMenu';
 
-const PersonalNavigation = ({isLogin,history}) => {
+const PersonalNavigation = ({isLogin,history,loginMember}) => {
     const [openMyPageMenu,setOpenMyPageMenu] = useState(false);
     const [openAlarmMenu,setOpenAlarmMenu] = useState(false);
     let location = useLocation();
@@ -59,8 +59,11 @@ const PersonalNavigation = ({isLogin,history}) => {
                 <li>
                     {
                         isLogin ? 
-                            <button className="btnMyPage" onClick={handleOpenMyPageMenu}>
-                                D
+                            <button className="btnMyPage" onClick={handleOpenMyPageMenu} style={ loginMember !== null && loginMember.profileImage !== null ? {backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${loginMember.profileImage})`} : {backgroundColor:"#e8e8e8"}}>
+                                {
+                                    loginMember !== null && loginMember.profileImage !== null ?
+                                    "" : loginMember.member === null ? "P" : loginMember.email.split("")[0].toUpperCase()
+                                }
                             </button>
                             : <Link className="btnRegist" to="/auth/register">회원가입</Link>
                     }

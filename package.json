@@ -17,6 +17,7 @@
     "moment": "^2.29.1",
     "node-sass": "^6.0.0",
     "react": "^17.0.2",
+    "react-avatar-editor": "^12.0.0",
     "react-color": "^2.19.3",
     "react-cookies": "^0.1.1",
     "react-datepicker": "^4.1.0",

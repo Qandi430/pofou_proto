@@ -66,6 +66,7 @@
                     .form-group{
                         margin-top: 15px;
                         display: flex;
+                        flex-wrap: wrap;
                     }
                     ul{
                         margin-top: 15px;
@@ -75,6 +76,8 @@
                         .form-group{
                             .imageWrap{
                                 max-width: 75px;
+                                border-radius: 50%;
+                                overflow: hidden;
                                 img{
                                     max-width: 100%;
                                 }
@@ -126,16 +129,117 @@
                             border-radius: .25rem;
                         }
                     }
+                    &.profileKeyword{
+                        ul{
+                            li{
+                                &+li{
+                                    &::before{
+                                        content: '\00B7';
+                                    }
+                                }
+                            }
+                        }
+                    }
                     &.profileWebAddress{
                         ul{
                             li{
+                                &.homepage{
+                                    svg{
+                                        color: #333;
+                                    }
+                                }
+                                &.facebook{
+                                    svg{
+                                        color: rgb(61,94,239);
+                                    }
+                                }
+                                &.twitter{
+                                    svg{
+                                        color: rgb(74,141,238);
+                                    }
+                                }
+                                &.pinterest{
+                                    svg{
+                                        color: rgb(220,0,55);
+                                    }
+                                }
+                                &.tumblr{
+                                    svg{
+                                        color: rgb(10,17,40);
+                                    }
+                                }
+                                &.vimeo{
+                                    svg{
+                                        color: rgb(89,164,222);
+                                    }
+                                }
+                                &.youtube{
+                                    svg{
+                                        color: rgb(220,0,55);
+                                    }
+                                }
+                                &.instagram{
+                                    svg{
+                                        color: rgb(220,0,55);
+                                    }
+                                }
                                 &+li{
                                     margin-left: 15px; 
                                 }
                                 .empty{
-                                    opacity: 0.9;
+                                    opacity: 0.5;
                                 }
                             }
+                        }
+                    }
+                    &.profileUrl{
+                        dl{
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            width: 100%;
+                            flex: 0 0 100%;
+                            border: 1px solid #d9d9d9;
+                            border-radius: 5px;
+                            // padding-bottom: 5px;
+                            dt{
+                                flex: 0 0 35%;
+                                border-right: 1px solid #d9d9d9;
+                                .dropdown{
+                                    .dropdown-toggle{
+                                        background-color: transparent;
+                                        border: 0;
+                                        color: #333;
+                                        width: 100%;
+                                        display: flex;
+                                        justify-content: space-between;
+                                        align-items: center;
+                                        font-weight: bold;
+                                    }
+                                    .dropdown-menu{
+                                        width: 100%;
+                                        .dropdown-item{
+                                            padding-top: 10px;
+                                            padding-bottom: 10px;
+                                            transition: background-color 0.5s;
+                                        }
+                                    }
+                                }
+                            }
+                            dd{
+                                flex: 0 0 60%;
+                                input[type=text]{
+                                    border: 0;
+                                    width: 100%;
+                                    &:focus{
+                                        outline: none;
+                                    }
+                                }
+                            }
+                        }
+                        p{
+                            margin-top: 5px;
+                            color: #ed2727;
                         }
                     }
                 }
