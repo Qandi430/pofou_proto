@@ -1,8 +1,9 @@
 import React,{ useState} from 'react';
 import { Form, FormGroup, Label,Button } from 'reactstrap';
 import { createCommonConsumer } from '../../../context/commonContext';
+import PackmanLoader from '../../common/PackmanLoader';
 
-const LoginForm = ({history,isLogin,loginAction}) => {
+const LoginForm = ({history,isLogin,loginAction,openSpinnerModal,toggleSpinnerModal}) => {
 
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
@@ -47,6 +48,7 @@ const LoginForm = ({history,isLogin,loginAction}) => {
                 <div className="line"></div>
             </FormGroup>
             <Button>로그인</Button>
+            <PackmanLoader isOpen={openSpinnerModal} toggle={toggleSpinnerModal}/>
         </Form>
     )
 }

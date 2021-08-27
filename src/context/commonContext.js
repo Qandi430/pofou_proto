@@ -18,7 +18,8 @@ class CommonProvider extends Component{
                 memberNumber : "",
                 email : "",
                 memberType : "",
-            }
+            },
+            openSpinnerModal : false,
         };
     }
 
@@ -43,11 +44,12 @@ class CommonProvider extends Component{
         loginAction : (email,password) => this.loginAction(email,password),        
         logoutAction : () => this.logoutAction(),
         setMember : token => this.setMember(token),
+        toggleSpinnerModal : status => this.toggleSpinnerModal(status),
     };
 
     //login action
     loginAction = async(email,password) => {
-        
+        this.toggleSpinnerModal(true);
         console.log(email,password);
         const {data}  = await login(email,password);
         console.log(data);
@@ -64,6 +66,7 @@ class CommonProvider extends Component{
                 this.props.history.push("/");
             }
         }
+        this.toggleSpinnerModal(false);
         // this.setState({
         //     isLogin : true
         // });
@@ -101,6 +104,21 @@ class CommonProvider extends Component{
         })
     }
 
+    toggleSpinnerModal = (status) => {
+        console.log(status);
+        if(status === undefined){
+            this.setState({
+                ...this.state,
+                openSpinnerModal : !this.state.openSpinnerModal
+            })
+        }else{
+            this.setState({
+                ...this.state,
+                openSpinnerModal : status
+            })
+        }
+    }
+
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.history !== undefined) {
             if(prevState.history === undefined || nextProps.history.location.pathname !== prevState.history.location.pathname){
@@ -136,6 +154,8 @@ function createCommonConsumer(WrappedComponent){
                             logoutAction = {actions.logoutAction}
                             loginMember = {state.loginMember}
                             setMember = {actions.setMember}
+                            openSpinnerModal = {state.openSpinnerModal}
+                            toggleSpinnerModal = {actions.toggleSpinnerModal}
                             {...props}
                         />
                     )
