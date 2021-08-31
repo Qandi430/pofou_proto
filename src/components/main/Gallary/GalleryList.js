@@ -1,7 +1,8 @@
-import { faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare,faHeart,faEye } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Container } from 'reactstrap';
+import { createMainConsumer } from '../../../context/mainContents';
 import thumb1 from '../../../resources/images/main/thumb01.gif';
 import thumb2 from '../../../resources/images/main/thumb02.jpeg';
 import thumb3 from '../../../resources/images/main/thumb03.jpeg';
@@ -71,10 +72,10 @@ const items = [
     },
 ];
 
-const GalleyList = ({toggleDetailModal}) => {
+const GalleyList = ({toggleDetailModal,workList,selectWork}) => {
     return (
         <div className="galleryList">
-            <Container>
+            {/* <Container>
                 <ul>
                     {
                         items.map(
@@ -105,9 +106,53 @@ const GalleyList = ({toggleDetailModal}) => {
                         )
                     }
                 </ul>
-            </Container>
+            </Container> */}
+            <ul>
+                {
+                    workList.length > 0 ?
+                        workList.map(
+                            work => 
+                                <li key={work.workNumber} onClick={() => selectWork(work.workNumber)}>
+                                    <div className="thumbnail" style={{backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${work.thumbnail})`}}>
+                                        <div className="titleBox">
+                                            <h6 className="title">{work.title}</h6>
+                                            <div className="btnBox">
+                                                <button>
+                                                    <FontAwesomeIcon icon={faHeart}/>
+                                                </button>
+                                                <button>
+                                                    <FontAwesomeIcon icon={faPlusSquare}/>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="workInfo">
+                                        <div className="profileImage" style={ work.profileImage !== null || work.profileImage !=="" ? {backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${work.profileImage})`} : {backgroundColor:"#e8e8e8"}}>
+                                            {
+                                                work.profileImage !== null ?
+                                                "" : work.email === null ? "P" : work.email.split("")[0].toUpperCase()
+                                            }
+                                        </div>
+                                        <div className="name">{work.name}</div>
+                                        <div className="info">
+                                            <span className="viewCnt">
+                                                <FontAwesomeIcon icon={faEye}/> 0
+                                            </span>
+                                            <span className="like">
+                                                <FontAwesomeIcon icon={faHeart}/> 0
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                        )
+                        :
+                        <li className="empty">
+                            준비된 창작물인 없습니다.
+                        </li>
+                }
+            </ul>
         </div>
     )
 }
 
-export default GalleyList;
+export default  createMainConsumer(GalleyList);

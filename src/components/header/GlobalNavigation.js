@@ -5,7 +5,7 @@ const GlobalNavigation = () => {
     return (
         <nav className="gnb">
             <ul>
-                <li>
+                {/* <li>
                     <Link to="/">갤러리</Link>
                 </li>
                 <li>
@@ -16,7 +16,7 @@ const GlobalNavigation = () => {
                 </li>
                 <li>
                     <Link to="/">갤러리</Link>
-                </li>
+                </li> */}
             </ul>
         </nav>
     )

@@ -134,12 +134,12 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember}) => {
                     <div className="commentBox">
                         <div className="commentList"></div>
                         {
-                            loginMember !== null &&
+                            loginMember !== null && loginMember.memberNumber !=="" &&
                             <div className="inputBox">
                                 <div className="profile">
-                                    <div className="profileImage" style={ loginMember !== null && loginMember.profileImage !== null ? {backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${loginMember.profileImage})`} : {backgroundColor:"#e8e8e8"}}>
+                                    <div className="profileImage" style={ loginMember !== null && loginMember.profileImage !== null && loginMember.profileImage !== undefined ? {backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${loginMember.profileImage})`} : {backgroundColor:"#e8e8e8"}}>
                                         {
-                                            loginMember !== null && loginMember.profileImage !== null ?
+                                            loginMember !== null && loginMember.profileImage !== null && loginMember.profileImage !== undefined  ?
                                             "" : loginMember.member === null ? "P" : loginMember.email.split("")[0].toUpperCase()
                                         }
                                     </div>
