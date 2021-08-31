@@ -3,6 +3,7 @@ import { getArchive, saveBackgroundImage, uploadBackgroundImage } from '../serve
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
 import { getCategoryCodeList, singleFileUpload } from '../server/common/CommonServer';
+import { getWorkDetail } from '../server/work/WorkServer';
 
 const Context  = createContext();
 
@@ -29,9 +30,28 @@ class ArchiveProvider extends Component{
                     youtube : "",
                     pinterest : "",
                 },
+                workList : [],
             },
             loginMember : null,
             keywordList : [],
+            openWorkDetailModal : false,
+            workDetail : {
+                memberNumber : "",
+                workNumber : "",
+                title : "",
+                backgroundColor : "#FFFFFF",
+                margin : 0,
+                thumbnail : "",
+                category1 : "",
+                category2 : "",
+                tag : "",
+                copyright : "",
+                status : "",
+                contentsList : [
+                    
+                ],
+            },
+            openSpinnerModal : false,
         };
     }
 
@@ -73,6 +93,23 @@ class ArchiveProvider extends Component{
 
     actions = {
         changeBackgroundImage : e => this.changeBackgroundImage(e),
+        toggleWorkDetailModal : () => this.toggleWorkDetailModal(),
+        selectWork : number => this.selectWork(number),
+        toggleSpinnerModal : status => this.toggleSpinnerModal(status),
+    }
+
+    toggleSpinnerModal = (status) => {
+        if(status === undefined){
+            this.setState({
+                ...this.state,
+                openSpinnerModal : !this.state.openSpinnerModal
+            })
+        }else{
+            this.setState({
+                ...this.state,
+                openSpinnerModal : status
+            })
+        }
     }
 
     setKeywordList = async () => {
@@ -85,7 +122,6 @@ class ArchiveProvider extends Component{
 
     getArchiveInfo = async (url) => {
         const {data} = await getArchive(url);
-        console.log(data);
         if(data === null || data === ""){
             alert("잘못된 접근입니다.");
             window.location.href = "/";
@@ -119,6 +155,30 @@ class ArchiveProvider extends Component{
         }else{
             alert("파일 업로드에 실패하였습니다.");
         }
+    }
+
+    selectWork = async (workNumber) => {
+        if(typeof workNumber !== "number"){
+            alert("잘못된 접근입니다.");
+        }
+        this.toggleSpinnerModal(true);
+        const {data : workDetail} = await getWorkDetail(workNumber);
+        if(workDetail !== null){
+            this.setState({
+                ...this.state,
+                workDetail : workDetail
+            })
+            this.toggleWorkDetailModal();
+        }else{
+            alert("손상된 작업물 입니다.");
+        }
+        this.toggleSpinnerModal(false);
+    }
+
+    toggleWorkDetailModal = () => {
+        this.setState({
+            openWorkDetailModal : !this.state.openWorkDetailModal
+        })
     }
     
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -154,6 +214,12 @@ function createArchiveConsumer(WrappedComponent){
                             editMode = {state.editMode}
                             changeBackgroundImage = {actions.changeBackgroundImage}
                             keywordList = {state.keywordList}
+                            openWorkDetailModal = {state.openWorkDetailModal}
+                            toggleWorkDetailModal = {actions.toggleWorkDetailModal}
+                            selectWork = {actions.selectWork}
+                            openSpinnerModal = {state.openSpinnerModal}
+                            toggleSpinnerModal = {actions.toggleSpinnerModal}
+                            workDetail = {state.workDetail}
                             {...props}
                         />
                     )

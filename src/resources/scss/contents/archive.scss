@@ -167,6 +167,41 @@
                 &.archiveAbout{
                     border: 1px solid #d9d9d9;
                 }
+                &.archiveWork{
+                    > .workList{
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: flex-start;
+                        gap:3%;
+                        > .item{
+                            flex: 0 0 22.75%;
+                            cursor: pointer;
+                            .thumbnail{
+                                width: 100%;
+                                position: relative;
+                                background-position: center center;
+                                background-repeat: no-repeat;
+                                background-size: 100%;
+                                border-radius: 10px;
+                                transition: background-size 0.5s;
+                                &::after{
+                                    content: "";
+                                    display: block;
+                                    padding-bottom: 100%;
+                                }
+                            }
+                            .title{
+                                font-weight: bold;
+                                margin-top: 15px;
+                            }
+                            &:hover{
+                                .thumbnail{
+                                    background-size: 110%;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

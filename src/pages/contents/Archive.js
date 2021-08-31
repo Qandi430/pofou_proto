@@ -6,6 +6,7 @@ import axios from 'axios';
 import { createCommonConsumer } from '../../context/commonContext';
 import { ArchiveProvider } from '../../context/archiveContext';
 import ArchiveBackground from '../../containers/contents/archive/ArchiveBackground';
+import PackmanLoader from '../../components/common/PackmanLoader';
 
 const Archive = ({loginMember,history}) => {
     return (
