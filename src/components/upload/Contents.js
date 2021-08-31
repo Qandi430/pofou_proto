@@ -6,7 +6,10 @@ import { multiFileUpload, singleFileUpload } from '../../server/common/CommonSer
 import {Button, Input, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import { Editor } from '@tinymce/tinymce-react';
 import { ReactSortable } from 'react-sortablejs';
-const Contents = ({contents,removeContents,saveContents,toggleSpinnerModal}) => {
+import VideoContents from './VideoContents';
+import axios from 'axios';
+
+const Contents = ({uploadForm,contents,removeContents,saveContents,toggleSpinnerModal,toggleContentsSortModal}) => {
 
     const [openChangeUrlModal,setOpenCahngeUrlModal] = useState(false);
     const [openGridEditModal,setGridEditModal] = useState(false);
@@ -33,7 +36,7 @@ const Contents = ({contents,removeContents,saveContents,toggleSpinnerModal}) => 
     }
 
     return (
-        <div className={`contents ${contents.type}`}>
+        <div className={`contents ${contents.type}`} style={{margin:`${contents.order > 0 ? uploadForm.margin : 0}px 0`}}>
             <div className="contentsController">
                 {
                     contents.type === "image" &&
@@ -63,7 +66,8 @@ const Contents = ({contents,removeContents,saveContents,toggleSpinnerModal}) => 
                         </div>
                     </button>
                 }
-                <button className="reOrderContents"><FontAwesomeIcon icon={faLongArrowAltUp}/>
+                <button className="reOrderContents" onClick={toggleContentsSortModal}>
+                    <FontAwesomeIcon icon={faLongArrowAltUp}/>
                     <FontAwesomeIcon icon={faLongArrowAltDown}/>
                     <div className="customTooltip">
                         콘텐츠 재정렬
@@ -77,7 +81,10 @@ const Contents = ({contents,removeContents,saveContents,toggleSpinnerModal}) => 
                 </button>
             </div>
             {
-                contents.type === "text" ? <TextEditor contents={contents} saveContents={saveContents}/> : <div className={`${contents.type === "video" ? "videoWrapper" : ""}`} dangerouslySetInnerHTML={{__html: contents.contents }}/>
+                contents.type === "text" ? 
+                    <TextEditor contents={contents} saveContents={saveContents}/> 
+                    : contents.type === "video" ? <VideoContents contents={contents.contents}/>
+                        :<div className={`${contents.type === "video" ? "videoWrapper" : ""}`} dangerouslySetInnerHTML={{__html: contents.contents }}/>
             }
             <ChangeUrlModal isOpen={openChangeUrlModal} toggle={toggleChangeUrlModal} saveContents={saveContents} contents={contents}/>
             <GridEditModal isOpen={openGridEditModal} toggle={toggleGridEditModal} saveContents={saveContents} contents={contents} toggleSpinnerModal={toggleSpinnerModal}/>
@@ -98,25 +105,34 @@ const ChangeUrlModal = ({isOpen,toggle,saveContents,contents}) => {
     const changeUrl = (e) => {
         setUrl(e.target.value);
     }
-    const submitChangeUrl = () => {
+    const submitChangeUrl = async () => {
         const youtubeOption = 'frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen';
         const vimeoOption = 'frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen';
-        let value = "";
+        let iframe = "";
+        let thumbnail  = "";
         // https://www.youtube.com/watch?v=XvBRJeCPNDY
         // https://vimeo.com/584079874
         if(url.indexOf('youtube.com') > -1){
             const  id = url.split("v=")[1];
-            value = `<iframe width="100%" src="https://www.youtube.com/embed/${id}" ${youtubeOption}></iframe>`;
+            iframe = `<iframe width="100%" src="https://www.youtube.com/embed/${id}" ${youtubeOption}></iframe>`;
+            thumbnail =  `<img src="https://img.youtube.com/vi/${id}/maxresdefault.jpg" alt=""/>`;
         }else if(url.indexOf('vimeo.com') > -1){
             const id = url.split("/")[url.split("/").length -1];
-            value = `<iframe width="100%" src="https://player.vimeo.com/video/${id}" ${vimeoOption}></iframe>`;
+            iframe = `<iframe width="100%" src="https://player.vimeo.com/video/${id}" ${vimeoOption}></iframe>`;
+            await axios.get(`http://vimeo.com/api/v2/video/${id}.json`).then(
+                res=>{
+                    console.log(res.data[0].thumbnail_large);
+                    thumbnail =  `<img src="${res.data[0].thumbnail_large}" alt=""/>`;
+                }
+            )
         }else{
             alert("https://를 포함한 전체 URL을 입력해주세요. (Youtube, Vimeo)");
             return;
         }
-        saveContents(contents.order,"contents",value);
+        saveContents(contents.order,"contents",JSON.stringify({iframe : iframe,thumbnail:thumbnail}));
         toggle();
     }
+    
 
     return (
         <Modal isOpen={isOpen} toggle={toggle} centered>
