@@ -48,7 +48,7 @@ const selectedItem = {
     ],
 };
 
-const Gallery = ({openSpinnerModal,toggleSpinnerModal,openWorkDetailModal,toggleWorkDetailModal,workDetail,loginMember}) => {
+const Gallery = ({openSpinnerModal,toggleSpinnerModal,openWorkDetailModal,toggleWorkDetailModal,workDetail,loginMember,clickLikeButton}) => {
 
     const [openDetailModal,setOpenDetailModal] = useState(false);
     const toggleDetailModal = () => {
@@ -61,7 +61,7 @@ const Gallery = ({openSpinnerModal,toggleSpinnerModal,openWorkDetailModal,toggle
             <GalleyList toggleDetailModal={toggleDetailModal}/>
             <GalleryDetailModal toggle={toggleDetailModal} isOpen={openDetailModal} item={selectedItem}/>
             <PackmanLoader isOpen={openSpinnerModal} toggle={toggleSpinnerModal}/>
-            <WorkDetailModal isOpen={openWorkDetailModal} toggle={toggleWorkDetailModal} workDetail={workDetail} loginMember={loginMember}/>
+            <WorkDetailModal isOpen={openWorkDetailModal} toggle={toggleWorkDetailModal} workDetail={workDetail} loginMember={loginMember} clickLikeButton={clickLikeButton}/>
         </div>
     )
 }

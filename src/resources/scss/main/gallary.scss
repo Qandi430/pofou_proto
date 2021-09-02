@@ -162,6 +162,11 @@
                                     background-color: #fff;
                                     border-radius: 50%;
                                     transition: all 0.5s;
+                                    svg{
+                                        &.fullHeart{
+                                            color: #f85272;
+                                        }
+                                    }
                                     &+button{
                                         margin-left: 10px;
                                     }
@@ -196,6 +201,11 @@
                             display: flex;
                             span{
                                 color: #999;
+                                svg{
+                                    &.fullHeart{
+                                        color: #f85272;
+                                    }
+                                }
                                 &+span{
                                     margin-left: 5px;
                                 }

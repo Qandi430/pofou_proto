@@ -1,11 +1,11 @@
-import { faComments, faEye, faHeart, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
-import { faEdit, faFolderPlus, faPlus, faShareSquare } from '@fortawesome/free-solid-svg-icons';
+import { faComments, faEye, faHeart as emptyHeart, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
+import { faEdit, faFolderPlus, faPlus, faShareSquare, faHeart as fullHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React,{useState} from 'react';
 import { useEffect } from 'react';
 import { Input, Modal } from 'reactstrap';
 import moment from 'moment';
-const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember}) => {
+const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton}) => {
     
     const [data,setData] = useState({
         memberNumber : "",
@@ -24,6 +24,8 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember}) => {
         copyright : "",
         status : "",
         registrationDate : new Date(),
+        likeList : [],
+        viewCnt : 0,
         contentsList : [
             
         ],
@@ -57,6 +59,11 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember}) => {
         }
     },[workDetail]);
     
+    const handleLike = (workNumber) => {
+        console.log(data);
+        clickLikeButton(workNumber);
+    }
+
     return(
         <Modal isOpen={isOpen} toggle={toggle} centered id="workDetailModal">
             <div className="detailWrap">
@@ -80,11 +87,13 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember}) => {
                     <div className="headerRight">
                         <div className="viewCnt">
                             <FontAwesomeIcon icon={faEye}/>
-                            <span>0</span>
+                            <span>{data.viewCnt}</span>
                         </div>
                         <div className="likeCnt">
-                            <FontAwesomeIcon icon={faHeart}/>
-                            <span>0</span>
+                            {
+                                loginMember !== null && loginMember.memberNumber !== "" && data.likeList !== null && data.likeList !== undefined && data.likeList.find(like => like.memberNumber === loginMember.memberNumber) !== undefined ? <FontAwesomeIcon icon={fullHeart} className="fullHeart"/>:<FontAwesomeIcon icon={emptyHeart}/>
+                            }
+                            <span>{data.likeList !== null && data.likeList !== undefined ? data.likeList.length : 0}</span>
                         </div>
                         <div className="commentCnt">
                             <FontAwesomeIcon icon={faComments}/>
@@ -110,8 +119,11 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember}) => {
                 </div>
                 <div className="detailFooter">
                     <div className="btnBox">
-                        <button className="btnLike">
-                            <FontAwesomeIcon icon={faHeart}/> 좋아요 0
+                        <button className="btnLike" onClick={() => handleLike(data.workNumber)}>
+                            {
+                                loginMember !== null && loginMember.memberNumber !== "" && data.likeList !== null && data.likeList !== undefined && data.likeList.find(like => like.memberNumber === loginMember.memberNumber) !== undefined ? <FontAwesomeIcon icon={fullHeart} className="fullHeart"/>:<FontAwesomeIcon icon={emptyHeart}/>
+                            }
+                            &nbsp;좋아요 {data.likeList !== null && data.likeList !== undefined ? data.likeList.length : 0}
                         </button>
                         <button className="btnCollection">
                             <FontAwesomeIcon icon={faPlusSquare}/> 컬렉션 추가
@@ -170,7 +182,11 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember}) => {
                         <div className="btnName">의뢰하기</div>
                     </li>
                     <li className="btnLike">
-                        <button className="btnIcon"><FontAwesomeIcon icon={faHeart}/></button>
+                        <button className="btnIcon" onClick={() => clickLikeButton(data.workNumber)}>
+                            {
+                                loginMember !== null && loginMember.memberNumber !== "" && data.likeList !== null && data.likeList !== undefined && data.likeList.find(like => like.memberNumber === loginMember.memberNumber) !== undefined ? <FontAwesomeIcon icon={fullHeart} className="fullHeart"/>:<FontAwesomeIcon icon={emptyHeart}/>
+                            }
+                        </button>
                         <div className="btnName">좋아요</div>
                     </li>
                     <li className="btnCollection">

@@ -1,4 +1,5 @@
-import { faPlusSquare,faHeart,faEye } from '@fortawesome/free-regular-svg-icons';
+import { faPlusSquare,faHeart as emptyHeart,faEye } from '@fortawesome/free-regular-svg-icons';
+import {faHeart as fullHeart} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Container } from 'reactstrap';
@@ -72,7 +73,7 @@ const items = [
     },
 ];
 
-const GalleyList = ({toggleDetailModal,workList,selectWork}) => {
+const GalleyList = ({toggleDetailModal,workList,selectWork,clickLikeButton,loginMember}) => {
     return (
         <div className="galleryList">
             {/* <Container>
@@ -118,9 +119,9 @@ const GalleyList = ({toggleDetailModal,workList,selectWork}) => {
                                             <h6 className="title">{work.title}</h6>
                                             <div className="btnBox">
                                                 <button>
-                                                    <FontAwesomeIcon icon={faHeart}/>
+                                                {loginMember !== null && loginMember.memberNumber !== "" && work.likeList.find( like => like.memberNumber === loginMember.memberNumber) !== undefined ? <FontAwesomeIcon icon={fullHeart} className="fullHeart"/>:<FontAwesomeIcon icon={emptyHeart}/>}
                                                 </button>
-                                                <button>
+                                                <button onClick={() => clickLikeButton(work.workNumber)}>
                                                     <FontAwesomeIcon icon={faPlusSquare}/>
                                                 </button>
                                             </div>
@@ -136,10 +137,11 @@ const GalleyList = ({toggleDetailModal,workList,selectWork}) => {
                                         <div className="name">{work.name}</div>
                                         <div className="info">
                                             <span className="viewCnt">
-                                                <FontAwesomeIcon icon={faEye}/> 0
+                                                <FontAwesomeIcon icon={faEye}/> {work.viewCnt}
                                             </span>
                                             <span className="like">
-                                                <FontAwesomeIcon icon={faHeart}/> 0
+                                                {loginMember !== null && loginMember.memberNumber !== "" && work.likeList.find( like => like.memberNumber === loginMember.memberNumber) !== undefined ? <FontAwesomeIcon icon={fullHeart} className="fullHeart"/>:<FontAwesomeIcon icon={emptyHeart}/>}
+                                                &nbsp;{work.likeList === null ? 0 : work.likeList.length}
                                             </span>
                                         </div>
                                     </div>

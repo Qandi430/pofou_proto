@@ -2,7 +2,7 @@ import React, { createContext, Component } from 'react';
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
 import { getWorkList } from '../server/main/MainServer';
-import { getWorkDetail } from '../server/work/WorkServer';
+import { deleteLike, getWorkByWorkNumber, getWorkDetail, insertLike } from '../server/work/WorkServer';
 
 const Context  = createContext();
 
@@ -29,6 +29,7 @@ class MainProvider extends Component{
                 tag : "",
                 copyright : "",
                 status : "",
+                linkList : [],
                 contentsList : [
                     
                 ],
@@ -76,6 +77,7 @@ class MainProvider extends Component{
         toggleSpinnerModal : status => this.toggleSpinnerModal(status),
         toggleWorkDetailModal : () => this.toggleWorkDetailModal(),
         selectWork : workNumber => this.selectWork(workNumber),
+        clickLikeButton : workNumber => this.clickLikeButton(workNumber),
     }
 
    setWorkList = async (pageNo) => {
@@ -114,7 +116,7 @@ class MainProvider extends Component{
             this.setState({
                 ...this.state,
                 workDetail : workDetail
-            })
+            });
             this.toggleWorkDetailModal();
         }else{
             alert("손상된 작업물 입니다.");
@@ -127,6 +129,59 @@ class MainProvider extends Component{
             ...this.state,
             openWorkDetailModal : !this.state.openWorkDetailModal
         })
+    }
+
+    clickLikeButton = async (workNumber) => {
+        if(this.state.loginMember == null || this.state.loginMember.memberNumber === ""){
+            alert("로그인시 이용 가능합니다.");
+        }else{
+            this.toggleSpinnerModal(true);
+            if(
+                this.state.workDetail.likeList == null 
+                || this.state.workDetail.likeList.find(like => like.memberNumber === this.state.loginMember.memberNumber) === undefined
+            ){
+                const {data : insertResult} = await insertLike(workNumber,this.state.loginMember.memberNumber);
+                if(insertResult){
+                    console.log("success insert Like");
+                    this.changeWorkList(workNumber);
+                    this.setState({
+                        ...this.state,
+                        workDetail : {
+                            ...this.state.workDetail,
+                            likeList : this.state.workDetail.likeList.concat({workNumber:workNumber,memberNumber:this.state.loginMember.memberNumber}),
+                        }
+                    });
+                }else{
+                    console.log("fail insert Like");
+                }
+            }else{
+                const {data : deleteResult} = await deleteLike(workNumber,this.state.loginMember.memberNumber);
+                if(deleteResult){
+                    console.log("success delete Like");
+                    this.changeWorkList(workNumber);
+                    this.setState({
+                        ...this.state,
+                        workDetail : {
+                            ...this.state.workDetail,
+                            likeList : this.state.workDetail.likeList.filter(like => like.memberNumber !== this.state.loginMember.memberNumber),
+                        }
+                    });
+                }else{
+                    console.log("fail delete Like");
+                }
+            }
+            this.toggleSpinnerModal(false);
+        }
+    }
+
+    changeWorkList = async(workNumber) => {
+        const {data} = await getWorkByWorkNumber(workNumber);
+        if(data != null){
+            this.setState({
+                ...this.state,
+                workList : this.state.workList.map(work => work.workNumber === data.workNumber ? data : work)
+            })
+        }
     }
     
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -165,6 +220,7 @@ function createMainConsumer(WrappedComponent){
                             toggleWorkDetailModal = {actions.toggleWorkDetailModal}
                             workDetail = {state.workDetail}
                             selectWork = {actions.selectWork}
+                            clickLikeButton = {actions.clickLikeButton}
                             {...props}
                         />
                     )
