@@ -10,7 +10,7 @@ const Archive = React.lazy(() => import('../contents/Archive'));
 const Resume = React.lazy(() => import('../contents/Resume'));
 const MyPage = React.lazy(() => import('../myPage/MyPage'));
 const Portfolio = React.lazy(() => import('../myPage/Portfolio'));
-const Basic = React.lazy(() => import('../../pages/template/portfolio/Portfolio'));
+
 const MainPage = React.lazy(() => import('../main/MainPage'));
 
 
@@ -37,7 +37,6 @@ const LayoutWrap = ({location,match,history}) => {
                 <Route path="/resume" component={Resume}/>
                 <Route path="/myPage" component={MyPage}/>
                 <Route path="/portfolio" component={Portfolio}/>
-                <Route path="/template/portfolio/basic" component={Basic}/>
                 <Route path="/" component={MainPage}/>
             </Switch>
         </CommonProvider>

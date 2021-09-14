@@ -1,5 +1,4 @@
 import React,{useState} from 'react';
-import Basic from '../../../containers/template/portfolio/Basic';
 import Basic2 from '../../../containers/template/portfolio/Basic2';
 import '../../../resources/scss/template/portfolio/portfolio.scss';
 
@@ -149,7 +148,6 @@ const Portfolio = () => {
 
     return(
         <div className="portfolio">
-            {/* <Basic data={data} /> */}
             <Basic2/>
         </div>
     )
