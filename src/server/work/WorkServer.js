@@ -20,10 +20,25 @@ const getWorkByWorkNumber = (workNumber) => (
     axios.get("/work/getWorkByWorkNumber",{params:{workNumber:workNumber}})
 )
 
+const insertComment = (commentForm) => (
+    axios.post("/work/insertComment",commentForm)
+)
+
+const insertReComment = (commentForm) => (
+    axios.post("/work/insertReComment",commentForm)
+)
+
+const getCommentListByWorkNumber = (workNumber) => (
+    axios.get("/work/getCommentListByWorkNumber",{params:{workNumber:workNumber}})
+)
+
 export {
     upload,
     getWorkDetail,
     insertLike,
     deleteLike,
     getWorkByWorkNumber,
+    insertComment,
+    insertReComment,
+    getCommentListByWorkNumber,
 }

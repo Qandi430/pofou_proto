@@ -3,7 +3,7 @@ import {faHeart as fullHeart} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Container } from 'reactstrap';
-import { createMainConsumer } from '../../../context/mainContents';
+import { createMainConsumer } from '../../../context/mainContext';
 import thumb1 from '../../../resources/images/main/thumb01.gif';
 import thumb2 from '../../../resources/images/main/thumb02.jpeg';
 import thumb3 from '../../../resources/images/main/thumb03.jpeg';

@@ -4,7 +4,7 @@ import WorkDetailModal from '../../components/common/WorkDetailModal';
 import Filters from '../../components/main/Gallary/Filters';
 import GalleryDetailModal from '../../components/main/Gallary/GalleryDetailModal';
 import GalleyList from '../../components/main/Gallary/GalleryList';
-import { createMainConsumer } from '../../context/mainContents';
+import { createMainConsumer } from '../../context/mainContext';
 import detail1 from '../../resources/images/main/detail01.jpeg';
 import detail2 from '../../resources/images/main/detail02.jpeg';
 import detail3 from '../../resources/images/main/detail03.jpeg';
@@ -61,7 +61,7 @@ const Gallery = ({openSpinnerModal,toggleSpinnerModal,openWorkDetailModal,toggle
             <GalleyList toggleDetailModal={toggleDetailModal}/>
             <GalleryDetailModal toggle={toggleDetailModal} isOpen={openDetailModal} item={selectedItem}/>
             <PackmanLoader isOpen={openSpinnerModal} toggle={toggleSpinnerModal}/>
-            <WorkDetailModal isOpen={openWorkDetailModal} toggle={toggleWorkDetailModal} workDetail={workDetail} loginMember={loginMember} clickLikeButton={clickLikeButton}/>
+            <WorkDetailModal isOpen={openWorkDetailModal} toggle={toggleWorkDetailModal} workDetail={workDetail} loginMember={loginMember} clickLikeButton={clickLikeButton} toggleSpinnerModal={toggleSpinnerModal}/>
         </div>
     )
 }
