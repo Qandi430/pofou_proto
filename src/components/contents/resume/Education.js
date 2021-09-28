@@ -1,9 +1,38 @@
+import React from 'react';
+import { FormGroup } from 'reactstrap';
 import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
 
-const EducationContents = ({education,removeEducation,modifyEducation}) => {
+const Education = ({
+    formData,
+    handleEducationAdditionalModal,
+    removeEducation,
+    modifyEducation,
+    modifyEducationForm,
+}) => {
+    return(
+        <FormGroup className="education">
+            <h6 className="formTitle">
+                학력 <button onClick={handleEducationAdditionalModal}>추가 +</button>
+            </h6>
+            <div className="educationList">
+                {
+                    formData.educationList.length > 0 ?
+                    formData.educationList.map(
+                        (education,index) => <EducationContents education={education} key={index} removeEducation={removeEducation} modifyEducation={modifyEducation} modifyEducationForm={modifyEducationForm}/>
+                    )
+                    :
+                    <div className="empty">
+                        등록된 학력이 없습니다.
+                        <button onClick={handleEducationAdditionalModal}>학력 등록하기</button>
+                    </div>
+                }
+            </div>
+        </FormGroup>
+    )
+}
 
+const EducationContents = ({education,modifyEducation,removeEducation}) => {
     const convertValueToName = (type,name) => {
         if(type === "educationType"){
             switch(name){
@@ -41,6 +70,14 @@ const EducationContents = ({education,removeEducation,modifyEducation}) => {
                     return "연합전공";
                 case "course":
                     return "코스";
+                case "NatudalSciences":
+                    return "이과";
+                case "LiberalArts":
+                    return "문과";
+                case "Meister":
+                    return "전문(실업)";
+                case "ArtsAndPhysical":
+                    return "예체능";
                 default:
                     return "선택";
             }
@@ -73,7 +110,7 @@ const EducationContents = ({education,removeEducation,modifyEducation}) => {
         }
     }
 
-    return (
+    return(
         <div className="educationContent" key={education.index}>
             <h4 className="educationName">
                 {education.educationName}
@@ -87,7 +124,7 @@ const EducationContents = ({education,removeEducation,modifyEducation}) => {
                         <li key={index}>{major.majorName} {convertValueToName("majorType",major.majorType)} ({convertValueToName("degreeType",major.degreeType)})</li>
                     )
                     :
-                    <li>{education.highScoolMajor}</li>
+                    <li>{convertValueToName("majorType",education.majorList[0].majorType)}</li>
                 }
                 
             </ul>
@@ -107,4 +144,4 @@ const EducationContents = ({education,removeEducation,modifyEducation}) => {
     )
 }
 
-export default EducationContents;
+export default Education;

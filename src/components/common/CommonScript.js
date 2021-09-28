@@ -1,10 +1,4 @@
-const getYearList = () => {
-    let yearList = [];
-    for(let i = 2021; i <= 1900; i--){
-        yearList.push(i);
-    }
-    return yearList;
-}
+
 
 const convertFontName = fontName => {
     switch(fontName){
@@ -126,9 +120,63 @@ const getQuery = () => {
     return result;
 }
 
+const getYearList = () => {
+    let yearList = [];
+    for(let i = 2021; i >= 1900; i--){
+        yearList.push(i);
+    }
+    return yearList;
+}
+
+const getDayList = () => {
+    let list = [];
+    
+    for(let i = 1; i<= 31; i++){
+        list.push(i)
+    }
+
+    return list;
+}
+
+const getByteLength = (s,space) => {
+    if(!space){
+        s = s.replace(/(\s*)/g, "");
+    }
+    if (s === null || s.length === 0) {
+        return 0;
+    }
+    var size = 0;
+
+    for ( var i = 0; i < s.length; i++) {
+        size += charByteSize(s.charAt(i));
+    }
+
+    return size;
+}
+const charByteSize = (ch) => {
+
+    if (ch === null || ch.length === 0) {
+        return 0;
+    }
+
+    var charCode = ch.charCodeAt(0);
+
+    if (charCode <= 0x00007F) {
+        return 1;
+    } else if (charCode <= 0x0007FF) {
+        return 2;
+    } else if (charCode <= 0x00FFFF) {
+        return 3;
+    } else {
+        return 4;
+    }
+}
+
 export {
     getYearList,
     convertFontName,
     convertEducation,
     getQuery,
+    getDayList,
+    getByteLength,
 }

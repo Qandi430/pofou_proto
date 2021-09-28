@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter,Route,Switch } from 'react-router-dom';
 import { CommonProvider } from '../../context/commonContext';
 import Header from '../../containers/common/Header';
-
+import "react-datepicker/dist/react-datepicker.css";
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 const UploadPage = React.lazy(() => import('../upload/UploadPage'));
 const AuthPage = React.lazy(() => import('../auth/AuthPage'));

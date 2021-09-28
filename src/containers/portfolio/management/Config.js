@@ -508,15 +508,10 @@ const Config = ({location}) => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [modifyHistory]);
-    
-    const checkModifyHistory = () => {
-        console.log(modifyHistory,modifyHistory.length);
-    }
 
     return (
         <div className="config">
             <ConfigHeader modifyHistory={modifyHistory} revertHistory={revertHistory}/>
-            <button onClick={checkModifyHistory}>테스트</button>
             <div className="configBody">
                 {
                     data.blockList.map(

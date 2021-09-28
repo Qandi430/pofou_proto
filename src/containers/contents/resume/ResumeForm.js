@@ -1,74 +1,119 @@
 
 import React,{useEffect, useState} from 'react';
-import { Col, Row } from 'reactstrap';
-import ResumeFormContents from '../../../components/contents/resume/ResumeFormContents';
+import { Col, Form, Row } from 'reactstrap';
 import EducationAdditionalModal from '../../../components/contents/resume/EducationAdditionalModal';
-import CertificateSearchModal from '../../../components/contents/resume/CetificateSearchModal';
-import CareerAdditiaonalModal from '../../../components/contents/resume/CareeaAdditionalModal';
-import AwardsAdditionalModal from '../../../components/contents/resume/AwardsAdditionalModal';
-import ExperienceAdditionalModal from '../../../components/contents/resume/ExperienceAdditionalModal';
-
-const ResumeForm = () => {
+import BasicInfo from '../../../components/contents/resume/BasicInfo';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import Education from '../../../components/contents/resume/Education';
+import Career from '../../../components/contents/resume/Career';
+import Certificate from '../../../components/contents/resume/Certificate';
+import Preferential from '../../../components/contents/resume/Preferential';
+import Skill from '../../../components/contents/resume/Skill';
+import Activity from '../../../components/contents/resume/Activity';
+import Introduction from '../../../components/contents/resume/Introduction';
+import ResumeSidebar from '../../../components/contents/resume/ResumeSidebar';
+const ResumeForm = ({openSpinnerModal,toggleSpinnerModal,loginMember,history}) => {
 
     const [openTitleInput, setOpenTitleInput] = useState(false);
     const [formData,setFormData] = useState({
+        memberNumber:  "",
         title: "이력서",
         name : "",
+        photo : "",
+        displayPhoto : false,
         birthYear : "",
         birthMonth : "",
         birthDay : "",
-        gender : "",
+        birthDate : "",
+        gender : "M",
         phone : "",
         mobile : "",
         email : "",
         sns : "",
         address : "",
+        baseAddress : "",
+        detailAddress : "",
+        zipCode : "",
         educationList : [
+            // {
+            //     index : 0,
+            //     educationType : "univercity",
+            //     educationName : "연성대학교",
+            //     majorList : [
+            //         {
+            //             index : 0,
+            //             degreeType : "Associate",
+            //             majorType : "major",
+            //             majorName : "푸드스타일링",
+            //         },
+            //         {
+            //             index : 1,
+            //             degreeType : "Associate",
+            //             majorType : "double",
+            //             majorName : "호텔조리학과",
+            //         },
+            //     ],
+            //     admissionYear : "2012",
+            //     graduatedYear : "2014",
+            //     graduatedType : "graduate",
+            //     educationContent : "",
+            // },
+            // {
+            //     index : 1,
+            //     educationType : "highSchool",
+            //     educationName : "잠실고등학교",
+            //     majorList : [
+            //         {
+            //             index : 0,
+            //             degreeType : "",
+            //             majorType : "Meister",
+            //             majorName : "",
+            //         }
+            //     ],
+            //     admissionYear : "2006",
+            //     graduatedYear : "2009",
+            //     graduatedType : "graduate",
+            //     educationContent : "",
+            // }
+        ],
+        careerType : "experienced",
+        careerList : [
             {
-                index : 0,
-                educationType : "univercity",
-                educationName : "연성대학교",
-                majorList : [
-                    {
-                        index : 0,
-                        degreeType : "Associate",
-                        majorType : "major",
-                        majorName : "푸드스타일링",
-                    },
-                    {
-                        index : 1,
-                        degreeType : "Associate",
-                        majorType : "double",
-                        majorName : "호텔조리학과",
-                    },
-                ],
-                highScoolMajor : "",
-                admissionYear : "2012",
-                graduatedYear : "2014",
-                graduatedType : "graduate",
-                educationContent : "",
-            },
-            {
-                index : 1,
-                educationType : "highSchool",
-                educationName : "잠실고등학교",
-                majorList : [
-                    
-                ],
-                highScoolMajor : "Meister",
-                admissionYear : "2006",
-                graduatedYear : "2009",
-                graduatedType : "graduate",
-                educationContent : "",
+                careerName : "",
+                careerRole : "",
+                careerStart : "",
+                careerEnd : "",
+                careerPeriodType : "workOff",
+                careerContent : "",
             }
         ],
-        certificateList : [],
-        carrerList : [],
-        languageList: [],
-        awardsList : [],
-        abroadsList : [],
+        displayActivity : true,
+        activityList : [
+            {
+                activityType : "",
+                activityPlace : "",
+                activityStart : "",
+                activityEnd : "",
+                activityContent:  "",
+            }
+        ],
+        displayCertificate : true,
+        certificateList : [
+            {
+                cartificateType : "license",
+                certificateLanguage : "",
+                certificateName : "",
+                certificateIssuer : "",
+                certificatePassType : "",
+                certificateDate : "",
+                certificateScore : "",
+                certificateGrade : "",
+            },
+        ],
+        displayPreferred : true,
         preferred : {
-            veteran : "",
+            veteran : false,
             disabledWhether : "",
             militaryServiceStatus : "",
             militaryStartYear : "",
@@ -78,24 +123,38 @@ const ResumeForm = () => {
             mos : "",
             militaryClasses : "",
         },
-        experienceList : [],
+        displaySkill : true,
+        skillList : [
+            
+        ],
+        displayIntroduction : true,
+        introductionList : [
+            {
+                title : "",
+                content : "",
+                order : 0,
+            }
+        ],
     });
+
+    useEffect(() => {
+        if(formData.memberNumber !== loginMember.memberNumber){
+            setFormData({
+                ...formData,
+                memberNumber : loginMember.memberNumber
+            })
+        }
+    },[loginMember,formData]);
+
     const [openEducationAdditionalModal,setOpenEducationAdditionalModal] = useState(false);
     const [modifyEducationForm,setModifyEducationForm] = useState(null);
-    const [openCertificateSearchModal,setOpenCertificateSearchModal] = useState(false);
-    const [certificateSearchIndex,setCertificateSearchIndex] = useState(0);
-    const [openCareerAdditionalModal,setOpenCareerAdditionalModal] = useState(false);
-    const [modifyCareerForm,setModifyCareerForm] = useState(null);
-    const [openAwardsAdditionalModal, setOpenAwardsAdditionalModal] = useState(false);
-    const [modifyAwardsForm,setModifyAwardsForm] = useState(null);
-    const [openExperienceModal,setOpenExperienceModal] = useState(false);
-    const [modifyExperienceForm, setModifyExperienceForm] = useState(null);
+    
 
     useEffect(() => {
         if(!openEducationAdditionalModal){
             setModifyEducationForm(null);
         }
-    },[openEducationAdditionalModal])
+    },[openEducationAdditionalModal]);
 
     const handleTitleInput = () => {
         setOpenTitleInput(!openTitleInput);
@@ -106,22 +165,21 @@ const ResumeForm = () => {
         setOpenEducationAdditionalModal(!openEducationAdditionalModal);
     }
 
-    const changeFormData = e => {
-        const {value,name} = e.target;
+    const changeFormData = (name,value) => {
+        // const {value,name} = e.target;
         setFormData({
             ...formData,
             [name]:value
         })
     }
 
-    const changePreferredData = e => {
-        const {value,name} = e.target;
-
+    const changeForm = (target,name,value) => {
+        console.log(name,value)
         setFormData({
             ...formData,
-            preferred : {
-                ...formData.preferred,
-                [name]:value
+            [target] : {
+                ...formData[target],
+                [name] : value
             }
         })
     }
@@ -155,7 +213,7 @@ const ResumeForm = () => {
                 }
             }
         }else{
-            if(educationForm.highScoolMajor === ""){
+            if(educationForm.majorList[0].majorType === ""){
                 alert("전공을 입력해 주세요.");
                 return false;
             }
@@ -199,184 +257,57 @@ const ResumeForm = () => {
         setOpenEducationAdditionalModal(true);
     }
 
-    const addCertificateList = e => {
-        e.preventDefault();
-        setFormData({
-            ...formData,
-            certificateList : formData.certificateList.concat({
-                index: formData.certificateList.length,
-                certificateName : "",
-                certificateIssuer : "",
-                certificateGrade : "",
-                certificateIssueDate : new Date(),
-            })
-        })   
-    }
-
-    const changteCertificateData = (name,value,index) => {
-        let certificateList = formData.certificateList;
-        console.log(name,value,index)
-        certificateList[index][name] = value;
-
-        setFormData({
-            ...formData,
-            certificateList : certificateList
-        })
-    }
-
-    const handleCertificateSearchModal = (e,index) => {
-        e.preventDefault();
-        if(index !== undefined){
-            setCertificateSearchIndex(index);
-            setOpenCertificateSearchModal(true);
-        }else{
-            setCertificateSearchIndex(0);
-            setOpenCertificateSearchModal(false);
-        }
-    }
-
-    const handleCareerAdditionalModal = e => {
-        e.preventDefault();
-        setOpenCareerAdditionalModal(!openCareerAdditionalModal);
-        
-        if(openCareerAdditionalModal){
-            console.log("modify form is null")
-            setModifyCareerForm(null);
-        }
-    }
-
-    const addCareer = careerForm =>{
-        careerForm["index"] = formData.carrerList.length;
-        setFormData({
-            ...formData,
-            carrerList : formData.carrerList.concat(careerForm)
-        });
-        setOpenCareerAdditionalModal(false);
-    }
-
-    const removeCareer = (e,index) => {
-        e.preventDefault();
-        if(window.confirm("해당 경력을 삭제하시겠습니까?")){
-            setFormData({
-                ...formData,
-                carrerList: formData.carrerList.filter(career => career.index !== index)
-            })
-        }
-    }
-
-    const modifyCareer = (e,index) => {
-        e.preventDefault();
-        setModifyCareerForm(formData.carrerList.find(career => career.index === index));
-        setOpenCareerAdditionalModal(true);
-    }
-
-    const handleAwardsAdditionalModal = e => {
-        if(e !== undefined){
-            e.preventDefault();
-        }
-        setOpenAwardsAdditionalModal(!openAwardsAdditionalModal);
-        if(openAwardsAdditionalModal){
-            setModifyAwardsForm(null)
-        }
-    };
-
-    const addAwards = awardsForm => {
-        awardsForm["index"] = formData.awardsList.length;
-        setFormData({
-            ...formData,
-            awardsList : formData.awardsList.concat(awardsForm),
-        })
-        handleAwardsAdditionalModal();
-    }
-
-    const removeAwards = (e,index) => {
-        e.preventDefault();
-        if(window.confirm("해당 수상내역을 삭제하시겠습니까?")){
-            setFormData({
-                ...formData,
-                awardsList : formData.awardsList.filter(awards => awards.index !== index)
-            })
-        }
-    };
-
-    const modifyAwards = (e,index) => {
-        e.preventDefault();
-        setModifyAwardsForm(formData.awardsList.find(awards => awards.index === index));
-        setOpenAwardsAdditionalModal(true);
-    }
-
-    const handExperienceAddiionalModal = e => {
-        if(e !== undefined){
-            e.preventDefault();
-        }
-        setOpenExperienceModal(!openExperienceModal);
-        if(openExperienceModal){
-
-        }
-    }
-
-    const addExperience = experienceForm => {
-        experienceForm["index"] = formData.experienceList.length;
-        setFormData({
-            ...formData,
-            experienceList : formData.experienceList.concat(experienceForm)
-        })
-        handExperienceAddiionalModal();
-    }
-
-    const removeExperience = (e,index) => {
-        e.preventDefault();
-        if(window.confirm("해당 관련활동 또는 사회경험을 삭제하시겠습니까?")){
-            setFormData({
-                ...formData,
-                experienceList : formData.experienceList.filter(experience => experience.index !== index)
-            })
-        }
-    }
-
-    const modifyExperience = (e,index) => {
-        e.preventDefault();
-        setModifyExperienceForm(formData.experienceList.find(experience => experience.index === index));
-        setOpenExperienceModal(true);
-    }
+    
 
     return (
         <div className="resumeForm">
             <Row>
                 <Col md={9}>
-                    <ResumeFormContents
-                        formData={formData}
-                        openTitleInput={openTitleInput}
-                        changeFormData={changeFormData}
-                        handleTitleInput={handleTitleInput}
-                        handleEducationAdditionalModal={handleEducationAdditionalModal}
-                        removeEducation = {removeEducation}
-                        modifyEducation = {modifyEducation}
-                        modifyEducationForm = {modifyEducationForm}
-                        addCertificateList = {addCertificateList}
-                        changteCertificateData = {changteCertificateData}
-                        handleCertificateSearchModal={handleCertificateSearchModal}
-                        handleCareerAdditionalModal={handleCareerAdditionalModal}
-                        modifyCareer = {modifyCareer}
-                        removeCareer = {removeCareer}
-                        changePreferredData = {changePreferredData}
-                        handleAwardsAdditionalModal={handleAwardsAdditionalModal}
-                        modifyAwards={modifyAwards}
-                        removeAwards={removeAwards}
-                        handExperienceAddiionalModal={handExperienceAddiionalModal}
-                        modifyExperience={modifyExperience}
-                        removeExperience = {removeExperience}
-                    />
+                    <Form>
+                        <div className="resumeTitle">
+                            {
+                                openTitleInput ? 
+                                <>
+                                <input type="text" id="resumeTitle" name="title" value={formData.title} onChange={e => changeFormData("title",e.target.value)} />
+                                <button onClick={handleTitleInput}>적용</button>
+                                </>
+                                :
+                                <h5>
+                                    {formData.title}
+                                    <button onClick={handleTitleInput}><FontAwesomeIcon icon={faEdit}/></button>
+                                </h5>
+                            }
+                        </div>
+                        <BasicInfo formData={formData} changeFormData={changeFormData} setFormData={setFormData} toggleSpinnerModal={toggleSpinnerModal}/>
+                        <Education formData={formData} handleEducationAdditionalModal = {handleEducationAdditionalModal} removeEducation={removeEducation} modifyEducation={modifyEducation}  modifyEducationForm={modifyEducationForm}/>
+                        <Career formData={formData} changeFormData={changeFormData}/>
+                        {
+                            formData.displayCertificate &&
+                            <Certificate formData={formData} changeFormData={changeFormData}/>
+                        }
+                        {
+                            formData.displayActivity &&
+                            <Activity formData={formData} changeFormData={changeFormData}/>
+                        }
+                        {
+                            formData.displayPreferred &&
+                            <Preferential formData={formData} changeForm={changeForm}/>
+                        }
+                        {
+                            formData.displaySkill &&
+                            <Skill formData={formData} changeFormData={changeFormData}/>
+                        }
+                        {
+                            formData.displayIntroduction &&
+                            <Introduction formData={formData} changeFormData={changeFormData}/>
+                        }
+                    </Form>
                 </Col>
                 <Col md={3}>
-                    <div style={{height:"300px",backgroundColor:"red"}}></div>
+                    <ResumeSidebar formData={formData} changeFormData={changeFormData} openSpinnerModal={openSpinnerModal} toggleSpinnerModal={toggleSpinnerModal} history={history}/>
                 </Col>
             </Row>
             <EducationAdditionalModal isOpen={openEducationAdditionalModal} toggle={handleEducationAdditionalModal} addEducation={addEducation} modifyEducationForm={modifyEducationForm}/>
-            <CertificateSearchModal isOpen={openCertificateSearchModal} toggle={handleCertificateSearchModal} index={certificateSearchIndex} changteCertificateData={changteCertificateData}/>
-            <CareerAdditiaonalModal isOpen={openCareerAdditionalModal} toggle={handleCareerAdditionalModal} modifyCareerForm={modifyCareerForm} addCareer={addCareer}/>
-            <AwardsAdditionalModal isOpen={openAwardsAdditionalModal} toggle={handleAwardsAdditionalModal} modifyAwardsForm={modifyAwardsForm} addAwards={addAwards}/>
-            <ExperienceAdditionalModal isOpen={openExperienceModal} toggle={handExperienceAddiionalModal} modifyExperienceForm={modifyExperienceForm} addExperience={addExperience}/>
         </div>
     )
 }

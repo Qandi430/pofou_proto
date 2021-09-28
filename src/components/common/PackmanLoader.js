@@ -5,7 +5,7 @@ import PackmainLoder from 'react-spinners/PacmanLoader';
 
 const PackmanLoader = ({isOpen,toggle}) => {
     return(
-        <Modal id="spinnerModal" isOpen={isOpen} toggle={toggle} centered>
+        <Modal id="spinnerModal" isOpen={isOpen} centered>
             <PackmainLoder size="50px" color={"#f85272"}/>
         </Modal>
     )

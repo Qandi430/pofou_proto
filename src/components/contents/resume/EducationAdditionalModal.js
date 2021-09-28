@@ -95,9 +95,11 @@ const EducationAdditionalModal = ({isOpen,toggle,addEducation,modifyEducationFor
                     majorList : eduForm.majorList.map(m => m.index === major.index ? major: m)
                 }   
             }
+            
             return {
                 ...eduForm,
-                [name]:value
+                [name]:value,
+                majorList : name === "educationType" ? [{index : 0,degreeType : value === "highSchool" ? "" : "Associate",majorType : value === "highSchool" ? "" : "major",majorName : "",openDegreeTypeDropdown : false,openMajorTypeDropdown : false,}]: eduForm.majorList
             }
         })
     }
@@ -140,6 +142,14 @@ const EducationAdditionalModal = ({isOpen,toggle,addEducation,modifyEducationFor
                     return "연합전공";
                 case "course":
                     return "코스";
+                case "NatudalSciences":
+                    return "이과";
+                case "LiberalArts":
+                    return "문과";
+                case "Meister":
+                    return "전문(실업)";
+                case "ArtsAndPhysical":
+                    return "예체능";
                 default:
                     return "선택";
             }
@@ -268,7 +278,7 @@ const EducationAdditionalModal = ({isOpen,toggle,addEducation,modifyEducationFor
                                                 <FormGroup>
                                                     <Dropdown isOpen={major.openMajorTypeDropdown} toggle={() => handleDropdown("majorType",major.index)}>
                                                         <DropdownToggle caret>
-                                                        {convertValueToName("majorType",major.index)}
+                                                            {convertValueToName("majorType",major.index)}
                                                         </DropdownToggle>
                                                         <DropdownMenu>
                                                             <DropdownItem onClick={() => changeEduForm("majorType","major",major.index)}>전공</DropdownItem>
@@ -301,13 +311,13 @@ const EducationAdditionalModal = ({isOpen,toggle,addEducation,modifyEducationFor
                                 <FormGroup>
                                     <Dropdown isOpen={openHighSchoolMajor} toggle={() => handleDropdown("openHighSchoolMajor")}>
                                         <DropdownToggle caret>
-                                            {convertValueToName("highScoolMajor")}
+                                            {convertValueToName("majorType",0)}
                                         </DropdownToggle>
                                         <DropdownMenu>
-                                            <DropdownItem onClick={() => changeEduForm("highScoolMajor","NatudalSciences")}>이과</DropdownItem>
-                                            <DropdownItem onClick={() => changeEduForm("highScoolMajor","LiberalArts")}>문과</DropdownItem>
-                                            <DropdownItem onClick={() => changeEduForm("highScoolMajor","Meister")}>전문(실업)</DropdownItem>
-                                            <DropdownItem onClick={() => changeEduForm("highScoolMajor","ArtsAndPhysical")}>예체능</DropdownItem>
+                                            <DropdownItem onClick={() => changeEduForm("majorType","NatudalSciences",0)}>이과</DropdownItem>
+                                            <DropdownItem onClick={() => changeEduForm("majorType","LiberalArts",0)}>문과</DropdownItem>
+                                            <DropdownItem onClick={() => changeEduForm("majorType","Meister",0)}>전문(실업)</DropdownItem>
+                                            <DropdownItem onClick={() => changeEduForm("majorType","ArtsAndPhysical",0)}>예체능</DropdownItem>
                                         </DropdownMenu>
                                     </Dropdown>
                                 </FormGroup>

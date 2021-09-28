@@ -31,6 +31,7 @@ const AddBlockSideBar = ({addBlock,toggleAddBlock,addNewBlock}) => {
                     id : "basicTitle",
                     image:BasicTitleImage,
                     category : "title",
+                    backgroundColor: "transparent",
                     contents : [
                         {
                             type : "title",
@@ -56,6 +57,7 @@ const AddBlockSideBar = ({addBlock,toggleAddBlock,addNewBlock}) => {
                     id : "basicContents",
                     category : "contents",
                     image : BasicContentsImage,
+                    backgroundColor: "transparent",
                     grid : 3,
                     contents : [
                         {
@@ -133,14 +135,23 @@ const AddBlockSideBar = ({addBlock,toggleAddBlock,addNewBlock}) => {
                             index : 2,
                             type : "contents",
                             id : "skillList",
-                            skillList : [
-                                {type : "괴력", level : 85},
-                                {type : "분신술", level : 80},
-                                {type : "소환술", level : 60},
-                                {type : "환술", level : 70},
-                                {type : "퇴마술", level : 40},
-                                {type : "변신술", level : 30},
-                            ],
+                            skill : {
+                                colors: {
+                                    "bar": "#3498db",
+                                    "title": {
+                                        "text": "#fff",
+                                        "background": "#2980b9"
+                                    }
+                                },
+                                list : [
+                                    {type : "Java", level : 85},
+                                    {type : "Javascript", level : 80},
+                                    {type : "React", level : 60},
+                                    {type : "SQL", level : 70},
+                                    {type : "Photoshop", level : 40},
+                                    {type : "Illustrator", level : 30},
+                                ]
+                            },
                         }
                     ],
                 }
@@ -157,6 +168,7 @@ const AddBlockSideBar = ({addBlock,toggleAddBlock,addNewBlock}) => {
                     image:BasicWorkImage,
                     category : "title",
                     grid : 4,
+                    backgroundColor: "transparent",
                     contents : [
                         {
                             index : 0,
@@ -202,6 +214,7 @@ const AddBlockSideBar = ({addBlock,toggleAddBlock,addNewBlock}) => {
                     category : "contact",
                     image : BasicContactImage,
                     grid : 2,
+                    backgroundColor: "transparent",
                     contents : [
                         {
                             index : 0,
