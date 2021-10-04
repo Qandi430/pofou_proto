@@ -4,9 +4,11 @@ import defaultImage from '../../../resources/images/contents/resume/default_prof
 import ReactDatePicker from 'react-datepicker';
 import DaumPostModal from '../../common/DaumPostModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faCameraRetro } from '@fortawesome/free-solid-svg-icons';
+import {  faCameraRetro, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import PhotoEditModal from './PhotoEditModal';
-
+import { getMonth, getYear } from 'date-fns';
+// import {range} from 'react-lodash';
+const _ = require("lodash");
 const BasicInfo = ({
     changeFormData
     ,formData
@@ -38,6 +40,9 @@ const BasicInfo = ({
         setBeforeImage(null);
         document.getElementById("uploadPhoto").value = "";
     }
+
+    const years = _.range(1950, getYear(new Date()) + 1, 1);
+    const months = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']; 
 
     return(
         <FormGroup className="basicInfo">
@@ -85,10 +90,47 @@ const BasicInfo = ({
                             dateFormat="yyyyMMdd"
                             placeholderText="YYYYMMDD"
                             maxDate={new Date()}
-                            showMonthDropdown
-                            showYearDropdown
-                            dropdownMode="select"
                             className="form-control"
+                            renderCustomHeader={({
+                                date,
+                                changeYear,
+                                changeMonth,
+                                decreaseMonth,
+                                increaseMonth,
+                                prevMonthButtonDisabled,
+                                nextMonthButtonDisabled,
+                            }) => (
+                                <div className="datePickerHeader fullDay">
+                                    <button type="button" className="btnPrev" onClick={decreaseMonth} disabled={prevMonthButtonDisabled}><FontAwesomeIcon icon={faChevronLeft}/></button>
+                                    <select
+                                        value={getYear(date)}
+                                        onChange={({ target: { value } }) => changeYear(value)}
+                                    >
+                                        {years.map((option) => (
+                                        <option key={option} value={option}>
+                                            {option}
+                                        </option>
+                                        ))}
+                                    </select>
+
+                                    <select
+                                        value={months[getMonth(date)]}
+                                        onChange={({ target: { value } }) =>
+                                        changeMonth(months.indexOf(value))
+                                        }
+                                    >
+                                        {months.map((option) => (
+                                        <option key={option} value={option}>
+                                            {option}
+                                        </option>
+                                        ))}
+                                    </select>
+
+                                    <button onClick={increaseMonth} type="button" className="btnNext" disabled={nextMonthButtonDisabled}>
+                                        <FontAwesomeIcon icon={faChevronRight}/>
+                                    </button>
+                                </div>
+                            )}
                         />
                         <div className="genderBox">
                             <Label htmlFor="resumeGenderM" className={formData.gender === "M" ? "on" : ""}>
@@ -111,20 +153,20 @@ const BasicInfo = ({
                 <FormGroup className="mobile">
                     <Label>휴대폰 <span>필수</span></Label>
                     <div className="inputBox">
-                        <Input type="text" name="mobile" value={formData.mobile}  onChange={e => changeFormData(e.target.name,e.target.value)} placeholder="휴대전화번호 입력"/>
+                        <Input type="text" className="onlyNumber" name="mobile" value={formData.mobile}  onChange={e => changeFormData(e.target.name,e.target.value)} placeholder="휴대전화번호 입력"/>
                     </div>
                 </FormGroup>
                 <FormGroup className="phone">
                     <Label>전화번호</Label>
                     <div className="inputBox">
-                        <Input type="text" name="phone" value={formData.phone}  onChange={e => changeFormData(e.target.name,e.target.value)} placeholder="전화번호 입력"/>
+                        <Input type="text" className="onlyNumber" name="phone" value={formData.phone}  onChange={e => changeFormData(e.target.name,e.target.value)} placeholder="전화번호 입력"/>
                     </div>
                 </FormGroup>
                 <FormGroup className="address">
                     <Label>주소 <span>필수</span></Label>
                     <div className="inputBox">    
                         <Input type="text" name="baseAddress" value={formData.baseAddress}  onClick={toggleDaumPostModal} readOnly placeholder="기본주소"/>
-                        <Input type="text" name="detailAddress" value={formData.detailAdress} onChange={e => changeFormData(e.target.name,e.target.value)} placeholder="상세주소 입력"/>
+                        <Input type="text" name="detailAddress" value={formData.detailAddress} onChange={e => changeFormData(e.target.name,e.target.value)} placeholder="상세주소 입력"/>
                     </div>
                 </FormGroup>
             </div>

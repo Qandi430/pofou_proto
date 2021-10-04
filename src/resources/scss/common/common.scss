@@ -830,3 +830,68 @@ header{
         color: #f85272;
     }
 }
+.react-datepicker{
+    .react-datepicker__header{
+        // background-color: #fff;
+        .datePickerHeader{
+            display: flex;
+            justify-content: center;
+            padding: 0 10px;
+            button{
+                background-color: #ff6813;
+                color: #fff;
+                padding: 3px 15px;
+                border: 1px solid #ff6813;
+                // border-radius: .25em;
+                &.btnPrev{
+                    border-radius: .25em 0 0 .25em;
+                    margin-right: auto;
+                }
+                &.btnNext{
+                    border-radius: 0 .25em .25em 0;
+                    margin-left: auto;
+                }
+            }
+            select{
+                flex: 1;
+                padding: 5px 0;
+                border: 0;
+                border-top: 1px solid #ff6813;
+                border-bottom: 1px solid #ff6813;
+                background-color: #ff6813;
+                color: #fff;
+                text-align: center;
+                font-size: 1rem;
+                -webkit-appearance:none; /* 화살표 없애기 for chrome*/ 
+                -moz-appearance:none; /* 화살표 없애기 for firefox*/ 
+                appearance:none; /* 화살표 없애기 공통*/
+                border-left: 1px solid #fff; 
+                border-right: 1px solid #fff;
+                cursor: pointer;
+                &+select{
+                    border-left: 0;
+                }
+            }
+            &.month{
+                select{
+                    border-left: 1px solid #fff;
+                    border-right: 1px solid #fff;
+                    cursor: pointer;
+                    background-color: #ff6813;
+                    color: #fff;
+                    text-align: center;
+                    font-size: 1rem;
+                    -webkit-appearance:none; /* 화살표 없애기 for chrome*/ 
+                    -moz-appearance:none; /* 화살표 없애기 for firefox*/ 
+                    appearance:none /* 화살표 없애기 공통*/
+                }
+            }
+        }
+        .react-datepicker__day-names{
+            .react-datepicker__day-name{
+                color: #ff6813;
+                font-weight: bold;
+            }
+        }
+    }
+}

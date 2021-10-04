@@ -2,8 +2,10 @@ import React,{useState} from 'react'
 import { FormGroup, Label, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input } from 'reactstrap'
 import ReactDatePicker from 'react-datepicker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faChevronLeft, faChevronRight  } from '@fortawesome/free-solid-svg-icons';
+import { getYear } from 'date-fns';
 
+const _ = require("lodash");
 
 const Certificate = ({formData,changeFormData}) => {
     const [openCertificateType,setOpenCertificateType] = useState(-1);
@@ -403,6 +405,32 @@ const Certificate = ({formData,changeFormData}) => {
                                             
                                             maxDate={new Date()}
                                             className="form-control"
+                                            renderCustomHeader={({
+                                                date,
+                                                changeYear,
+                                                decreaseYear,
+                                                increaseYear,
+                                                prevYearButtonDisabled,
+                                                nextYearButtonDisabled,
+                                            }) => (
+                                                <div className="datePickerHeader month">
+                                                    <button type="button" className="btnPrev" onClick={decreaseYear} disabled={prevYearButtonDisabled}><FontAwesomeIcon icon={faChevronLeft}/></button>
+                                                    <select
+                                                        value={getYear(date)}
+                                                        onChange={({ target: { value } }) => changeYear(value)}
+                                                    >
+                                                        {_.range(1950, getYear(new Date()) + 1, 1).map((option) => (
+                                                        <option key={option} value={option}>
+                                                            {option}
+                                                        </option>
+                                                        ))}
+                                                    </select>
+                
+                                                    <button onClick={increaseYear} type="button" className="btnNext" disabled={nextYearButtonDisabled}>
+                                                        <FontAwesomeIcon icon={faChevronRight}/>
+                                                    </button>
+                                                </div>
+                                            )}
                                         />
                                     </div>
                                 </FormGroup>

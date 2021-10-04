@@ -1,0 +1,224 @@
+.resumeTitle{
+    border-bottom: 1px solid #333;
+    padding: 15px 0;
+    .title{
+        font-size: 1.6rem;
+        font-weight: bold;
+    }
+}
+.template{
+    >.contents{
+        margin-top: 30px;
+        .flexTable{
+            .tr{
+                display: flex;
+                border-bottom: 1px solid #d9d9d9;
+                border-left: 1px solid #d9d9d9;
+                border-right: 1px solid #d9d9d9;
+                .th,.td{
+                    padding: 10px;
+                    display: flex;
+                    flex: 1;
+                    align-items: center;
+                    justify-content: center;
+                    &.th{
+                        justify-content: center;
+                        background-color: #f1f1f1;
+                    }
+                    &+.th,&+.td{
+                        border-left: 1px solid #d9d9d9;
+                    }
+                }
+            }
+        }
+        .titleBox{
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+            .title{
+                font-size: 1.2rem;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.basicInfo{
+    padding: 15px 0;
+    display: flex;
+    .imageBox{
+        flex: 0 0 15%;
+        border: 1px solid #d9d9d9;
+        padding: 3px;
+        img{
+            max-width: 100%;
+        }
+    }
+    .infoBox{
+        flex: 0 0 85%;
+        margin-left: 15px;
+        ul{
+            li{
+                display: flex;
+                // font-size: 1.2rem;
+                gap: 10px;
+                .iconBox{
+                    flex: 0 0 20px;
+                    svg{
+                        width: 100%;
+                    }
+                }
+                &+li{
+                    margin-top: 15px;
+                }
+                &.basic{
+                    align-items: flex-end;
+                    .name{
+                        font-size: 1.2rem;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+}
+.education{
+    .educationList{
+        // margin-top: 15px;
+        // border-top: 2px solid #333;
+        .tr{
+            .th,.td{    
+                &.th{
+                    justify-content: center;
+                }
+                &+.th,&+.td{
+                    border-left: 1px solid #d9d9d9;
+                }
+                &.period{
+                    flex: 0 0 20%;
+                    justify-content: center;
+                }
+                &.graduatedType{
+                    flex: 0 0 10%;
+                    justify-content: center;
+                }
+                &.eductionName{
+                    flex: 0 0 30%;
+                }
+                &.major{
+                    flex: 0 0 40%;
+                    justify-content: flex-start;
+                    ul{
+                        li{
+                            &+li{
+                                margin-top: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.career{
+    .careerList{
+        .tr{
+            .td,.th{
+                &.careerName{
+                    flex: 0 0 20%;
+                    
+                }
+                &.careerPeriod{
+                    flex: 0 0 25%;
+                    justify-content: center;
+                }
+                &.careerRole{
+                    flex: 0 0 20%;
+                    justify-content: center;
+                }
+            }
+        }
+        
+    }
+}
+.certificate{
+    .certificateList{
+        .tr{
+            .th,.td{
+                &.certificateDate{
+                    flex: 0 0 15%;
+                }
+            }
+        }
+        
+    }
+}
+.activity{
+    .activityList{
+        .tr{
+            .th,.td{
+                &.activityPeriod{
+                    flex: 0 0 25%;
+                }
+                &.activityType{
+                    flex: 0 0 15%;
+                }
+                &.activityPlace{
+                    flex: 0 0 20%;
+                }
+            }
+        }
+    }
+}
+.preferential{
+    .preferred{
+        .tbody{
+            .tr{
+                .th{
+                    flex: 0 0 20%;
+                }
+                .td{
+                    justify-content: flex-start;
+                }
+            }
+        }
+    }
+}
+.skill{
+    .skillList{
+        .tbody{
+            .tr{
+                .td{
+                    justify-content: flex-start;
+                    .skillName{
+                        font-weight: bold;
+                    }
+                    .skillLevel::before{
+                        content:'/';
+                        padding: 0 10px;
+                    }
+                    .skillContent::before{
+                        content:'/';
+                        padding: 0 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+.introduction{
+    .introductionList{
+        border: 1px solid #d9d9d9;
+        border-top: 0;
+        padding: 15px;
+        .listItem{
+            padding: 10px 0;
+            .title{
+                font-size: 1.1rem;
+                font-weight: bold;
+            }
+            .content{
+                margin-top: 25px;
+            }
+        }
+    }
+}

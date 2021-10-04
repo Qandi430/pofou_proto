@@ -1,14 +1,15 @@
 import React from 'react'
 import { FormGroup, Input, Label } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import ReactDatePicker,{registerLocale} from 'react-datepicker';
-import ko from 'date-fns/locale/ko';
-// registerLocale("ko", ko);
+import { faPlus, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import ReactDatePicker from 'react-datepicker';
+import { getYear } from 'date-fns';
+
+const _ = require("lodash");
 const Career = ({formData,changeFormData}) => {
     
     const changeCareerType = (value) => {
-        
+        console.log(value);
         changeFormData("careerType",value);
     }
 
@@ -20,7 +21,7 @@ const Career = ({formData,changeFormData}) => {
             careerRole : "",
             careerStart : "",
             careerEnd : "",
-            careerPeriodType : "workOff",
+            quit : true,
             careerContent : "",
         });
         
@@ -29,14 +30,12 @@ const Career = ({formData,changeFormData}) => {
 
     const changeCareer = (index,name,value) => {
         let newList = formData.careerList;
-        if(name === "careerPeriodType"){
+        if(name === "quit"){
             if(value){
-                value = "workOn";
                 newList = newList.map((c,i) => i === index ? {...c,careerEnd:new Date()} : c);
                 
                 document.getElementById(`careerEnd${index}`).readOnly = true;
             }else{
-                value = "workOff";
                 document.getElementById(`careerEnd${index}`).readOnly = false;
             }
         }
@@ -62,11 +61,11 @@ const Career = ({formData,changeFormData}) => {
                 {/* <button onClick={handleCareerAdditionalModal}>추가 +</button> */}
             </h6>
             <div className="careerType">
-                <input type="radio" name="careerType" value="newcomer" id="careerNewcommer" defaultChecked={formData.careerType === "newcomer"} onChange={e => changeCareerType(e.target.value)}/>
+                <input type="radio" name="careerType" value="newcomer" id="careerNewcommer" onChange={e => changeCareerType(e.target.value)}/>
                 <label htmlFor="careerNewcommer" className={`${formData.careerType === "newcomer" ? "on" : ""}`}>
                     신입
                 </label>
-                <input type="radio" name="careerType" value="experienced" id="careerExperienced" defaultChecked={formData.careerType === "experienced"} onChange={e => changeCareerType(e.target.value)}/>
+                <input type="radio" name="careerType" value="experienced" id="careerExperienced" onChange={e => changeCareerType(e.target.value)}/>
                 <label htmlFor="careerExperienced" className={`${formData.careerType === "experienced" ? "on" : ""}`}>
                     경력
                 </label>
@@ -104,14 +103,40 @@ const Career = ({formData,changeFormData}) => {
                                                 dateFormat="yyyyMM"
                                                 placeholderText="YYYYMM"
                                                 showMonthYearPicker
-                                                maxDate={career.careerEnd}
+                                                maxDate={career.careerEnd === "" ? new Date() : career.careerEnd}
                                                 className="form-control"
                                                 id={`careerStart${index}`}
+                                                autoComplete="off"
+                                                renderCustomHeader={({
+                                                    date,
+                                                    changeYear,
+                                                    decreaseYear,
+                                                    increaseYear,
+                                                    prevYearButtonDisabled,
+                                                    nextYearButtonDisabled,
+                                                }) => (
+                                                    <div className="datePickerHeader month">
+                                                        <button type="button" className="btnPrev" onClick={decreaseYear} disabled={prevYearButtonDisabled}><FontAwesomeIcon icon={faChevronLeft}/></button>
+                                                        <select
+                                                            value={getYear(date)}
+                                                            onChange={({ target: { value } }) => changeYear(value)}
+                                                        >
+                                                            {_.range(1950, getYear(new Date()) + 1, 1).map((option) => (
+                                                            <option key={option} value={option}>
+                                                                {option}
+                                                            </option>
+                                                            ))}
+                                                        </select>
+                    
+                                                        <button onClick={increaseYear} type="button" className="btnNext" disabled={nextYearButtonDisabled}>
+                                                            <FontAwesomeIcon icon={faChevronRight}/>
+                                                        </button>
+                                                    </div>
+                                                )}
                                             />
                                             <label>
                                                 -
                                             </label>    
-                                            
                                             <ReactDatePicker
                                                 selected={career.careerEnd}
                                                 onChange={(date) => changeCareer(index,"careerEnd",date)}
@@ -123,9 +148,36 @@ const Career = ({formData,changeFormData}) => {
                                                 maxDate={new Date()}
                                                 className="form-control"
                                                 id={`careerEnd${index}`}
+                                                autoComplete="off"
+                                                renderCustomHeader={({
+                                                    date,
+                                                    changeYear,
+                                                    decreaseYear,
+                                                    increaseYear,
+                                                    prevYearButtonDisabled,
+                                                    nextYearButtonDisabled,
+                                                }) => (
+                                                    <div className="datePickerHeader month">
+                                                        <button type="button" className="btnPrev" onClick={decreaseYear} disabled={prevYearButtonDisabled}><FontAwesomeIcon icon={faChevronLeft}/></button>
+                                                        <select
+                                                            value={getYear(date)}
+                                                            onChange={({ target: { value } }) => changeYear(value)}
+                                                        >
+                                                            {_.range(1950, getYear(new Date()) + 1, 1).map((option) => (
+                                                            <option key={option} value={option}>
+                                                                {option}
+                                                            </option>
+                                                            ))}
+                                                        </select>
+                    
+                                                        <button onClick={increaseYear} type="button" className="btnNext" disabled={nextYearButtonDisabled}>
+                                                            <FontAwesomeIcon icon={faChevronRight}/>
+                                                        </button>
+                                                    </div>
+                                                )}
                                             />
                                             <div className="periodTypeBox">
-                                                <Input type="checkbox" name="careerPeriodType" id={`careerPeriodType${index}`} onChange={e => changeCareer(index,"careerPeriodType",e.target.checked)}/>
+                                                <Input type="checkbox" name="careerPeriodType" id={`careerPeriodType${index}`} onChange={e => changeCareer(index,"quit",e.target.checked)}/>
                                                 <Label style={{marginBottom:"0",marginLeft:"0.5em"}} htmlFor={`careerPeriodType${index}`}>재직중</Label>
                                             </div>
                                         </div>

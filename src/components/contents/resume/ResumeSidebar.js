@@ -1,9 +1,9 @@
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import { insertResume } from '../../../server/resume/ResumeServer'
+import { insertResume, updateResume } from '../../../server/resume/ResumeServer'
 
-const ResumeSidebar = ({formData,changeFormData,toggleSpinnerModal,history}) => {
+const ResumeSidebar = ({formData,changeFormData,toggleSpinnerModal,history,handelResumeDetail}) => {
     const moveToTarget = (target) => {
         let time = 0;
         
@@ -38,7 +38,7 @@ const ResumeSidebar = ({formData,changeFormData,toggleSpinnerModal,history}) => 
         changeFormData(name,!formData[name]);
     }
 
-    const saveResume = async (e) => {
+    const saveResume = async (e,complete) => {
         e.preventDefault();
         if(formData.name === ""){
             alert("기본정보의 이름은 필수사항 입니다.");
@@ -192,13 +192,24 @@ const ResumeSidebar = ({formData,changeFormData,toggleSpinnerModal,history}) => 
                 }
             }
         }
+        formData.complete = complete;
         toggleSpinnerModal(true);
-        const {data : insertResult} = await insertResume(formData);
-        if(insertResult){
-            alert("이력서가 등록되었습니다.");
-            history.push(`/resume/list`);
+        if(formData.resumeNumber === undefined || formData.resumeNumber === ""){
+            const {data : insertResult} = await insertResume(formData);
+            if(insertResult){
+                alert("이력서가 등록되었습니다.");
+                history.push(`/resume/list`);
+            }else{
+                alert("이력서 등록에 실패하였습니다.");
+            }
         }else{
-            alert("이력서 등록에 실패하였습니다.");
+            const {data : updateResult} = await updateResume(formData);
+            if(updateResult){
+                alert("이력서가 수정되었습니다.");
+                history.push(`/resume/list`);
+            }else{
+                alert("이력서 수정에 실패하였습니다.");
+            }
         }
         toggleSpinnerModal(false);    
     }
@@ -248,8 +259,9 @@ const ResumeSidebar = ({formData,changeFormData,toggleSpinnerModal,history}) => 
                 </li>
             </ul>
             <div className="btnBox">
-                <button className="btnPreview">미리보기</button>
-                <button className="btnSave" onClick={saveResume}>이력서 저장</button>
+                <button className="btnPreview" onClick={handelResumeDetail}>미리보기</button>
+                <button className="btnTemporary" onClick={ e => saveResume(e,false)}>중간저장</button>
+                <button className="btnSave" onClick={ e => saveResume(e,true)}>{formData.resumeNumber === undefined  || formData.resumeNumber === "" || !formData.complete ? "이력서 저장" : "이력서 수정"}</button>
             </div>
         </aside>
     )

@@ -1,0 +1,8 @@
+#resumeDetailModal{
+    max-width: 980px;
+    .modal-body{
+        max-height: 85vh;
+        overflow-y: scroll
+    }
+    @import './basic.scss';
+}

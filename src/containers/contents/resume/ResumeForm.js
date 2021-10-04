@@ -13,8 +13,9 @@ import Skill from '../../../components/contents/resume/Skill';
 import Activity from '../../../components/contents/resume/Activity';
 import Introduction from '../../../components/contents/resume/Introduction';
 import ResumeSidebar from '../../../components/contents/resume/ResumeSidebar';
-const ResumeForm = ({openSpinnerModal,toggleSpinnerModal,loginMember,history}) => {
-
+import { getResumeDetailByResumeNumber } from '../../../server/resume/ResumeServer';
+const ResumeForm = ({openSpinnerModal,toggleSpinnerModal,loginMember,history,match,openResumeDetailModal}) => {
+    const [resumeNumber,setResumeNumber] = useState(-1);
     const [openTitleInput, setOpenTitleInput] = useState(false);
     const [formData,setFormData] = useState({
         memberNumber:  "",
@@ -22,60 +23,18 @@ const ResumeForm = ({openSpinnerModal,toggleSpinnerModal,loginMember,history}) =
         name : "",
         photo : "",
         displayPhoto : false,
-        birthYear : "",
-        birthMonth : "",
-        birthDay : "",
         birthDate : "",
         gender : "M",
         phone : "",
         mobile : "",
         email : "",
-        sns : "",
         address : "",
         baseAddress : "",
         detailAddress : "",
         zipCode : "",
+        complete : "",
         educationList : [
-            // {
-            //     index : 0,
-            //     educationType : "univercity",
-            //     educationName : "연성대학교",
-            //     majorList : [
-            //         {
-            //             index : 0,
-            //             degreeType : "Associate",
-            //             majorType : "major",
-            //             majorName : "푸드스타일링",
-            //         },
-            //         {
-            //             index : 1,
-            //             degreeType : "Associate",
-            //             majorType : "double",
-            //             majorName : "호텔조리학과",
-            //         },
-            //     ],
-            //     admissionYear : "2012",
-            //     graduatedYear : "2014",
-            //     graduatedType : "graduate",
-            //     educationContent : "",
-            // },
-            // {
-            //     index : 1,
-            //     educationType : "highSchool",
-            //     educationName : "잠실고등학교",
-            //     majorList : [
-            //         {
-            //             index : 0,
-            //             degreeType : "",
-            //             majorType : "Meister",
-            //             majorName : "",
-            //         }
-            //     ],
-            //     admissionYear : "2006",
-            //     graduatedYear : "2009",
-            //     graduatedType : "graduate",
-            //     educationContent : "",
-            // }
+            
         ],
         careerType : "experienced",
         careerList : [
@@ -84,7 +43,7 @@ const ResumeForm = ({openSpinnerModal,toggleSpinnerModal,loginMember,history}) =
                 careerRole : "",
                 careerStart : "",
                 careerEnd : "",
-                careerPeriodType : "workOff",
+                quit : true,
                 careerContent : "",
             }
         ],
@@ -141,10 +100,19 @@ const ResumeForm = ({openSpinnerModal,toggleSpinnerModal,loginMember,history}) =
         if(formData.memberNumber !== loginMember.memberNumber){
             setFormData({
                 ...formData,
-                memberNumber : loginMember.memberNumber
+                memberNumber : loginMember.memberNumber,
             })
         }
     },[loginMember,formData]);
+
+    useEffect(() => {
+        if(match.params.resumeNumber !== undefined && match.params.resumeNumber !== resumeNumber){
+            // console.log("update")
+            // getResume(match.params.resumeNumber);
+            setResumeNumber(match.params.resumeNumber);
+            getResume(match.params.resumeNumber);
+        }
+    },[match,resumeNumber]);
 
     const [openEducationAdditionalModal,setOpenEducationAdditionalModal] = useState(false);
     const [modifyEducationForm,setModifyEducationForm] = useState(null);
@@ -155,6 +123,79 @@ const ResumeForm = ({openSpinnerModal,toggleSpinnerModal,loginMember,history}) =
             setModifyEducationForm(null);
         }
     },[openEducationAdditionalModal]);
+
+    const getResume = async(resumeNumber) => {
+        // console.log("update",resumeNumber);
+        toggleSpinnerModal(true);
+        const {data : resume}  = await getResumeDetailByResumeNumber(resumeNumber);
+        
+        resume.birthDate = new Date(resume.birthDate);
+        if(resume.careerList.length > 0){
+            resume.careerList = resume.careerList.map(career => ({...career, careerStart : new Date(career.careerStart), careerEnd : new Date(career.careerEnd)}));
+        }else{
+            resume.careerList.push({
+                careerName : "",
+                careerRole : "",
+                careerStart : "",
+                careerEnd : "",
+                quit : true,
+                careerContent : "",
+            })
+        }
+        
+        
+        if(resume.activityList.length === 0){
+            resume.activityList.push({
+                activityType : "",
+                activityPlace : "",
+                activityStart : "",
+                activityEnd : "",
+                activityContent:  "",
+            });
+        }else{
+            resume.activityList = resume.activityList.map(activity => ({...activity, activityStart : new Date(activity.activityStart), activityEnd : new Date(activity.activityEnd)}));
+        }
+
+        if(resume.certificateList.length === 0){
+            resume.certificateList.push({
+                cartificateType : "license",
+                certificateLanguage : "",
+                certificateName : "",
+                certificateIssuer : "",
+                certificatePassType : "",
+                certificateDate : "",
+                certificateScore : "",
+                certificateGrade : "",
+            })
+        }else{
+            resume.certificateList = resume.certificateList.map(certificate => ({...certificate, certificateDate : new Date(certificate.certificateDate)}));
+        }
+
+        if(resume.preferred === null){
+            resume.preferred = {
+                veteran : false,
+                disabledWhether : "",
+                militaryServiceStatus : "",
+                militaryStartYear : "",
+                militaryStartMonth : "",
+                militaryEndYear : "",
+                militaryEndMonth : "",
+                mos : "",
+                militaryClasses : "",
+            };
+        }
+
+        if(resume.introductionList.length === 0){
+            resume.introductionList.push({
+                title : "",
+                content : "",
+                order : 0,
+            })
+        }
+        
+        setFormData(resume)
+        toggleSpinnerModal(false);
+    }
 
     const handleTitleInput = () => {
         setOpenTitleInput(!openTitleInput);
@@ -167,6 +208,10 @@ const ResumeForm = ({openSpinnerModal,toggleSpinnerModal,loginMember,history}) =
 
     const changeFormData = (name,value) => {
         // const {value,name} = e.target;
+        if(name === "mobile" || name === "phone"){
+            const regex = /[^0-9]/g;
+            value = value.replace(regex,"");
+        }
         setFormData({
             ...formData,
             [name]:value
@@ -257,7 +302,22 @@ const ResumeForm = ({openSpinnerModal,toggleSpinnerModal,loginMember,history}) =
         setOpenEducationAdditionalModal(true);
     }
 
-    
+    const handelResumeDetail = (e) => {
+        e.preventDefault();
+        let resumeDetail = JSON.parse(JSON.stringify(formData));
+
+        resumeDetail.educationList = resumeDetail.educationList.filter( education =>  education.educationName !== "" && education.majorList.length > 0 && education.admissionYear !== "" && education.graduatedYear !== "" && education.graduatedType !== "");
+        resumeDetail.careerList = resumeDetail.careerList.filter( career => career.careerName !== "" && career.careerRole !== "" && career.careerStart !== "" && career.careerEnd !== "");
+        resumeDetail.activityList = resumeDetail.activityList.filter(activity => activity.activityType !== "" && activity.activityPlace !== "" && activity.activityStart !== "" && activity.activityEnd !== "");
+        resumeDetail.certificateList = resumeDetail.certificateList.filter(certificate => certificate.certificateName !== "" 
+                                                                                          && certificate.certificateDate !== "" 
+                                                                                          && (certificate.certificateType !== "language" && certificate.certificateIssuer !== "")
+                                                                                          && (certificate.certificateType !== "awards" && certificate.certificatePassType !== "")
+                                                                                          && (certificate.certificateType === "language" && certificate.certificateLanguage !== "")
+                                                                            );
+        resumeDetail.introductionList = resumeDetail.introductionList.filter(introduction => introduction.title !== "" && introduction.content !== "");
+        openResumeDetailModal(resumeDetail);
+    }
 
     return (
         <div className="resumeForm">
@@ -304,7 +364,7 @@ const ResumeForm = ({openSpinnerModal,toggleSpinnerModal,loginMember,history}) =
                     </Form>
                 </Col>
                 <Col md={3}>
-                    <ResumeSidebar formData={formData} changeFormData={changeFormData} openSpinnerModal={openSpinnerModal} toggleSpinnerModal={toggleSpinnerModal} history={history}/>
+                    <ResumeSidebar formData={formData} changeFormData={changeFormData} openSpinnerModal={openSpinnerModal} toggleSpinnerModal={toggleSpinnerModal} history={history} handelResumeDetail={handelResumeDetail}/>
                 </Col>
             </Row>
             <EducationAdditionalModal isOpen={openEducationAdditionalModal} toggle={handleEducationAdditionalModal} addEducation={addEducation} modifyEducationForm={modifyEducationForm}/>

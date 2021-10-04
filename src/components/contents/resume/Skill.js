@@ -127,7 +127,7 @@ const SkillDetailModal = ({isOpen,toggle,form,saveSkillDetail}) => {
                     </dd>
                 </dl>
                 <dl>
-                    <dt>보유기술</dt>
+                    <dt>상세내용</dt>
                     <dd>
                         <Input type="textarea" defaultValue={detailForm.skillContent} onChange={(e) => changeDetailForm("skillContent",e.target.value)}/>
                     </dd>

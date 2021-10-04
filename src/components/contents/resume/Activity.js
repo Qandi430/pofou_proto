@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import ReactDatePicker,{registerLocale} from 'react-datepicker';
+import ReactDatePicker from 'react-datepicker';
 import { FormGroup, Label, Input, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
-import ko from 'date-fns/locale/ko';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { getMonth, getYear } from 'date-fns';
+// import {range} from 'react-lodash';
+const _ = require("lodash");
 // registerLocale("ko", ko);
 const Activity = ({formData,changeFormData}) => {
     const [openActivityType,setOpenActivityType] = useState(-1);
@@ -38,6 +40,9 @@ const Activity = ({formData,changeFormData}) => {
         newList = newList.filter((n,i) => i !== index);
         changeFormData("activityList",newList);
     }
+
+    const years = _.range(1950, getYear(new Date()) + 1, 1);
+    const months = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']; 
 
     return(
         <FormGroup className="activity">
@@ -114,6 +119,46 @@ const Activity = ({formData,changeFormData}) => {
                                             selected={activity.activityStart}
                                             maxDate={activity.activityEnd === "" ? new Date() : activity.activityEnd}
                                             onChange={ date => changeActivity(index,"activityStart",date)}
+                                            renderCustomHeader={({
+                                                date,
+                                                changeYear,
+                                                changeMonth,
+                                                decreaseMonth,
+                                                increaseMonth,
+                                                prevMonthButtonDisabled,
+                                                nextMonthButtonDisabled,
+                                            }) => (
+                                                <div className="datePickerHeader fullDay">
+                                                    <button type="button" className="btnPrev" onClick={decreaseMonth} disabled={prevMonthButtonDisabled}><FontAwesomeIcon icon={faChevronLeft}/></button>
+                                                    <select
+                                                        value={getYear(date)}
+                                                        onChange={({ target: { value } }) => changeYear(value)}
+                                                    >
+                                                        {years.map((option) => (
+                                                        <option key={option} value={option}>
+                                                            {option}
+                                                        </option>
+                                                        ))}
+                                                    </select>
+                
+                                                    <select
+                                                        value={months[getMonth(date)]}
+                                                        onChange={({ target: { value } }) =>
+                                                        changeMonth(months.indexOf(value))
+                                                        }
+                                                    >
+                                                        {months.map((option) => (
+                                                        <option key={option} value={option}>
+                                                            {option}
+                                                        </option>
+                                                        ))}
+                                                    </select>
+                
+                                                    <button onClick={increaseMonth} type="button" className="btnNext" disabled={nextMonthButtonDisabled}>
+                                                        <FontAwesomeIcon icon={faChevronRight}/>
+                                                    </button>
+                                                </div>
+                                            )}
                                         />
                                         <label>~</label>
                                         <ReactDatePicker
@@ -125,6 +170,46 @@ const Activity = ({formData,changeFormData}) => {
                                             minDate={activity.activityStart}
                                             maxDate={new Date()}
                                             onChange={ date => changeActivity(index,"activityEnd",date)}
+                                            renderCustomHeader={({
+                                                date,
+                                                changeYear,
+                                                changeMonth,
+                                                decreaseMonth,
+                                                increaseMonth,
+                                                prevMonthButtonDisabled,
+                                                nextMonthButtonDisabled,
+                                            }) => (
+                                                <div className="datePickerHeader fullDay">
+                                                    <button type="button" className="btnPrev" onClick={decreaseMonth} disabled={prevMonthButtonDisabled}><FontAwesomeIcon icon={faChevronLeft}/></button>
+                                                    <select
+                                                        value={getYear(date)}
+                                                        onChange={({ target: { value } }) => changeYear(value)}
+                                                    >
+                                                        {years.map((option) => (
+                                                        <option key={option} value={option}>
+                                                            {option}
+                                                        </option>
+                                                        ))}
+                                                    </select>
+                
+                                                    <select
+                                                        value={months[getMonth(date)]}
+                                                        onChange={({ target: { value } }) =>
+                                                        changeMonth(months.indexOf(value))
+                                                        }
+                                                    >
+                                                        {months.map((option) => (
+                                                        <option key={option} value={option}>
+                                                            {option}
+                                                        </option>
+                                                        ))}
+                                                    </select>
+                
+                                                    <button onClick={increaseMonth} type="button" className="btnNext" disabled={nextMonthButtonDisabled}>
+                                                        <FontAwesomeIcon icon={faChevronRight}/>
+                                                    </button>
+                                                </div>
+                                            )}
                                         />
                                     </div>
                                 </FormGroup>

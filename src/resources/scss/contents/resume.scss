@@ -1,9 +1,15 @@
 .resume{
     padding: 30px 0;
     .resumeList{
+        // border: 1px solid #d9d9d9;
+        display: flex;
+        gap: 2%;
+        // padding: 30px;
+        flex-wrap: wrap;
         .empty{
-            min-height: 500px;
             border: 1px solid #d9d9d9;
+            flex: 0 0 100%;
+            min-height: 500px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -11,6 +17,96 @@
             a{
                 margin-top: 10px;
                 color: #2ac5c6;
+            }
+        }
+        .listItem{
+            margin-bottom: 2%;
+            height: 200px;
+            flex: 0 0 23.5%;
+            border: 1px solid #d9d9d9;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            .itemInfo{
+                flex: 1;
+                padding: 10px;
+                .resumeTitle{
+                    font-weight: bold;
+                    font-size: 1.2rem;
+                }
+                .updateDate{
+                    margin-top: 10px;
+                    color: #999;
+                }
+                .represent{
+                    margin-top: 10px;
+                    font-weight: bold;
+                    color: #4876ef;
+                }
+            }
+            .itemFooter{
+                border-top: 1px solid #d9d9d9;
+                padding: 10px 15px;
+                display: flex;
+                justify-content: space-between;
+                .status{
+                    color: #999;
+                    &.complete{
+                        color: #333;
+                        font-weight: bold;
+                    }
+                }
+            }
+            &.new{
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                transition: all 0.5s;
+                .icon{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 50%;
+                    border: 1px solid #4876ef;
+                    background-color: #4876ef;
+                    color: #fff;
+                    margin-bottom: 30px;
+                }
+                &:hover{
+                    border-color: #4876ef;
+                }
+            }
+            .itemMenu{
+                position: absolute;
+                background-color: #fff;
+                border: 1px solid #d9d9d9;
+                top: calc(100% - 10px);
+                right: 0;
+                pointer-events: none;
+                opacity: 0;
+                transition: all 0.5s;
+                box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.5);
+                ul{
+                    li{
+                        padding: 10px;
+                        transition: all 0.5s;
+                        cursor: pointer;
+                        &+li{
+                            border-top: 1px solid #d9d9d9;
+                        }
+                        &:hover{
+                            background-color: #999;
+                            color: #fff;
+                        }
+                    }
+                }
+                &.on{
+                    opacity: 1;
+                    pointer-events: auto;
+                }
             }
         }
     }
@@ -53,7 +149,6 @@
                     border: 1px solid #d9d9d9;
                     .tableData{
                         flex: 0 0 50%;
-                        
                         display: flex;
                         .th{
                             height: 100%;
@@ -855,6 +950,7 @@
                 padding-bottom: 10px;
             }
             .resumeList{
+                display: block;
                 padding: 15px 0;
                 li{
                     display: flex;
@@ -909,6 +1005,7 @@
                     font-weight: bold;
                     padding: 15px 0;
                     transition: all 0.5s;
+                    border-radius: .25rem;
                     &.btnPreview{
                         background-color: #fff;
                         border: 1px solid #d9d9d9;
@@ -916,6 +1013,17 @@
                             background-color: #666666;
                             border: 1px solid #666666;
                             color: #fff;
+                        }
+                    }
+                    &.btnTemporary{
+                        margin-top: 15px;
+                        background-color: #d9d9d9;
+                        border: 1px solid #d9d9d9;
+                        color: #333;
+                        &:hover{
+                            border-color: #d9d9d9;
+                            background-color: #ffffff;
+                            color: #666666;
                         }
                     }
                     &.btnSave{
