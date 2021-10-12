@@ -10,6 +10,11 @@
             p{
                 margin-top: 10px;
                 color: #333;
+                &.warning{
+                    margin-top: 0;
+                    color: #ff5165;
+                    font-weight: bold;
+                }
             }
         }
         .list{

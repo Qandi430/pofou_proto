@@ -16,10 +16,12 @@ import AddBlockSideBar from '../../../components/portfolio/management/config/Add
 import '../../../resources/scss/myPage/config.scss';
 import ConfigBlockSideBar from '../../../components/portfolio/management/config/ConfigBlockSideBar';
 import SortBlockModal from '../../../components/portfolio/management/config/SortBlockModal';
+import { createPortfolioConsumer } from '../../../context/portfolioContext';
 
-const Config = ({location}) => {
+const Config = ({loginMember,getPortfolioData,match}) => {
     const [openWorkDetailModal,setOpenWorkDetailModal] = useState(false);
     const [addBlock,setAddBlock] = useState(null);
+    
     const [data,setData] = useState({
         id : "",
         config : {
@@ -49,22 +51,6 @@ const Config = ({location}) => {
                         contents : "",
                         media : MainImage,
                     },
-                    // {
-                    //     index : 0,
-                    //     type : "title",
-                    //     id : "basicTitle",
-                    //     name : "기본 타이틀",
-                    //     titleType : "text",
-                    //     title : "About",
-                    //     subTitle : "",
-                    //     contents : "",
-                    //     media : "",
-                    //     color : "#333333",
-                    //     textAlign : "left",
-                    //     fontFamily : "Noto Sans KR",
-                    //     fontSize : 3.0,
-                    //     fontWeighr : "bold",
-                    // }
                 ]
             },
             {
@@ -466,15 +452,15 @@ const Config = ({location}) => {
 
     const saveHistory = (history) => {
         if(debounceTimer){
-            console.log("clear timer");
+            // console.log("clear timer");
             clearTimeout(debounceTimer);
         }
         const newTimer = setTimeout(() => {
             try{
-                console.log(history,data);
+                // console.log(history,data);
                 modifyHistory.unshift({index : modifyHistory.length,data : JSON.parse(JSON.stringify(data)),history : history,time : new Date()})
             }catch(e){
-                console.error('error',e);
+                // console.error('error',e);
             }
         },500);
         setDebounceTimer(newTimer);
@@ -486,9 +472,9 @@ const Config = ({location}) => {
     },[]);
 
     const revertHistory = (index) => {
-        console.log("start revertHistory",index,modifyHistory,modifyHistory.length);
+        // console.log("start revertHistory",index,modifyHistory,modifyHistory.length);
         if(index === "back"){
-            console.log("back",modifyHistory,modifyHistory.length);
+            // console.log("back",modifyHistory,modifyHistory.length);
             index = modifyHistory.length - 2 < 0 ? 0 : modifyHistory.length - 2;
         }
         const selectedHistory = modifyHistory.find(history => history.index === index);
@@ -509,6 +495,13 @@ const Config = ({location}) => {
         };
     }, [modifyHistory]);
 
+    //refactoring
+    useEffect(() => {
+        if(loginMember !== null && match.params.id !== undefined){
+            getPortfolioData(match.params.id);
+        }
+    }, [loginMember,match,getPortfolioData])
+
     return (
         <div className="config">
             <ConfigHeader modifyHistory={modifyHistory} revertHistory={revertHistory}/>
@@ -528,4 +521,4 @@ const Config = ({location}) => {
     )
 }
 
-export default Config;
+export default createPortfolioConsumer(Config);
