@@ -8,10 +8,19 @@ import TemplatePreviewModal from './TemplatePreviewModal';
 
 const TemplateList = ({toggleResumeSelectModal}) => {
 
-    const [openTemplatePreview, setOpenTemplatePreview] = useState(false);
+    const [openTemplatePreview, setOpenTemplatePreview] = useState("");
 
-    const toggleTemplatePreview = () => {
-        setOpenTemplatePreview(!openTemplatePreview);
+    const toggleTemplatePreview = (name) => {
+        if(typeof name === "string"){
+            if(setOpenTemplatePreview === name){
+                setOpenTemplatePreview("");
+            }else{
+                setOpenTemplatePreview(name);
+            }
+        }else{
+            setOpenTemplatePreview("");
+        }
+        // setOpenTemplatePreview(!openTemplatePreview);
     }
 
     return (
@@ -29,7 +38,7 @@ const TemplateList = ({toggleResumeSelectModal}) => {
                                 <div className="btnWrap">
                                     <Button className="btnCreate" tag={Link} to="/portfolio/config/1">개설하기</Button>
                                     {/* <Button className="btnCreate" onClick={() => toggleResumeSelectModal("basic")}>개설하기</Button> */}
-                                    <Button className="btnPreview" onClick={toggleTemplatePreview}>미리보기</Button>
+                                    <Button className="btnPreview" onClick={() => toggleTemplatePreview("basic")}>미리보기</Button>
                                 </div>
                                 <img src={Basic} alt="" />
                             </div>

@@ -1,66 +1,85 @@
-import React from 'react';
+import moment from 'moment';
+import React,{useState, useEffect} from 'react';
+import defaultImage from '../../../../resources/images/contents/resume/default_profile.png'
 
-const BasicProfile = ({privacy,grid}) => {
+const BasicProfile = ({privacy,grid,resume}) => {
+
+    const [birthYear,setBirthYear] = useState(0);
+    const [age,setAge] = useState(0);
+    const [international,setInternational] = useState(0);
+
+    useEffect(() => {
+        if(resume.birthDate === ""){
+            setBirthYear("-");
+            setAge("-");
+            setInternational("-")
+        }else{
+            const today = new Date();
+            const birthDate = new Date(resume.birthDate);
+            const tempAge = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            setBirthYear(birthDate.getFullYear());
+            setAge(tempAge + 1);
+            setInternational(m < 0 || (m === 0 && today.getDate() < birthDate.getDate()) ? tempAge -1 : tempAge)
+        }
+    }, [resume]);
+
     return (
         <div  className={`contents basicProfile grid${grid}`}>
             <div className="profileImage" style={{position:"relative"}}>
-                <img src={privacy.info.profileImage} alt="" className="img-fluid"/>
+                {
+                    resume.displayPhoto &&
+                    <img src={resume.photo !== "" ? `https://storage.googleapis.com/pofou_repo/${resume.photo}`:defaultImage} alt="" className="img-fluid"/>
+                }    
             </div>
             <div className="privacyList">
                 {
                     privacy.info.name !== "" && privacy.displayName &&
                     <dl className="name">
                         <dt>이름</dt>
-                        <dd>{privacy.info.name}</dd>
+                        <dd>{resume.name}</dd>
                     </dl>
                 }
                 {
-                    (privacy.info.birthYear !== "" && privacy.info.birthMonth !== "" && privacy.info.birthDay !== "") && privacy.displayBirthDate &&
+                    resume.birthDate !== "" && privacy.displayBirthDate &&
                     <dl className="name">
                         <dt>생년월일</dt>
-                        <dd>{`${privacy.info.birthYear}.${privacy.info.birthMonth}.${privacy.info.birthDay}`} (만 31세)</dd>
+                        <dd>{`${moment(new Date(resume.birthDate !== "" ? resume.birthDate : "")).format("YYYY.MM.DD")}`} (만 {international}세)</dd>
                     </dl>
                 }
                 {
-                    privacy.info.gender !== "" && privacy.displayGender &&
+                    resume.gender !== "" && privacy.displayGender &&
                     <dl className="name">
                         <dt>성별</dt>
-                        <dd>{privacy.info.gender === "M" ? "남" : "여"}</dd>
+                        <dd>{resume.gender === "M" ? "남" : "여"}</dd>
                     </dl>
                 }
                 {
-                    privacy.info.gender !== "" && privacy.displayGender &&
-                    <dl className="name">
-                        <dt>성별</dt>
-                        <dd>{privacy.info.gender === "M" ? "남" : "여"}</dd>
-                    </dl>
-                }
-                {
-                    privacy.info.phone !== "" && privacy.displayPhone &&
+                    privacy.displayPhone &&
                     <dl className="name">
                         <dt>전화번호</dt>
-                        <dd>{privacy.info.phone}</dd>
+                        <dd>{resume.phone}</dd>
                     </dl>
                 }
                 {
-                    privacy.info.mobile !== "" && privacy.displayMobile &&
+                    privacy.displayMobile &&
                     <dl className="name">
                         <dt>휴대전화번호</dt>
-                        <dd>{privacy.info.mobile}</dd>
+                        <dd>{resume.mobile}</dd>
                     </dl>
                 }
                 {
-                    privacy.info.email !== "" && privacy.displayEmail &&
+                    privacy.displayEmail &&
                     <dl className="name">
                         <dt>이메일</dt>
-                        <dd>{privacy.info.email}</dd>
+                        <dd>{resume.email}</dd>
                     </dl>
                 }
                 {
-                    privacy.info.address !== "" && privacy.displayAddress &&
+                    privacy.displayAddress &&
                     <dl className="name">
                         <dt>주소</dt>
-                        <dd>{privacy.info.address}</dd>
+                        <dd>{resume.baseAddress} {resume.detailAddress}</dd>
                     </dl>
                 }
             </div>

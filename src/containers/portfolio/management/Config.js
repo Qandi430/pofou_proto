@@ -125,6 +125,7 @@ const Config = ({loginMember,getPortfolioData,match}) => {
                         type : "histoty",
                         id : "basicHistory",
                         name : "기본 히스토리",
+                        link : "education",
                         educationList : [
                             {
                                 index : 0,

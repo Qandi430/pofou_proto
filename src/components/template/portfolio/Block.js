@@ -24,7 +24,7 @@ const blockList = [
     {id : "basicContactForm", component : BasicContactForm},
 ]
 
-const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfigBlock}) => {
+const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfigBlock,resume}) => {
     const [style,setStyle] = useState({
         paddingTop : 0,
         paddingBottom : 0,
@@ -53,7 +53,7 @@ const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfi
                                     data.contents.map(
                                         (contents,index) => {
                                             const obj = blockList.find(block => block.id === contents.id);
-                                            return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
+                                            return <Route render={() => (<obj.component {...contents} grid={data.grid} resume={resume} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
                                         }       
                                     )
                                 }
@@ -65,7 +65,7 @@ const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfi
                                 data.contents.map(
                                     (contents,index) => {
                                         const obj = blockList.find(block => block.id === contents.id);
-                                        return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
+                                        return <Route render={() => (<obj.component {...contents} grid={data.grid} resume={resume} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
                                     }       
                                 )
                             }
@@ -77,7 +77,7 @@ const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfi
                             data.contents.map(
                                 (contents,index) => {
                                     const obj = blockList.find(block => block.id === contents.id);
-                                    return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
+                                    return <Route render={() => (<obj.component {...contents} grid={data.grid} resume={resume} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
                                 }       
                             )        
                         }
@@ -86,7 +86,7 @@ const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfi
                     data.contents.map(
                         (contents,index) => {
                             const obj = blockList.find(block => block.id === contents.id);
-                            return <Route render={() => (<obj.component {...contents} grid={data.grid} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
+                            return <Route render={() => (<obj.component {...contents} grid={data.grid} resume={resume} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
                         }       
                     )
             }
