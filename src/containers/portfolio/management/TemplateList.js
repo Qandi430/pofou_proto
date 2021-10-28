@@ -36,9 +36,9 @@ const TemplateList = ({toggleResumeSelectModal}) => {
                         <div className="itemWrap">
                             <div className="imageWrap">
                                 <div className="btnWrap">
-                                    <Button className="btnCreate" tag={Link} to="/portfolio/config/1">개설하기</Button>
-                                    {/* <Button className="btnCreate" onClick={() => toggleResumeSelectModal("basic")}>개설하기</Button> */}
-                                    <Button className="btnPreview" onClick={() => toggleTemplatePreview("basic")}>미리보기</Button>
+                                    {/* <Button className="btnCreate" tag={Link} to="/portfolio/config/1">개설하기</Button> */}
+                                    <Button className="btnCreate" onClick={() => toggleResumeSelectModal("basic2")}>개설하기</Button>
+                                    <Button className="btnPreview" onClick={() => toggleTemplatePreview("basic2")}>미리보기</Button>
                                 </div>
                                 <img src={Basic} alt="" />
                             </div>

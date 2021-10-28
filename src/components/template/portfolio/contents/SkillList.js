@@ -3,6 +3,7 @@ import SkillBar from 'react-skillbars';
 
 const SkillList = ({grid,skill,resume}) => {
     const [skillList,setSkillList] = useState(null);
+    const [colors,setColors] = useState(null);
     useEffect(() => {
         if(skillList === null){
             let newList = [];
@@ -10,16 +11,22 @@ const SkillList = ({grid,skill,resume}) => {
             resume.skillList.forEach(
                 skill => newList.push({type:skill.skillName,level:skill.skillLevel})
             );
-            console.log(newList);
+            setColors({
+                "bar": skill.bar,
+                "title": {
+                    "text": skill.text,
+                    "background": skill.background
+                }
+            })
             setSkillList(newList);
         }
-    },[resume])
+    },[resume,skill,skillList])
     return(
         <div  className={`contents skillList grid${grid}`}>
             <div className="skilListWrap">
                 {
                     skillList !== null &&
-                    <SkillBar colors={skill.colors}  skills={skillList} height={20}/>
+                    <SkillBar colors={{bar:skill.bar,title : {text : skill.text, background : skill.background}}}  skills={skillList} height={20}/>
                 }
             </div>
         </div>

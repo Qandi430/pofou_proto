@@ -7,12 +7,12 @@ const GridBlockConfig = ({configForm,toggleContentsList,modifyBlock,saveHistory}
 
     const [selectedContent,setSelectedContent] = useState(null);
 
-    const changeContents = (name,value) => {
+    const changeContents = async (name,value) => {
         const newForm = {
             ...configForm,
             [name] : value,
         }
-        modifyBlock(newForm);
+        await modifyBlock(newForm);
         saveHistory(name);
     }
 
@@ -24,13 +24,13 @@ const GridBlockConfig = ({configForm,toggleContentsList,modifyBlock,saveHistory}
         }
     }
 
-    const sortContents = newList => {
+    const sortContents = async (newList) => {
 
         const newForm = {
             ...configForm,
             contents : newList
         }
-        modifyBlock(newForm);
+        await modifyBlock(newForm);
         
         for(let i = 0; i<configForm.contents.length; i++){
             if(configForm.contents[i].index !== newList[i].index){
@@ -41,7 +41,7 @@ const GridBlockConfig = ({configForm,toggleContentsList,modifyBlock,saveHistory}
         }
     }
 
-    const removeContent = () => {
+    const removeContent = async () => {
         if(selectedContent === null){
             alert("선택된 컨텐츠가 없습니다.");
             return false;
@@ -50,7 +50,7 @@ const GridBlockConfig = ({configForm,toggleContentsList,modifyBlock,saveHistory}
             ...configForm,
             contents : configForm.contents.filter(c => c.index !== selectedContent.index)
         }
-        modifyBlock(newForm);
+        await modifyBlock(newForm);
         saveHistory("removeContents");
     }
 

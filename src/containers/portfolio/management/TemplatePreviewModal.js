@@ -134,6 +134,129 @@ const TemplatePreviewModal = ({isOpen,toggle}) => {
         ]
     };
 
+    const workList  = [
+        {
+            "workNumber": 5,
+            "memberNumber": 40,
+            "profileImage": "2021/08/27/0139420255.png",
+            "name": "김준배",
+            "email": "chunbae_father@junbae.com",
+            "keyword1": null,
+            "keyword2": null,
+            "title": "맛-있는 COFFEE *^^*",
+            "backgroundColor": null,
+            "margin": null,
+            "thumbnail": "2021/08/31/0343510619.png",
+            "category1": null,
+            "category2": null,
+            "tag": null,
+            "copyright": null,
+            "status": null,
+            "viewCnt": 8,
+            "registrationDate": null,
+            "updateDate": null,
+            "contentsList": null,
+            "likeList": [
+                {
+                    "workNumber": 5,
+                    "memberNumber": 1,
+                    "registrationDate": "2021-09-29T09:56:13.000+00:00"
+                }
+            ],
+            "commentList": null
+        },
+        {
+            "workNumber": 4,
+            "memberNumber": 1,
+            "profileImage": "2021/08/23/0617470479.png",
+            "name": "이승재",
+            "email": "dltmdwo430@gmail.com",
+            "keyword1": null,
+            "keyword2": null,
+            "title": "리얼서버테스트",
+            "backgroundColor": null,
+            "margin": null,
+            "thumbnail": "2021/08/31/0546350085.png",
+            "category1": null,
+            "category2": null,
+            "tag": null,
+            "copyright": null,
+            "status": null,
+            "viewCnt": 8,
+            "registrationDate": null,
+            "updateDate": null,
+            "contentsList": null,
+            "likeList": [
+                {
+                    "workNumber": 4,
+                    "memberNumber": 1,
+                    "registrationDate": "2021-09-29T09:32:57.000+00:00"
+                }
+            ],
+            "commentList": null
+        },
+        {
+            "workNumber": 3,
+            "memberNumber": 1,
+            "profileImage": "2021/08/23/0617470479.png",
+            "name": "이승재",
+            "email": "dltmdwo430@gmail.com",
+            "keyword1": null,
+            "keyword2": null,
+            "title": "테스트2",
+            "backgroundColor": null,
+            "margin": null,
+            "thumbnail": "2021/08/31/0230090805.png",
+            "category1": null,
+            "category2": null,
+            "tag": null,
+            "copyright": null,
+            "status": null,
+            "viewCnt": 8,
+            "registrationDate": null,
+            "updateDate": null,
+            "contentsList": null,
+            "likeList": [
+                {
+                    "workNumber": 3,
+                    "memberNumber": 1,
+                    "registrationDate": "2021-09-02T01:43:05.000+00:00"
+                }
+            ],
+            "commentList": null
+        },
+        {
+            "workNumber": 2,
+            "memberNumber": 1,
+            "profileImage": "2021/08/23/0617470479.png",
+            "name": "이승재",
+            "email": "dltmdwo430@gmail.com",
+            "keyword1": null,
+            "keyword2": null,
+            "title": "테스트",
+            "backgroundColor": null,
+            "margin": null,
+            "thumbnail": "2021/08/31/1143390917.png",
+            "category1": null,
+            "category2": null,
+            "tag": null,
+            "copyright": null,
+            "status": null,
+            "viewCnt": 19,
+            "registrationDate": null,
+            "updateDate": null,
+            "contentsList": null,
+            "likeList": [
+                {
+                    "workNumber": 2,
+                    "memberNumber": 1,
+                    "registrationDate": "2021-09-22T14:34:50.000+00:00"
+                }
+            ],
+            "commentList": null
+        }
+    ];
+
     const [data,setData] = useState(null);
     const toggleWorkDetailModal = () => {
         console.log("???");
@@ -154,11 +277,11 @@ const TemplatePreviewModal = ({isOpen,toggle}) => {
             <ModalBody>
                 {
                     data !== null &&
-                    <div className="portfolio" style={{fontFamily :`${data.config.fontFamily}`,backgroundColor:`${data.config.backgroundColor}`}}>
+                    <div className="portfolio" style={{fontFamily :`${data.fontFamily}`,backgroundColor:`${data.backgroundColor}`}}>
                         {
                             data.blockList.map(
                                 block => 
-                                    <Block data={block} key={block.index} toggleWorkDetailModal={toggleWorkDetailModal} resume={defaultResume}/>
+                                    <Block data={block} workList={workList} key={block.index} toggleWorkDetailModal={toggleWorkDetailModal} resume={defaultResume}/>
                             )
                         }
                         {/* <WorkDetailModal isOpen={openWorkDetailModal} toggle={toggleWorkDetailModal} item={selectedItem}/> */}

@@ -5,7 +5,7 @@ import { getResumeByMemberNumber,getResumeDetailByResumeNumber } from '../../../
 import moment from 'moment';
 
 
-const ResumeSelectModal = ({openResumeSelectModal,toggleResumeSelectModal,loginMember,toggleSpinnerModal,openResumeDetailModal}) => {
+const ResumeSelectModal = ({openResumeSelectModal,toggleResumeSelectModal,loginMember,toggleSpinnerModal,openResumeDetailModal,setResume}) => {
     const [resumeList,setResumeList] = useState([]);
     
     useEffect(() => {
@@ -16,7 +16,6 @@ const ResumeSelectModal = ({openResumeSelectModal,toggleResumeSelectModal,loginM
 
     const setList = async() => {
         const {data : list} = await getResumeByMemberNumber(loginMember.memberNumber);
-        console.log(list);
         setResumeList(list.filter(l => l.complete === true));
     }
 
@@ -27,6 +26,9 @@ const ResumeSelectModal = ({openResumeSelectModal,toggleResumeSelectModal,loginM
         toggleSpinnerModal(false);
     }
     
+    const selectResume = (resumeNumber) => {
+        
+    }
 
     return (
         <Modal isOpen={openResumeSelectModal} toggle={toggleResumeSelectModal} id="resumeSelectModal" size="xl" centered>
@@ -46,7 +48,7 @@ const ResumeSelectModal = ({openResumeSelectModal,toggleResumeSelectModal,loginM
                                         }
                                     </div>
                                     <div className="itemFooter">
-                                        <Button color="primary">이력서 선택</Button>
+                                        <Button color="primary" onClick={() => setResume(resume.resumeNumber)}>이력서 선택</Button>
                                         <Button color="info" style={{color:"#ffffff"}} onClick={() => handleResumeDetail(resume.resumeNumber)}>이력서 확인</Button>
                                     </div>
                                 </div>

@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
 const MainImage01 = React.lazy(() => import('./image/MainImage01'));
+const TranslucentTitle = React.lazy(() => import('./title/TranslucentTitle'));
 const BasicProfile = React.lazy(() => import('./contents/BasicProfile'));
 const BasicHistory = React.lazy(() => import('./contents/BasicHistory'));
 const SkillList = React.lazy(() => import('./contents/SkillList'));
@@ -15,6 +16,7 @@ const BasicContactForm = React.lazy(() => import('./contact/BasicContactForm'));
 
 const blockList = [
     {id : "mainImage01",component : MainImage01},
+    {id : "translucentTitle",component : TranslucentTitle},
     {id : "basicProfile",component : BasicProfile},
     {id : "basicHistory", component : BasicHistory},
     {id : "skillList", component : SkillList},
@@ -24,7 +26,7 @@ const blockList = [
     {id : "basicContactForm", component : BasicContactForm},
 ]
 
-const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfigBlock,resume}) => {
+const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfigBlock,resume,workList,selectWork}) => {
     const [style,setStyle] = useState({
         paddingTop : 0,
         paddingBottom : 0,
@@ -53,7 +55,7 @@ const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfi
                                     data.contents.map(
                                         (contents,index) => {
                                             const obj = blockList.find(block => block.id === contents.id);
-                                            return <Route render={() => (<obj.component {...contents} grid={data.grid} resume={resume} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
+                                            return <Route render={() => (<obj.component {...contents} contents={contents} grid={data.grid} workList={workList} resume={resume} selectWork={selectWork}/>)} key={index} />
                                         }       
                                     )
                                 }
@@ -65,7 +67,7 @@ const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfi
                                 data.contents.map(
                                     (contents,index) => {
                                         const obj = blockList.find(block => block.id === contents.id);
-                                        return <Route render={() => (<obj.component {...contents} grid={data.grid} resume={resume} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
+                                        return <Route render={() => (<obj.component {...contents} grid={data.grid} contents={contents} workList={workList} resume={resume} selectWork={selectWork}/>)} key={index}/>
                                     }       
                                 )
                             }
@@ -77,7 +79,7 @@ const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfi
                             data.contents.map(
                                 (contents,index) => {
                                     const obj = blockList.find(block => block.id === contents.id);
-                                    return <Route render={() => (<obj.component {...contents} grid={data.grid} resume={resume} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
+                                    return <Route render={() => (<obj.component {...contents} grid={data.grid} contents={contents} workList={workList} resume={resume} selectWork={selectWork}/>)} key={index}/>
                                 }       
                             )        
                         }
@@ -86,7 +88,7 @@ const Block = ({data,toggleWorkDetailModal,configMode,toggleAddBlock,selectConfi
                     data.contents.map(
                         (contents,index) => {
                             const obj = blockList.find(block => block.id === contents.id);
-                            return <Route render={() => (<obj.component {...contents} grid={data.grid} resume={resume} toggleWorkDetailModal={toggleWorkDetailModal}/>)} key={index}/>
+                            return <Route render={() => (<obj.component {...contents} grid={data.grid} contents={contents} workList={workList} resume={resume} selectWork={selectWork}/>)} key={index}/>
                         }       
                     )
             }

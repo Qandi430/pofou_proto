@@ -767,3 +767,38 @@
         }
     }
 }
+
+#configNoticeModal{
+    .modal-body{
+        > div{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1em 3em;
+            h2{
+                font-weight: bold;
+                font-size: 2rem;
+            }
+            p{
+                margin-top: 1em;
+            }
+            hr{
+                background-color: #696c71;
+                width: 100%;
+                &+p{
+                    margin-top: 0;
+                }
+            }
+            h6{
+                font-weight: bold;
+                margin-top: 1em;
+            }
+        }
+    }
+    .modal-footer{
+        button{
+            flex: 1;
+        }
+    }
+}

@@ -18,15 +18,19 @@ const DetailItem = ({openDetailItemList,toggleOpenDetailItem,contents,modifyCont
                 <div className="panelWrap">
                     {
                         contents.type === "profile" &&
-                            <ProfileForm contents={contents} modifyContents={modifyDetailItem}/>
+                            <ProfileForm contents={contents} modifyContents={modifyContents} saveHistory={saveHistory}/>
                     }
                     {
                         contents.type === "skillList" &&
-                            <SkillForm contents={contents} modifyContents={modifyDetailItem}/>
+                            <SkillForm contents={contents} modifyContents={modifyContents} saveHistory={saveHistory}/>
                     }
                     {
-                        contents.type === "title" &&
-                            <TitleForm/>
+                        contents.type === "history" &&
+                            <HistoryForm contents={contents} modifyContents={modifyContents} saveHistory={saveHistory}/>
+                    }
+                    {
+                        contents.type === "work" &&
+                            <WorkForm contents={contents} modifyContents={modifyContents} saveHistory={saveHistory}/>
                     }
                 </div>
             </div>
@@ -36,61 +40,69 @@ const DetailItem = ({openDetailItemList,toggleOpenDetailItem,contents,modifyCont
 
 export default DetailItem;
 
-const ProfileForm = ({contents,modifyContents}) => {
+const ProfileForm = ({contents,modifyContents,saveHistory}) => {
     
-    const togglePrivacyInfo = e => {
-        contents.privacy[e.target.name] = e.target.checked;
-        modifyContents(contents);
+    const togglePrivacyInfo = async (e) => {
+        contents.profile[e.target.name] = e.target.checked;
+        await modifyContents(contents);
+        saveHistory(e.target.name)
     }
 
     return(
         <div className="detailForm profileForm">
             <dl>
+                <dt>사진</dt>
+                <dd>
+                    <input className="tgl tgl-light" id={`displayPhoto${contents.index}`} type="checkbox" checked={contents.profile.displayPhoto} name="displayPhoto" onChange={ e => togglePrivacyInfo(e)}/>
+                    <label className="tgl-btn small" htmlFor={`displayPhoto${contents.index}`}></label>
+                </dd>
+            </dl>
+            <dl>
                 <dt>이름</dt>
                 <dd>
-                    <input className="tgl tgl-light" id={`displayName${contents.index}`} type="checkbox" checked={contents.privacy.displayName} name="displayName" onChange={ e => togglePrivacyInfo(e)}/>
+                    <input className="tgl tgl-light" id={`displayName${contents.index}`} type="checkbox" checked={contents.profile.displayName} name="displayName" onChange={ e => togglePrivacyInfo(e)}/>
                     <label className="tgl-btn small" htmlFor={`displayName${contents.index}`}></label>
                 </dd>
             </dl>
             <dl>
                 <dt>생년월일</dt>
                 <dd>
-                    <input className="tgl tgl-light" id={`displayBirthDate${contents.index}`} type="checkbox" checked={contents.privacy.displayBirthDate} name="displayBirthDate" onChange={ e => togglePrivacyInfo(e)}/>
+                    <input className="tgl tgl-light" id={`displayBirthDate${contents.index}`} type="checkbox" checked={contents.profile.displayBirthDate} name="displayBirthDate" onChange={ e => togglePrivacyInfo(e)}/>
                     <label className="tgl-btn small" htmlFor={`displayBirthDate${contents.index}`}></label>
                 </dd>
             </dl>
             <dl>
                 <dt>성별</dt>
                 <dd>
-                    <input className="tgl tgl-light" id={`displayGender${contents.index}`} type="checkbox" checked={contents.privacy.displayGender} name="displayGender" onChange={ e => togglePrivacyInfo(e)}/>
+                    <input className="tgl tgl-light" id={`displayGender${contents.index}`} type="checkbox" checked={contents.profile.displayGender} name="displayGender" onChange={ e => togglePrivacyInfo(e)}/>
                     <label className="tgl-btn small" htmlFor={`displayGender${contents.index}`}></label>
                 </dd>
             </dl>
             <dl>
                 <dt>전화번호</dt>
                 <dd>
-                    <input className="tgl tgl-light" id={`displayPhone${contents.index}`} type="checkbox" checked={contents.privacy.displayPhone} name="displayPhone" onChange={ e => togglePrivacyInfo(e)}/>
+                    <input className="tgl tgl-light" id={`displayPhone${contents.index}`} type="checkbox" checked={contents.profile.displayPhone} name="displayPhone" onChange={ e => togglePrivacyInfo(e)}/>
                     <label className="tgl-btn small" htmlFor={`displayPhone${contents.index}`}></label>
                 </dd>
             </dl>
             <dl>
                 <dt>휴대전화번호</dt>
                 <dd>
-                    <input className="tgl tgl-light" id={`displayMobile${contents.index}`} type="checkbox" checked={contents.privacy.displayMobile} name="displayMobile" onChange={ e => togglePrivacyInfo(e)}/>
+                    <input className="tgl tgl-light" id={`displayMobile${contents.index}`} type="checkbox" checked={contents.profile.displayMobile} name="displayMobile" onChange={ e => togglePrivacyInfo(e)}/>
                     <label className="tgl-btn small" htmlFor={`displayMobile${contents.index}`}></label>
                 </dd>
             </dl>
             <dl>
                 <dt>이메일</dt>
                 <dd>
-                    <input className="tgl tgl-light" id={`displayEmail${contents.index}`} type="checkbox" checked={contents.privacy.displayEmail} name="displayEmail" onChange={ e => togglePrivacyInfo(e)}/>
+                    <input className="tgl tgl-light" id={`displayEmail${contents.index}`} type="checkbox" checked={contents.profile.displayEmail} name="displayEmail" onChange={ e => togglePrivacyInfo(e)}/>
                     <label className="tgl-btn small" htmlFor={`displayEmail${contents.index}`}></label>
                 </dd>
             </dl>
             <dl>
                 <dt>주소</dt>
                 <dd>
-                    <input className="tgl tgl-light" id={`displayAddress${contents.index}`} type="checkbox" checked={contents.privacy.displayAddress} name="displayAddress" onChange={ e => togglePrivacyInfo(e)}/>
+                    <input className="tgl tgl-light" id={`displayAddress${contents.index}`} type="checkbox" checked={contents.profile.displayAddress} name="displayAddress" onChange={ e => togglePrivacyInfo(e)}/>
                     <label className="tgl-btn small" htmlFor={`displayAddress${contents.index}`}></label>
                 </dd>
             </dl>
@@ -98,90 +110,101 @@ const ProfileForm = ({contents,modifyContents}) => {
     )
 }
 
-const historyForm = () => {
-
+const HistoryForm = ({contents,modifyContents,saveHistory}) => {
+    const historyData = [
+        {
+            name : "basicHistory",
+            ableList : ["education","career"],
+        },
+    ];
+    const changeLink = async(link) => {
+        contents.link = link;
+        await modifyContents(contents);
+        saveHistory("historyLink");
+    }
+    return (
+        <div className="detailForm historyForm">
+            <dl>
+                <dt>링크</dt>
+                <dd>
+                    <Input type="select" defaultValue={contents.link} onChange={ e => changeLink(e.target.value)}>
+                        {
+                            historyData.find(data => data.name === contents.id).ableList.indexOf("education") > -1 &&
+                            <option value="education">학력</option>
+                        }
+                        {
+                            historyData.find(data => data.name === contents.id).ableList.indexOf("career") > -1 &&
+                            <option value="career">경력</option>
+                        }
+                    </Input>
+                </dd>
+            </dl>
+        </div>
+    )
 }
 
-const SkillForm = ({contents,modifyContents}) => {
+const SkillForm = ({contents,modifyContents,saveHistory}) => {
 
-    const changeColors = (name,value) => {
-        if(name === "bar"){
-            contents.skill.colors.bar = value;
-        }else{
-            contents.skill.colors.title[name] = value;
+    const changeColors = async (name,value) => {
+        contents.skill[name] = value;
+        await modifyContents(contents);
+        let historyName = "";
+        if(name === "background"){
+            historyName = "skillBackground";
+        }else if(name === "text"){
+            historyName = "skillText";
+        }else if(name === "bar"){
+            historyName = "skillBar";
         }
-        modifyContents(contents);
+        saveHistory(historyName);
     }
 
-    const changeListItem = (index,name,value) => {
-        contents.skill.list = contents.skill.list.map(
-            (s,i) => 
-                i === index ? {...s,[name] : value} : s
-        )
-        modifyContents(contents);
-    }
-
-    const removeListItem = index => {
-        contents.skill.list = contents.skill.list.filter((s,i) => i !== index);
-        modifyContents(contents);
-    }
     
-    const setList = (newList) => {
-        contents.skill.list = newList;
-        modifyContents(contents);
-    }
-
-    const addSkill = () => {
-        contents.skill.list = contents.skill.list.concat({type : "",level : 0});        
-        modifyContents(contents);
-    }
 
     return(
         <div className="detailForm skillForm">
             <dl>
                 <dt>스킬명 배경색</dt>
                 <dd>
-                    <label htmlFor="skillTitleBgColor" style={{backgroundColor:`${contents.skill.colors.title.background}`}} /> 
-                    <input type="color" id="skillTitleBgColor" value={contents.skill.colors.title.background} onChange={e => changeColors("background",e.target.value)}/>
+                    <label htmlFor="skillTitleBgColor" style={{backgroundColor:`${contents.skill.background}`}} /> 
+                    <input type="color" id="skillTitleBgColor" value={contents.skill.background} onChange={e => changeColors("background",e.target.value)}/>
                 </dd>
             </dl>
             <dl>
                 <dt>스킬명 글색</dt>
                 <dd>
-                    <label htmlFor="skillTitleColor" style={{backgroundColor:`${contents.skill.colors.title.text}`}} /> 
-                    <input type="color" id="skillTitleColor" value={contents.skill.colors.title.text} onChange={e => changeColors("text",e.target.value)}/>
+                    <label htmlFor="skillTitleColor" style={{backgroundColor:`${contents.skill.text}`}} /> 
+                    <input type="color" id="skillTitleColor" value={contents.skill.text} onChange={e => changeColors("text",e.target.value)}/>
                 </dd>
             </dl>
             <dl>
                 <dt>스킬바 색상</dt>
                 <dd>
-                    <label htmlFor="skillBarColor" style={{backgroundColor:`${contents.skill.colors.bar}`}} /> 
-                    <input type="color" id="skillBarColor" value={contents.skill.colors.bar} onChange={e => changeColors("bar",e.target.value)}/>
+                    <label htmlFor="skillBarColor" style={{backgroundColor:`${contents.skill.bar}`}} /> 
+                    <input type="color" id="skillBarColor" value={contents.skill.bar} onChange={e => changeColors("bar",e.target.value)}/>
                 </dd>
             </dl>
-            <ReactSortable list={contents.skill.list} setList={newList => setList(newList)} style={{padding: "5px 10px"}}>
-                {
-                    contents.skill.list.map(
-                        (skill,index) => (
-                            <div key={index} style={{display:"flex",alignItems:"center",marginTop:"10px"}}>
-                                <span style={{cursor:"pointer"}}><FontAwesomeIcon icon={faBars}/></span>
-                                <Input type="text" value={skill.type} onChange={e => changeListItem(index,"type",e.target.value)} style={{flex:"0 0 40%",marginLeft:"10px"}} placeholder="기술명 : 예)포토샵"/>
-                                <Input type="number" min="0" max="100" value={skill.level} onChange={e => changeListItem(index,"level",e.target.value)} style={{flex:"0 0 40%",marginLeft:"10px"}} placeholder="점수 : 예)100"/>
-                                <button onClick={() => removeListItem(index)} style={{marginLeft:"auto",backgroundColor:"transparent",color:"#ff0000"}}><FontAwesomeIcon icon={faTimes}/></button>
-                            </div>
-                        )
-                    )
-                }
-            </ReactSortable>
-            <button className="btnAdd" onClick={addSkill}><FontAwesomeIcon icon={faPlus}/> 추가</button>
         </div>
     )
 };
 
-const TitleForm = () => {
-    return (
-        <div>
-            asdf
+const WorkForm = ({contents,modifyContents,saveHistory}) => {
+
+    const changeGrid = async (grid) => {
+        contents.grid = grid;
+        await modifyContents(contents);
+        saveHistory("workGrid");
+    }
+
+    return(
+        <div className="detailForm workForm">
+            <dl>
+                <dt>그리드</dt>
+                <dd style={{display:"flex"}}>
+                    <span style={{flex:"0 0 20%",color:"#4789e7"}}>{contents !== null && contents.grid}</span>
+                    <input style={{flex:"0 0 80%"}} type="range" min="1" max="6" value={contents !== null && contents.grid} onChange={e => changeGrid(e.target.value)}/>
+                </dd>
+            </dl>
         </div>
     )
 }

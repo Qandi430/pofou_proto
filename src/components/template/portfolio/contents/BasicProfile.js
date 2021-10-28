@@ -2,7 +2,7 @@ import moment from 'moment';
 import React,{useState, useEffect} from 'react';
 import defaultImage from '../../../../resources/images/contents/resume/default_profile.png'
 
-const BasicProfile = ({privacy,grid,resume}) => {
+const BasicProfile = ({profile,grid,resume}) => {
 
     const [birthYear,setBirthYear] = useState(0);
     const [age,setAge] = useState(0);
@@ -34,49 +34,49 @@ const BasicProfile = ({privacy,grid,resume}) => {
             </div>
             <div className="privacyList">
                 {
-                    privacy.info.name !== "" && privacy.displayName &&
+                    profile.displayName &&
                     <dl className="name">
                         <dt>이름</dt>
                         <dd>{resume.name}</dd>
                     </dl>
                 }
                 {
-                    resume.birthDate !== "" && privacy.displayBirthDate &&
+                    profile.displayBirthDate &&
                     <dl className="name">
                         <dt>생년월일</dt>
                         <dd>{`${moment(new Date(resume.birthDate !== "" ? resume.birthDate : "")).format("YYYY.MM.DD")}`} (만 {international}세)</dd>
                     </dl>
                 }
                 {
-                    resume.gender !== "" && privacy.displayGender &&
+                    profile.displayGender &&
                     <dl className="name">
                         <dt>성별</dt>
                         <dd>{resume.gender === "M" ? "남" : "여"}</dd>
                     </dl>
                 }
                 {
-                    privacy.displayPhone &&
+                    profile.displayPhone &&
                     <dl className="name">
                         <dt>전화번호</dt>
                         <dd>{resume.phone}</dd>
                     </dl>
                 }
                 {
-                    privacy.displayMobile &&
+                    profile.displayMobile &&
                     <dl className="name">
                         <dt>휴대전화번호</dt>
                         <dd>{resume.mobile}</dd>
                     </dl>
                 }
                 {
-                    privacy.displayEmail &&
+                    profile.displayEmail &&
                     <dl className="name">
                         <dt>이메일</dt>
                         <dd>{resume.email}</dd>
                     </dl>
                 }
                 {
-                    privacy.displayAddress &&
+                    profile.displayAddress &&
                     <dl className="name">
                         <dt>주소</dt>
                         <dd>{resume.baseAddress} {resume.detailAddress}</dd>

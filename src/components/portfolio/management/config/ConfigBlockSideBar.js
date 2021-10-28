@@ -2,6 +2,7 @@ import { faCopy, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faArrowsAltV, faChevronRight, faFolderOpen,  faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React,{useEffect, useState} from 'react';
+import { createPortfolioConsumer } from '../../../../context/portfolioContext';
 import transparentImage from '../../../../resources/images/common/transparent.png';
 import ContentsList from './ContentsList';
 import DetailItem from './DetailItem';
@@ -16,7 +17,7 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock
     const [configForm,setConfigForm] = useState(null);
     const [openContentsList,setOpenContentsList] = useState("");
     const [openDetailItemList,setOpenDetailItemList] = useState([]);
-    const [timer,setTimer] = useState(0);
+
     useEffect(() => {
         if(configBlock !== null){
             setConfigForm(configBlock);
@@ -66,14 +67,14 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock
         }
     }
 
-    const changeFormData = (name,value) => {
+    const changeFormData = async (name,value) => {
         
         const newForm = {
             ...configForm,
             [name] : value,
         }
 
-        modifyBlock(newForm);
+        await modifyBlock(newForm);
         saveHistory(name);
     }
 
@@ -85,14 +86,14 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock
         }
     }
 
-    const addContents = contents => {
+    const addContents =  async (contents) => {
         let newContents = JSON.parse(JSON.stringify(contents));
         newContents["index"] = configForm.contents.length;
         const newForm = {
             ...configForm,
             contents : configForm.contents.concat(newContents),
         }
-        modifyBlock(newForm);
+        await modifyBlock(newForm);
         setOpenContentsList("");
         saveHistory("addContents");
     }
@@ -119,6 +120,7 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock
         modifyBlock(newForm);
         setOpenContentsList("");
     }
+    
 
     return (
         <div className={`configBlockSideBar ${configBlock !== null ? "on" : ""}`}>
@@ -169,7 +171,7 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock
                         }
                         {
                             ((configBlock !== null && configForm !== null) && (configForm.category === "title")) &&
-                            <TitleBlockConfig configForm={configForm} modifyBlock={modifyBlock}/>
+                            <TitleBlockConfig configForm={configForm} modifyBlock={modifyBlock} saveHistory={saveHistory}/>
                         }
                         {
                             ((configBlock !== null && configForm !== null) && (configForm.category === "image")) &&
@@ -291,4 +293,4 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock
     )
 }
 
-export default ConfigBlockSideBar;
+export default createPortfolioConsumer(ConfigBlockSideBar);

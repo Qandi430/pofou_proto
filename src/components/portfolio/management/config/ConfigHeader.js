@@ -2,8 +2,9 @@ import { faCopy, faEdit, faPlayCircle } from '@fortawesome/free-regular-svg-icon
 import { faArrowsAltH, faArrowsAltV, faFillDrip, faPlus, faSort, faTh, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
+import { createPortfolioConsumer } from '../../../../context/portfolioContext';
 
-const ConfigHeader = ({modifyHistory,revertHistory}) => {
+const ConfigHeader = ({modifyHistory,revertHistory,toggleNoticeModal}) => {
     const [openHistoryBox,setOpenHistoryBox] = useState(false);
     return(
         <header className="configHeader">
@@ -15,8 +16,8 @@ const ConfigHeader = ({modifyHistory,revertHistory}) => {
                     되돌리기
                     <HistoryBox openHistoryBox={openHistoryBox} modifyHistory={modifyHistory} revertHistory={revertHistory}/>        
                 </button>
-                <button>저장하기</button>
-                <button>편집끝내기</button>
+                <button onClick={() => toggleNoticeModal("update")}>저장하기</button>
+                <button onClick={() => toggleNoticeModal("quit")}>편집끝내기</button>
             </div>
         </header>
     )
@@ -130,6 +131,140 @@ const HistoryBox = ({openHistoryBox,modifyHistory,revertHistory}) => {
                                             컨텐츠 수정됨
                                         </li>
                                     )
+                                case "titleContent":
+                                    return(
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            타이틀 내용 수정됨
+                                        </li>
+                                    )
+                                case "titleFontFamily":
+                                    return(
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            타이틀 폰트 변경됨
+                                        </li>
+                                    )
+                                case "titleColor":
+                                    return(
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            타이틀 컬러 변경됨
+                                        </li>
+                                    )
+                                case "titleTextAlign":
+                                    return(
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            타이틀 정렬 변경됨
+                                        </li>
+                                    )
+                                case "subTitleContent":
+                                    return(
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            서브 타이틀 내용 수정됨
+                                        </li>
+                                    )
+                                case "subTitleFontFamily":
+                                    return(
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            서브 타이틀 폰트 변경됨
+                                        </li>
+                                    )
+                                case "subTitleColor":
+                                    return(
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            서브 타이틀 컬러 변경됨
+                                        </li>
+                                    )
+                                case "subTitleTextAlign":
+                                    return(
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            서브 타이틀 정렬 변경됨
+                                        </li>
+                                    )
+                                case "displayPhoto":
+                                    return (
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            프로필사진 노출 여부 변경됨
+                                        </li>
+                                    );
+                                case "displayName":
+                                    return (
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            프로필 이름 노출여부 변경됨
+                                        </li>
+                                    );
+                                case "displayBirthDate":
+                                    return (
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            프로필 생년월일 노출여부 변경됨
+                                        </li>
+                                    );
+                                case "displayPhone":
+                                    return (
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            프로필 전화번호 노출여부 변경됨
+                                        </li>
+                                    );
+                                case "displayAddress":
+                                    return (
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            프로필 주소 노출여부 변경됨
+                                        </li>
+                                    );
+                                case "displayMobile":
+                                    return (
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            프로필 휴대전화번호 노출여부 변경됨
+                                        </li>
+                                    );
+                                case "historyLink":
+                                    return (
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            히스토리 링크 변경됨
+                                        </li>
+                                    );
+                                case "skillBackground":
+                                    return (
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            스킬 배경색 변경됨
+                                        </li>
+                                    );
+                                case "skillText":
+                                    return (
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            스킬명 색상 변경됨
+                                        </li>
+                                    );
+                                case "skillBar":
+                                    return (
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            스킬 바 색상 변경됨
+                                        </li>
+                                    );
+                                case "workGrid":
+                                    return (
+                                        <li key={index} onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>
+                                            <FontAwesomeIcon icon={faEdit}/>
+                                            작업물 가로개수 변경됨
+                                        </li>
+                                    );
+                                
                                 default:
                                     return(
                                         <li key={index}  onClick={() => revertHistory(history.index)} className={`${index === modifyHistory.length -1 ? "on" : ""}`}>{history.history}</li>
@@ -143,4 +278,4 @@ const HistoryBox = ({openHistoryBox,modifyHistory,revertHistory}) => {
     )
 }
 
-export default ConfigHeader;
+export default createPortfolioConsumer(ConfigHeader);

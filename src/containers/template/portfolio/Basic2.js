@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import Block from '../../../components/template/portfolio/Block';
-import WorkDetailModal from '../../../components/template/portfolio/WorkdDetailModal';
+
 import MainImage from '../../../resources/images/template/portfolio/basic/basicMainImage.jpg';
 import ProfileImage from '../../../resources/images/template/profile.jpg'
 import thumb1 from '../../../resources/images/main/thumb01.gif';
@@ -335,7 +335,7 @@ const Basic2 = () => {
                         <Block data={block} key={block.index} toggleWorkDetailModal={toggleWorkDetailModal}/>
                 )
             }
-            <WorkDetailModal isOpen={openWorkDetailModal} toggle={toggleWorkDetailModal} item={selectedItem}/>
+            
         </div>
     )
 }

@@ -32,6 +32,10 @@ const getCommentListByWorkNumber = (workNumber) => (
     axios.get("/work/getCommentListByWorkNumber",{params:{workNumber:workNumber}})
 )
 
+const getWorkListByMemberNumber = (memberNumber) => (
+    axios.get("/work/getWorkListByMemberNumber",{params:{memberNumber:memberNumber}})
+)
+
 export {
     upload,
     getWorkDetail,
@@ -41,4 +45,5 @@ export {
     insertComment,
     insertReComment,
     getCommentListByWorkNumber,
+    getWorkListByMemberNumber,
 }

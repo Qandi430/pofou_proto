@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode';
 import cookie from 'react-cookies';
 import publicIp from 'react-public-ip';
 import { getQuery } from '../components/common/CommonScript';
+import { debounce } from 'lodash-es';
 
 const Context  = createContext();
 
@@ -105,7 +106,6 @@ class CommonProvider extends Component{
     }
 
     toggleSpinnerModal = (status) => {
-        console.log(status);
         if(status === undefined){
             this.setState({
                 ...this.state,
@@ -118,6 +118,7 @@ class CommonProvider extends Component{
             })
         }
     }
+    toggleSpinnerModal = debounce(this.toggleSpinnerModal,500);
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.history !== undefined) {

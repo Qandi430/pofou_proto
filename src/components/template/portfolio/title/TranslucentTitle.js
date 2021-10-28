@@ -1,8 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-const BasicTitle = ({grid,title,subTitle}) => {    
+const TranslucentTitle = ({title,media}) => {
     return (
-        <div className={`title basicTitle grid${grid === null || grid === undefined ? 1 : grid}`}>
+        <div className="mainImage01" style={{backgroundImage : `url(${media})`}}>
+            <div className="titleWrap">
             <h3 
                 className={`title`} 
                 style={{
@@ -14,7 +15,9 @@ const BasicTitle = ({grid,title,subTitle}) => {
                 }} 
                 dangerouslySetInnerHTML={{__html: title.title === null || title.title === undefined ? "Title" : title.title}}
             />
+            </div>
         </div>
     )
 }
-export default BasicTitle;
+
+export default TranslucentTitle

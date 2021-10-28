@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { ReactSortable } from 'react-sortablejs';
 import { Modal,ModalBody,ModalFooter,Button } from 'reactstrap';
+import { createPortfolioConsumer } from '../../../../context/portfolioContext';
 import Block from '../../../template/portfolio/Block';
 
-const SortBlockModal = ({isOpen,toggle,data,saveSortBlock}) => {
+const SortBlockModal = ({openSortBlockModal,toggleSortBlockModal,portfolioData,saveSortBlock}) => {
 
     const [blockList,setBlockList] = useState([]);
 
     useEffect(() => {
-        if(isOpen) setBlockList(data.blockList);
+        if(openSortBlockModal) setBlockList(portfolioData.blockList);
         else setBlockList([]);
-    },[isOpen,data]);
+    },[openSortBlockModal,portfolioData]);
 
     const sortBlock = newList => {
         setBlockList(newList);
@@ -21,7 +22,7 @@ const SortBlockModal = ({isOpen,toggle,data,saveSortBlock}) => {
     }
 
     return(
-        <Modal isOpen={isOpen} toggle={toggle} id="sortBlockModal" className="modal-fullscreen">
+        <Modal isOpen={openSortBlockModal} toggle={toggleSortBlockModal} id="sortBlockModal" className="modal-fullscreen">
             <ModalBody>
                 <div className="sortBlockHeader">
                     <div className="headerTitle">
@@ -29,7 +30,7 @@ const SortBlockModal = ({isOpen,toggle,data,saveSortBlock}) => {
                         <p>블럭을 드래그하여 위치를 변경하세요</p>
                     </div>
                     <div className="headerButton">
-                        <Button color="danger" onClick={toggle}>취소</Button>
+                        <Button color="danger" onClick={toggleSortBlockModal}>취소</Button>
                         <Button color="primary" onClick={handleSaveSort}>저장</Button>
                     </div>
                 </div>
@@ -48,4 +49,4 @@ const SortBlockModal = ({isOpen,toggle,data,saveSortBlock}) => {
     )
 }
 
-export default SortBlockModal;
+export default createPortfolioConsumer(SortBlockModal);

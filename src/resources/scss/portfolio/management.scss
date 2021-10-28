@@ -1,6 +1,6 @@
 .portfolio{
     .management{
-        .empty{
+        >.empty{
             height: 600px;
             width: 100%;
             margin: 0 auto;
@@ -26,5 +26,6 @@
                 }
             }
         }
+        @import "./dashboard.scss";
     }
 }
