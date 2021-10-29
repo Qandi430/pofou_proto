@@ -30,6 +30,7 @@ class PortfolioProvider extends Component{
             modifyHistory : [],
             openNoticeModal : "",
             managementData : null,
+            checkManagementData : false,
         };
     }
 
@@ -76,16 +77,19 @@ class PortfolioProvider extends Component{
             }
             window.addEventListener('keydown', this.handleKeyDown)
         }
+        if(!this.props.openSpinnerModal){
+            document.body.classList.remove('modal-open');
+        }
     }
 
     componentDidUpdate(prevProps,prevState){
-        console.log("protfileContext componentDidupdate")
+        
         const memberToken = cookie.load("memberToken");
         let loginMember = null;
         if(memberToken !== undefined){
             loginMember = jwtDecode(memberToken);
         }
-        console.log(memberToken,loginMember);
+        
         if(this.state.loginMember === null){
             if(memberToken !== undefined && loginMember !== null){  
                 this.setState({
@@ -104,7 +108,7 @@ class PortfolioProvider extends Component{
             }
         }
         if(this.props.history.location.pathname.indexOf("/portfolio/management") > -1){
-            if(this.state.managementData === null || this.state.managementData === ""){
+            if((this.state.managementData === null || this.state.managementData === "") && !this.state.checkManagementData){
                 if(memberToken !== undefined && loginMember !== null){
                     this.getPortfolioMangement(loginMember.member.memberNumber);
                 }else{
@@ -122,6 +126,9 @@ class PortfolioProvider extends Component{
             window.addEventListener('keydown', this.handleKeyDown)
         }
         // const portfolioId = this.props.match.
+        if(!this.props.openSpinnerModal){
+            document.body.classList.remove('modal-open');
+        }
     }
 
     actions = {
@@ -155,9 +162,11 @@ class PortfolioProvider extends Component{
         const {data : managementData} = await getPortfolioDataByMemberNumber(memberNumber);
         this.setState({
             ...this.state,
+            checkManagementData : true,
             managementData : managementData,
         });
-    }
+    };
+    getPortfolioMangement = debounce(this.getPortfolioMangement,500);
 
     //config
     getPortfolioData = async(id) => {
@@ -189,14 +198,16 @@ class PortfolioProvider extends Component{
         
         const {data} = await createPortfolio(this.state.portfolidForm);
         if(data){
-            this.props.history.push(`/portfolio/config/${this.state.loginMember.url}`);
-            this.setState({
+            await this.setState({
+                checkManagementData : false,
                 openResumeSelectModal : false,
             });
+            this.props.toggleSpinnerModal(false);
+            this.props.history.push(`/portfolio/config/${this.state.loginMember.url}`);
         }else{
             alert("포트폴리오 개설에 실패하였습니다.");
-        }
-        this.props.toggleSpinnerModal(false);
+            this.props.toggleSpinnerModal(false);
+        }   
     }
 
     getPortfolio = async (url) => {
