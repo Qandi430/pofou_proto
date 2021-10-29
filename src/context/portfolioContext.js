@@ -35,9 +35,13 @@ class PortfolioProvider extends Component{
 
     componentDidMount(){
         const memberToken = cookie.load("memberToken");
-        const loginMember = jwtDecode(memberToken);
+        let loginMember = null;
+        if(memberToken !== undefined){
+            loginMember = jwtDecode(memberToken);
+        }
+        // const loginMember = jwtDecode(memberToken);
         if(this.state.loginMember === null){
-            if(memberToken !== undefined){  
+            if(memberToken !== undefined && loginMember !== null){  
                 this.setState({
                     ...this.state,
                     loginMember : loginMember.member
@@ -47,10 +51,21 @@ class PortfolioProvider extends Component{
                 alert("로그인시 이용 가능합니다.");
                 this.props.history.push("/");
             };   
+        }else{
+            if(memberToken !== undefined && loginMember !== null){
+                
+                alert("로그인시 이용 가능합니다.");
+                this.props.history.push("/");
+            }
         }
         if(this.props.history.location.pathname.indexOf("/portfolio/management") > -1){
-            if(this.state.managementData === null){
-                this.getPortfolioMangement(loginMember.member.memberNumber);
+            if(this.state.managementData === null || this.state.managementData === ""){
+                if(memberToken !== undefined && loginMember !== null){
+                    this.getPortfolioMangement(loginMember.member.memberNumber);
+                }else{
+                    alert("로그인시 이용 가능합니다.");
+                    this.props.history.push("/");
+                }
             }   
         }
         if(this.props.history.location.pathname.indexOf("/portfolio/config") > -1){
@@ -64,23 +79,38 @@ class PortfolioProvider extends Component{
     }
 
     componentDidUpdate(prevProps,prevState){
+        console.log("protfileContext componentDidupdate")
         const memberToken = cookie.load("memberToken");
-        const loginMember = jwtDecode(memberToken);
+        let loginMember = null;
+        if(memberToken !== undefined){
+            loginMember = jwtDecode(memberToken);
+        }
+        console.log(memberToken,loginMember);
         if(this.state.loginMember === null){
-            if(memberToken !== undefined){  
+            if(memberToken !== undefined && loginMember !== null){  
                 this.setState({
                     ...this.state,
                     loginMember : loginMember.member
                 });
-                
             }else{
                 alert("로그인시 이용 가능합니다.");
                 this.props.history.push("/");
             };   
+        }else{
+            if(memberToken === undefined && loginMember === null){
+                console.log("login")
+                alert("로그인시 이용 가능합니다.");
+                this.props.history.push("/");
+            }
         }
         if(this.props.history.location.pathname.indexOf("/portfolio/management") > -1){
-            if(this.state.managementData === null){
-                this.getPortfolioMangement(loginMember.member.memberNumber);
+            if(this.state.managementData === null || this.state.managementData === ""){
+                if(memberToken !== undefined && loginMember !== null){
+                    this.getPortfolioMangement(loginMember.member.memberNumber);
+                }else{
+                    alert("로그인시 이용 가능합니다.");
+                    this.props.history.push("/");
+                }
             }   
         }
         if(this.props.history.location.pathname.indexOf("/portfolio/config") > -1){
@@ -123,7 +153,6 @@ class PortfolioProvider extends Component{
     //management
     getPortfolioMangement = async (memberNumber) => {
         const {data : managementData} = await getPortfolioDataByMemberNumber(memberNumber);
-        console.log(managementData);
         this.setState({
             ...this.state,
             managementData : managementData,
@@ -142,8 +171,6 @@ class PortfolioProvider extends Component{
     }
 
     toggleResumeSelectModal = (portfolioName) => {
-        console.log(portfolioName);
-        
         let newPortfolio = null;
         if(portfolioName !== undefined && typeof portfolioName === "string"){
             newPortfolio =  getDataByName(portfolioName);
@@ -156,24 +183,20 @@ class PortfolioProvider extends Component{
     }
 
     setResume = async (resumeNumber) => {
-        // const {data : resume} = await getResumeDetailByResumeNumber(resumeNumber);
-        //db insert
+        this.props.toggleSpinnerModal(true);
         this.state.portfolidForm.memberNumber = this.state.loginMember.memberNumber;
         this.state.portfolidForm.resumeNumber = resumeNumber;
-        const {data} = await createPortfolio(this.state.portfolidForm);
-        this.props.toggleSpinnerModal(true);
         
+        const {data} = await createPortfolio(this.state.portfolidForm);
         if(data){
-            this.props.history.push(`/portfolio/config/${this.state.loginMember.url}`)
+            this.props.history.push(`/portfolio/config/${this.state.loginMember.url}`);
+            this.setState({
+                openResumeSelectModal : false,
+            });
         }else{
             alert("포트폴리오 개설에 실패하였습니다.");
         }
         this.props.toggleSpinnerModal(false);
-        // this.setState({
-        //     ...this.state,
-        //     resume : resume
-        // });
-        // this.props.history.push()
     }
 
     getPortfolio = async (url) => {

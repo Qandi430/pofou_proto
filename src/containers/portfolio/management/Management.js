@@ -8,7 +8,7 @@ const Management = ({managementData}) => {
     return (
         <div className="management">
             {
-                managementData !== null ? 
+                managementData !== null && managementData !== "" ? 
                 <Dashboard/>
                 :
                 <TemplateList/>    

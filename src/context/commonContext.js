@@ -51,14 +51,11 @@ class CommonProvider extends Component{
     //login action
     loginAction = async(email,password) => {
         this.toggleSpinnerModal(true);
-        console.log(email,password);
         const {data}  = await login(email,password);
-        console.log(data);
         if(data.result === "fail"){
             alert(data.reason);
         }else{
             await this.setMember(data.token);
-            console.log(this.state.loginMember);
             if(this.state.loginMember.memberType === "none"){
                 // window.location.href = "";
                 this.props.history.push("/auth/selectMemberType");
@@ -118,7 +115,7 @@ class CommonProvider extends Component{
             })
         }
     }
-    toggleSpinnerModal = debounce(this.toggleSpinnerModal,500);
+    // toggleSpinnerModal = debounce(this.toggleSpinnerModal,500);
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.history !== undefined) {
