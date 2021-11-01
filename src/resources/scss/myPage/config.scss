@@ -3,7 +3,7 @@
     .configHeader{
         position: fixed;
         display: flex;
-        z-index: 99;
+        z-index: 999;
         background-color: #556273;
         width: 100%;
         top: 0;
@@ -44,6 +44,157 @@
                             flex-direction: column;
                             align-items: center;
                             justify-content: center;
+                        }
+                    }
+                }
+            }
+        }
+        .btnGlobalConfig{
+            background-color: transparent;
+            height: 38px;
+            color: #fff;
+            font-size: 0.8rem;
+            position: relative;
+            text-align: center;
+            width: 300px;
+            border-left: 0;
+            border-right: 1px solid #333;
+            z-index: 999;
+            >.btnOpenGlobalConfig{
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                padding: 0;
+                width: 100%;
+                text-align: center;
+                border-left: 0;
+                z-index: 99;
+                background-color: #556273;
+            }
+            >.globalConfigBox{
+                position: absolute;
+                top: -200%;
+                left: 0;
+                background-color: #fff;
+                border: 1px solid #333;
+                width: 100%;
+                transition: all 0.5s;
+                // display: none;
+                z-index: 9;
+                &.on{
+                    // display: block;
+                    top: 100%;
+                }
+                >.configItem{
+                    color: #333;
+                    text-align: left;
+                    h5{
+                        padding: 10px;
+                        font-weight: bold;
+                        cursor: pointer;
+                    }
+                    &+.configItem{
+                        border-top: 1px solid #d9d9d9;
+                    }
+                    .panelWrap{
+                        background-color: #F6F8F9;
+                        border-top: 1px solid #d9d9d9;
+                        dl{
+                            padding: 10px 20px;
+                            display: flex;
+                            align-items: center;
+                            
+                            font-size: 0.8rem;
+                            dt{
+                                flex: 0 0 20%;
+                            }
+                            dd{
+                                flex: 0 0 80%;
+                            }
+                            &.color{
+                                dd{
+                                    position: relative;
+                                    display: flex;
+                                    align-items: center;
+                                    >label{
+                                        width: 25px;
+                                        height: 25px;
+                                        border-radius: 50%;
+                                        border: 1px solid #d9d9d9;
+                                        cursor: pointer;
+                                    }
+                                    input[type=color]{
+                                        visibility: hidden;
+                                        position: absolute;
+                                        left:0;
+                                    }
+                                    span{
+                                        margin-left: 15px;
+                                        cursor: pointer;
+                                    }
+                                }
+                            }
+                            &.backgroundImage{
+                                dd{
+                                    display: flex;
+                                    align-items: center;
+                                    label{
+                                        border: 1px solid #d9d9d9;
+                                        // padding: 10px;
+                                        border-radius: 5px;
+                                        background-color: #fff;
+                                        cursor: pointer;
+                                        width: 35px;
+                                        height: 35px;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                    }
+                                    input{
+                                        display: none;
+                                    }
+                                    .backgrounImagePreview{
+                                        margin-left: 10px;
+                                        img{
+                                            height: 33px;
+                                        }
+                                    }
+                                    .btnRemoveBackgrounImage{
+                                        border-left: 0;
+                                        padding: 0;
+                                        color : #333;
+                                        margin-left: 15px;
+                                    }
+                                }
+                            }
+                            &.fontFamily{
+                                .dropdown-toggle{
+                                    width: 100%;
+                                    text-align: left;
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+                                    background-color: transparent;
+                                    color: #333;
+                                    border:0;
+                                    border-bottom: 1px solid #333;
+                                    border-radius: 0;
+                                    &:active,&:focus{
+                                        outline: none;
+                                        box-shadow: none;
+                                    }
+                                }
+                                .dropdown-menu{
+                                    width: 100%;
+                                    button{
+                                        color: #333;
+                                        padding: 0.25rem 1rem;
+                                        height: auto;
+                                        border: 0;
+                                    }
+                                }
+                            }
                         }
                     }
                 }

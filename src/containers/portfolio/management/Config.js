@@ -17,7 +17,16 @@ const Config = ({portfolioData,resume,workList,toggleAddBlock,selectConfigBlock,
                 :
                 <Fragment>
                     <ConfigHeader/>
-                    <div className="configBody" style={{fontFamily :`${portfolioData.fontFamily}`,backgroundColor:`${portfolioData.backgroundColor}`,}}>
+                    <div className="configBody" 
+                        style={{
+                            backgroundColor:`${portfolioData.backgroundColor}`,
+                            backgroundImage : `${portfolioData.backgroundImage !== "" ? `url(https://storage.googleapis.com/pofou_repo/${portfolioData.backgroundImage})` : "none"}`,
+                            backgroundRepeat : `${portfolioData.backgroundRepeat !== "" ? portfolioData.backgroundRepeat : "no-repeat"}`,
+                            backgroundSize : `${portfolioData.backgroundSize !== "" ? portfolioData.backgroundSize : "cover"}`,
+                            backgroundPosition : `${portfolioData.backgroundPosition !== "" ? portfolioData.backgroundPosition : "center center"}`,
+                            color : `${portfolioData.color !== "" ? portfolioData.color : "#333333"}`,
+                            fontFamily : `${portfolioData.fontFamily !== "" ? portfolioData.fontFamily : "Noto Sans KR"}`
+                    }}>
                         {
                             portfolioData.blockList.map(
                                 block => 

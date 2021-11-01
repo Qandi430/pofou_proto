@@ -139,6 +139,7 @@ class PortfolioProvider extends Component{
         closeResumeDetailModal : () => this.props.closeResumeDetailModal(),
         setResume : resumeNumber => this.setResume(resumeNumber),
         getPortfolio : url => this.getPortfolio(url),
+        changeGlobalConfig : (name,value) => this.changeGlobalConfig(name,value),
         //addBlock
         toggleAddBlock : index => this.toggleAddBlock(index),
         addNewBlock : block => this.addNewBlock(block),
@@ -177,6 +178,40 @@ class PortfolioProvider extends Component{
         }else{
             console.log("load");
         }
+    }
+
+    changeGlobalConfig = async (name,value) => {
+        await this.setState({
+            ...this.state,
+            portfolioData : {...this.state.portfolioData,[name]:value}
+        });
+        let historyName = "";
+        switch(name){
+            case "backgroundColor":
+                historyName = "globalBackgroundColor";
+                break;
+            case "fontFamily":
+                historyName = "globalFontFamily";
+                break;
+            case "backgroundImage":
+                historyName = "globalBackgroundImage";
+                break;
+            case "backgroundPosition":
+                historyName = "globalBackgroundPosition";
+                break;
+            case "backgroundRepeat":
+                historyName = "globalBackgroundRepeat";
+                break;
+            case "backgroundSize":
+                historyName = "globalBackgroundSize";
+                break;
+            case "color":
+                historyName = "globalFontColor";
+                break;
+            default:
+                historyName = name;
+        };
+        this.saveHistory(historyName);
     }
 
     toggleResumeSelectModal = (portfolioName) => {
@@ -468,6 +503,7 @@ function createPortfolioConsumer(WrappedComponent){
                             portfolioData = {state.portfolioData}
                             resume = {state.resume}
                             workList = {state.workList}
+                            changeGlobalConfig = {actions.changeGlobalConfig}
                             //addBlock
                             addBlock = {state.addBlock}
                             toggleAddBlock = {actions.toggleAddBlock}

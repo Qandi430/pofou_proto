@@ -58,7 +58,6 @@ class MainProvider extends Component{
             
             if(memberToken !== undefined){
                 const loginMember = jwtDecode(memberToken);
-                console.log(loginMember)
                 this.setState({
                     ...this.state,
                     loginMember : loginMember.member
@@ -84,7 +83,6 @@ class MainProvider extends Component{
        this.toggleSpinnerModal(true);
         if(typeof pageNo !== "number") pageNo = this.state.pageNo;
         const {data : workList} = await getWorkList(pageNo);
-        console.log(workList);
         this.setState({
             ...this.state,
             workList : this.state.workList.concat(workList)
