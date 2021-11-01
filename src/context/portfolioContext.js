@@ -74,6 +74,11 @@ class PortfolioProvider extends Component{
                 const urlSplit = this.props.history.location.pathname.split("/");
                 const url = urlSplit[urlSplit.length-1];
                 this.getPortfolio(url);
+            }else{
+                if(this.state.portfolioData.memberNumber !== loginMember.member.memberNumber){
+                    alert("잘못된 접근입니다.");
+                    this.props.history.push("/");
+                }
             }
             window.addEventListener('keydown', this.handleKeyDown)
         }
@@ -122,6 +127,11 @@ class PortfolioProvider extends Component{
                 const urlSplit = this.props.history.location.pathname.split("/");
                 const url = urlSplit[urlSplit.length-1];
                 this.getPortfolio(url);
+            }else{
+                if(this.state.portfolioData.memberNumber !== loginMember.member.memberNumber){
+                    alert("잘못된 접근입니다.");
+                    this.props.history.push("/");
+                }
             }
             window.addEventListener('keydown', this.handleKeyDown)
         }
