@@ -28,7 +28,7 @@ const BasicProfile = ({profile,grid,resume}) => {
         <div  className={`contents basicProfile grid${grid}`}>
             <div className="profileImage" style={{position:"relative"}}>
                 {
-                    resume.displayPhoto &&
+                    profile.displayPhoto &&
                     <img src={resume.photo !== "" ? `https://storage.googleapis.com/pofou_repo/${resume.photo}`:defaultImage} alt="" className="img-fluid"/>
                 }    
             </div>
