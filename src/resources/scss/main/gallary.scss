@@ -7,6 +7,7 @@
             ul{
                 display: flex;
                 align-items: center;
+                flex-wrap: wrap;
                 li{
                     &+li{
                         margin-left: 30px;
@@ -116,12 +117,14 @@
         //     }
         // }
         .galleryList{
-            padding: 30px 50px;
+            padding: 0px 50px;
             >ul{
                 display: flex;
                 gap: 1.5%;
+                flex-wrap: wrap;
                 > li{
                     flex: 0 0 18.8%;
+                    margin-top: 1.5%;
                     cursor: pointer;
                     .thumbnail{
                         width: 100%;

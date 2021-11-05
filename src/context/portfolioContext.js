@@ -49,16 +49,13 @@ class PortfolioProvider extends Component{
                 });
                 
             }else{
-                alert("로그인시 이용 가능합니다.");
-                this.props.history.push("/");
+                if(this.props.history.location.pathname.indexOf("/portfolio/management") > -1 || this.props.history.location.pathname.indexOf("/portfolio/config") > -1){
+                    alert("로그인시 이용 가능합니다.");
+                    this.props.history.push("/");
+                }
             };   
-        }else{
-            if(memberToken !== undefined && loginMember !== null){
-                
-                alert("로그인시 이용 가능합니다.");
-                this.props.history.push("/");
-            }
         }
+        
         if(this.props.history.location.pathname.indexOf("/portfolio/management") > -1){
             if(this.state.managementData === null || this.state.managementData === ""){
                 if(memberToken !== undefined && loginMember !== null){
