@@ -5,12 +5,18 @@ import { createCommonConsumer } from '../../context/commonContext';
 import defaultImage from '../../resources/images/contents/resume/default_profile.png';
 import { singleFileUpload } from '../../server/common/CommonServer';
 
-const ThumbnailCreateModal = ({beforeImage,saveImage,toggleSpinnerModal}) => {
+const ThumbnailCreateModal = ({beforeImage,saveImage,toggleSpinnerModal,changeBeforeImage}) => {
 
     const [open,setOpen] = useState(false);
     const editRef = useRef(null);
     const toggle = () => {
-        setOpen(!open);
+        if(open){
+            changeBeforeImage(null,true);
+            setOpen(false);
+        }else{
+            setOpen(true)
+        }
+        // setOpen(!open);
     }
     const [editorConfig,setEditorConfig] = useState({
         image : defaultImage,
@@ -27,20 +33,24 @@ const ThumbnailCreateModal = ({beforeImage,saveImage,toggleSpinnerModal}) => {
         if(beforeImage){
             setOpen(true);
             if(beforeImage !== editorConfig.image){
-                if(typeof beforeImage === "string"){
-                    let img = new Image();
-                    img.src = beforeImage;
-                    img.crossOrigin = 'Anonymous';
-                    setEditorConfig({
-                        ...editorConfig,
-                        image : img,
-                    });
-                }else{
-                    setEditorConfig({
-                        ...editorConfig,
-                        image : beforeImage,
-                    });
-                }
+                // if(typeof beforeImage === "string"){
+                //     let img = new Image();
+                //     img.src = beforeImage;
+                //     img.crossOrigin = 'Anonymous';
+                //     setEditorConfig({
+                //         ...editorConfig,
+                //         image : img,
+                //     });
+                // }else{
+                //     setEditorConfig({
+                //         ...editorConfig,
+                //         image : beforeImage,
+                //     });
+                // }
+                setEditorConfig({
+                    ...editorConfig,
+                    image : beforeImage,
+                });
             }
         }else{
             setOpen(false);
@@ -57,7 +67,7 @@ const ThumbnailCreateModal = ({beforeImage,saveImage,toggleSpinnerModal}) => {
                 })
             }
         }
-    },[beforeImage,editorConfig]);
+    },[beforeImage]);
 
 
     const onClickSave = async() => {

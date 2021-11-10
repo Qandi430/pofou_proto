@@ -1,13 +1,14 @@
-import { faImage, faTimes, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faPhotoVideo, faTimes, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React,{useEffect,useState} from 'react';
 import { Col, Input, FormGroup, Modal, ModalBody, ModalFooter, ModalHeader, Row,Button } from 'reactstrap';
-import { getCategoryCodeList } from '../../server/common/CommonServer';
+import { getCategoryCodeList, singleFileUpload } from '../../server/common/CommonServer';
 import AvartaCreateModal from '../common/AvataCreateModal';
 import ImageSelectModal from './ImageSelectModal';
 import ThumbnailCreateModal from './ThumbnailCreateModal';
 
-const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail}) => {
+
+const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail,toggleSpinnerModal}) => {
     const [detailForm,setDetailForm] = useState({
        title : "",
        thumbnail : "",
@@ -107,6 +108,21 @@ const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail}) => {
         changeUploadDetail(form);
     }
 
+    const uploadGif = async(e) => {
+        console.log(e);
+        toggleSpinnerModal(true);
+        let form = new FormData();
+        form.append("file",e.target.files[0]);
+        const {data} = await singleFileUpload(form);
+        if(data.result === "success"){
+            changeThumbnailImage(data.fileName);
+        }else{
+            alert("파일 업로드에 실패하였습니다.");
+        }
+        document.getElementById("gifInput").value = "";
+        toggleSpinnerModal(false);
+    }
+
     return (
         <Modal isOpen={isOpen} toggle={toggle} centered size="xl" id="contentsDetailModal">
             <ModalHeader>콘텐츠 세부설정</ModalHeader>
@@ -122,8 +138,8 @@ const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail}) => {
                                     {detailForm.thumbnail !== "" && <img src={`https://storage.googleapis.com/pofou_repo/${detailForm.thumbnail}`} alt=""/>}
                                 </div>
                                 <div className="btnBox">
-                                    {/* <button onClick={toggleImageSelectModal}> */}
-                                    <button onClick={() => alert("오류로 인하여 잠시 사용중지")}>
+                                    <button onClick={toggleImageSelectModal}>
+                                    {/* <button onClick={() => alert("오류로 인하여 잠시 사용중지")}> */}
                                         <FontAwesomeIcon icon={faImage}/>
                                         <p>내용중 선택</p>
                                     </button>
@@ -131,6 +147,11 @@ const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail}) => {
                                         <FontAwesomeIcon icon={faUpload}/>
                                         <p>새로 업로드</p>
                                         <input type="file" style={{display:"none"}} id="thumbnailInput" onChange={changeBeforeImage} accept="image/jpg, image/jpeg, image/png"/>
+                                    </label>
+                                    <label htmlFor="gifInput">
+                                        <FontAwesomeIcon icon={faPhotoVideo}/>
+                                        <p>GIF로 업로드</p>
+                                        <input type="file" style={{display:"none"}} id="gifInput" onChange={uploadGif} accept="image/gif"/>
                                     </label>
                                 </div>
                                 <p>콘텐츠 썸네일 권장 사이즈는 380x380 입니다</p>

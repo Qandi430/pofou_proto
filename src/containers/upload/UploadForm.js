@@ -1,7 +1,7 @@
 
-import { faImages, faKeyboard,faSearch,faTh, faVideo } from '@fortawesome/free-solid-svg-icons';
+import { faImages, faKeyboard,faPlus,faSearch,faTh, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Container, Input,Row,Col, Button } from 'reactstrap';
 import PackmanLoader from '../../components/common/PackmanLoader';
 import Contents from '../../components/upload/Contents';
@@ -36,6 +36,8 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
     const [openContentsSortModal,setOpenContentsSortModal] = useState(false);
     const [openContentsDetailModal, setOpenContentsDetailModal] = useState(false);
     const [uploadResult,setUploadResult] = useState("");
+    const [openAddButton,setOpenAddButton] = useState(-1);
+    
     useEffect(() => {
         if(uploadForm.memberNumber === ""){
             const memberToken = cookie.load("memberToken");
@@ -52,17 +54,36 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
         }
     },[uploadForm,history]);
 
-    const addContents = (type) => {
-        let newCotents = {
+    const addContents = async (type,order) => {
+        
+        let newContents = {
             order : uploadForm.contentsList.length,
             type : type,
             contents : "",
             container : true,
         }
-        setUploadForm({
-            ...uploadForm,
-            contentsList : uploadForm.contentsList.concat(newCotents)
-        });
+        if(order === undefined){
+            await setUploadForm({
+                ...uploadForm,
+                contentsList : uploadForm.contentsList.concat(newContents)
+            });
+        }else{
+            let newList = JSON.parse(JSON.stringify(uploadForm.contentsList));
+            newContents.order = order + 1;
+            newList.forEach(
+                contents => {
+                    contents.order = contents.order >= newContents.order ? contents.order +1 : contents.order 
+                }
+            );
+            
+            newList.splice(newContents.order,0,newContents);
+            await  setUploadForm({
+                ...uploadForm,
+                contentsList : newList
+            });
+            setOpenAddButton(-1);
+        };
+        window.scrollTo({top:document.getElementsByClassName("contents")[order === undefined ? uploadForm.contentsList.length : order+1].offsetTop, behavior:"smooth"});
     };
 
     const changeUploadForm = (name,value) => {
@@ -189,6 +210,14 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
     const closedResultModal = () => {
         setUploadResult("")
     }
+
+    const toggleAddButton = (index) => {
+        if(openAddButton === index){
+            setOpenAddButton(-1);
+        }else{
+            setOpenAddButton(index);
+        }
+    }
     
     return (
         <div>
@@ -203,26 +232,49 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
                                 uploadForm.contentsList.length > 0 ?
                                     uploadForm.contentsList.map(
                                         (contents,index) => 
-                                            contents.contents === "" ?
-                                                (() => {
-                                                    console.log(uploadForm)
-                                                    switch(contents.type){
-                                                        case "image":
-                                                            return <ImageDropzone key={contents.order} contents={contents} toggleSpinnerModal={toggleSpinnerModal} saveContents={saveContents} uploadForm={uploadForm}/>
-                                                        case "video":
-                                                            return <VideoUpload key={contents.order} contents={contents} toggleSpinnerModal={toggleSpinnerModal} saveContents={saveContents} uploadForm={uploadForm}/>
-                                                        case "text":
-                                                            return <Contents key={contents.order} contents={contents} toggleSpinnerModal={toggleSpinnerModal} saveContents={saveContents} removeContents={removeContents} uploadForm={uploadForm}/>
-                                                        case "grid":
-                                                            return <GridDropzone key={contents.order} contents={contents} toggleSpinnerModal={toggleSpinnerModal} saveContents={saveContents} uploadForm={uploadForm}/>
-                                                        case "dummy":
-                                                            return "";
-                                                        default :
-                                                            return <div key={index} className="contentsPreset">오류가 발생했습니다.</div>
-                                                    }
-                                                })()
-                                                :
-                                                <Contents key={contents.order} uploadForm={uploadForm} contents={contents} toggleSpinnerModal={toggleSpinnerModal} saveContents={saveContents} removeContents={removeContents} toggleContentsSortModal={toggleContentsSortModal}/>
+                                            <Fragment key={index}>
+                                                {
+                                                    contents.contents === "" ?
+                                                    (() => {
+                                                        switch(contents.type){
+                                                            case "image":
+                                                                return (
+                                                                    <ImageDropzone key={contents.order} contents={contents} toggleSpinnerModal={toggleSpinnerModal} saveContents={saveContents} uploadForm={uploadForm}/>
+                                                                )
+                                                            case "video":
+                                                                return <VideoUpload key={contents.order} contents={contents} toggleSpinnerModal={toggleSpinnerModal} saveContents={saveContents} uploadForm={uploadForm}/>
+                                                            case "text":
+                                                                return <Contents key={contents.order} contents={contents} toggleSpinnerModal={toggleSpinnerModal} saveContents={saveContents} removeContents={removeContents} uploadForm={uploadForm}/>
+                                                            case "grid":
+                                                                return <GridDropzone key={contents.order} contents={contents} toggleSpinnerModal={toggleSpinnerModal} saveContents={saveContents} uploadForm={uploadForm}/>
+                                                            case "dummy":
+                                                                return "";
+                                                            default :
+                                                                return <div key={index} className="contentsPreset">오류가 발생했습니다.</div>
+                                                        }
+                                                    })()
+                                                    :
+                                                    <Contents key={contents.order} uploadForm={uploadForm} contents={contents} toggleSpinnerModal={toggleSpinnerModal} saveContents={saveContents} removeContents={removeContents} toggleContentsSortModal={toggleContentsSortModal}/>
+                                                }
+                                                <div className={`addContentsBox ${openAddButton === contents.order ? "on" : ""}`}>
+                                                    <Button className="btnAddContents" onClick={() => toggleAddButton(contents.order)}>
+                                                        <FontAwesomeIcon icon={faPlus}/>
+                                                    </Button>
+                                                    <Button onClick={() => addContents("image",contents.order)}>
+                                                        <FontAwesomeIcon icon={faImages}/>
+                                                    </Button>
+                                                    <Button onClick={() => addContents("text",contents.order)}>
+                                                        <FontAwesomeIcon icon={faKeyboard}/>
+                                                    </Button>
+                                                    <Button onClick={() => addContents("video",contents.order)}>
+                                                        <FontAwesomeIcon icon={faVideo}/>
+                                                    </Button>
+                                                    <Button onClick={() => addContents("grid",contents.order)}>
+                                                        <FontAwesomeIcon icon={faTh}/>
+                                                    </Button>
+                                                </div>
+                                            </Fragment>
+                                            
                                     )
                                 :
                                 <div className="contentsPreset">
@@ -315,7 +367,7 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
             </Container>
             <PackmanLoader isOpen={openSpinnerModal} toggleSpinnerModal={toggleSpinnerModal}/>
             <ContentsSortModal isOpen={openContentsSortModal} toggle={toggleContentsSortModal} contentsList={uploadForm.contentsList} saveList={saveList}/>
-            <ContentsDetailModal isOpen={openContentsDetailModal} toggle={toggleContentsDetailModal} uploadForm={uploadForm} changeUploadDetail={changeUploadDetail}/>
+            <ContentsDetailModal isOpen={openContentsDetailModal} toggle={toggleContentsDetailModal} uploadForm={uploadForm} changeUploadDetail={changeUploadDetail} toggleSpinnerModal={toggleSpinnerModal}/>
             <ResultModal result={uploadResult} closedResultModal={closedResultModal}/>
         </div>
     )
