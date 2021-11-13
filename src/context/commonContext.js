@@ -1,5 +1,5 @@
 import React, { createContext, Component } from 'react';
-import { login, logout } from '../server/member/MemberServer';
+import { getMemberByMemberNumber, login, logout } from '../server/member/MemberServer';
 import jwtDecode from 'jwt-decode';
 import cookie from 'react-cookies';
 import publicIp from 'react-public-ip';
@@ -41,11 +41,28 @@ class CommonProvider extends Component{
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot){
+        let memberToken = cookie.load("memberToken");
+        
+        if(memberToken !== undefined){
+            const member = jwtDecode(memberToken).member;
+            
+            if(member.memberType === "none" && this.props.history.location.pathname.indexOf("/auth/selectMemberType") < 0){
+                this.props.history.push("/auth/selectMemberType");
+            }
+
+            if(this.props.location.pathname !== prevProps.location.pathname){
+                this.resetMemberInfo(member.memberNumber);
+            }
+        }
+    }
+
     actions = {
         loginAction : (email,password) => this.loginAction(email,password),        
         logoutAction : () => this.logoutAction(),
         setMember : token => this.setMember(token),
         toggleSpinnerModal : status => this.toggleSpinnerModal(status),
+        resetMemberInfo : memberNumber => this.resetMemberInfo(memberNumber),
     };
 
     //login action
@@ -65,11 +82,6 @@ class CommonProvider extends Component{
             }
         }
         this.toggleSpinnerModal(false);
-        // this.setState({
-        //     isLogin : true
-        // });
-        // console.log("loginAction true")
-        // window.history.back();
     }
 
     setMember = async (token) => {
@@ -79,13 +91,13 @@ class CommonProvider extends Component{
         cookie.save("memberToken",token,{path:"/",expires:expires});
         const ipv4 = await publicIp.v4();
 
-        this.setState({
+        await this.setState({
             isLogin : true,
             loginMember : {
                 ...loginMember.member,
                 ipAddress : ipv4
             }
-        })
+        });
     }
 
     logoutAction = async () => {
@@ -99,7 +111,11 @@ class CommonProvider extends Component{
                 memberType : "",
             },
             isLogin : false,
-        })
+        });
+
+        if(this.props.history.location.pathname !==  "/"){
+            this.props.history.push("/");
+        }
     }
 
     toggleSpinnerModal = (status) => {
@@ -116,6 +132,24 @@ class CommonProvider extends Component{
         }
     }
     // toggleSpinnerModal = debounce(this.toggleSpinnerModal,500);
+
+    resetMemberInfo = async (memberNumber) => {
+        console.log("resetMemberInfo")
+        const {data : memberInfo} = await getMemberByMemberNumber(memberNumber);
+        let loginMember = jwtDecode(memberInfo);
+        let expires = new Date();
+        expires.setHours(expires.getHours() + 2);
+        cookie.save("memberToken",memberInfo,{path:"/",expires:expires});
+        const ipv4 = await publicIp.v4();
+
+        await this.setState({
+            isLogin : true,
+            loginMember : {
+                ...loginMember.member,
+                ipAddress : ipv4
+            }
+        });
+    }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.history !== undefined) {
@@ -154,6 +188,7 @@ function createCommonConsumer(WrappedComponent){
                             setMember = {actions.setMember}
                             openSpinnerModal = {state.openSpinnerModal}
                             toggleSpinnerModal = {actions.toggleSpinnerModal}
+                            resetMemberInfo = {actions.resetMemberInfo}
                             {...props}
                         />
                     )

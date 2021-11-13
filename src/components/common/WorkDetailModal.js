@@ -1,12 +1,14 @@
 import { faComments, faEye, faHeart as emptyHeart, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
-import { faEdit, faFolderPlus, faPlus, faShareSquare, faHeart as fullHeart } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faFolderPlus, faPlus, faShareSquare, faHeart as fullHeart, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React,{useState} from 'react';
 import { useEffect } from 'react';
 import { Input, Modal } from 'reactstrap';
 import moment from 'moment';
 import { getCommentListByWorkNumber, insertComment, insertReComment } from '../../server/work/WorkServer';
-const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,toggleSpinnerModal}) => {
+import { deleteFollow, insertCollection, insertFollow } from '../../server/member/MemberServer';
+import {createCommonConsumer} from '../../context/commonContext';
+const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,toggleSpinnerModal,resetMemberInfo}) => {
     
     const [data,setData] = useState({
         memberNumber : "",
@@ -99,7 +101,6 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,t
     },[workDetail,loginMember]);
     
     const handleLike = (workNumber) => {
-        console.log(data);
         clickLikeButton(workNumber);
     }
 
@@ -232,6 +233,35 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,t
             alert("오류가 발생했습니다.\n다시 시도해 주세요.")
         }
         toggleSpinnerModal(false);
+    }
+
+    const clickFollowButton = async () => {
+        const {data : followResult}  = await insertFollow(loginMember.memberNumber, data.memberNumber);
+        if(followResult){
+            alert("팔로우 하였습니다.");
+            resetMemberInfo(loginMember.memberNumber);
+        }else{
+            alert("팔로우에 실패하였습니다.");
+        }
+    }
+
+    const clickCancelFollow = async() => {
+        const {data : cancelResult} = await deleteFollow(loginMember.memberNumber,data.memberNumber);
+        if(cancelResult){
+            alert("팔로우 취소하였습니다.");
+            resetMemberInfo(loginMember.memberNumber);
+        }else{
+            alert("팔로우 취소에 실패하였습니다.");
+        }
+    }
+
+    const clickCollectionButton = async () => {
+        const {data : collectionResult} = await insertCollection(loginMember.memberNumber,data.workNumber);
+        if(collectionResult){
+            alert("컬렉션에 추가되었습니다.");
+        }else{
+            alert("컬렉션 추가에 실패하였습니다.");
+        }
     }
 
     return(
@@ -413,10 +443,26 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,t
                         </button>
                         <div className="btnName">프로필</div>
                     </li>
-                    <li className="btnFollow">
-                        <button className="btnIcon"><FontAwesomeIcon icon={faPlus}/></button>
-                        <div className="btnName">팔로우</div>
-                    </li>
+                    {
+                        loginMember !== null && loginMember.memberNumber !== "" && loginMember.memberNumber !== data.memberNumber &&
+                            (() => {
+                                if(loginMember.followings.find(following => following.followMemberNumber === data.memberNumber)){
+                                    return (
+                                        <li className="btnFollowCancel">
+                                            <button className="btnIcon" style={{color: "#f85272"}} onClick={() => clickCancelFollow()}><FontAwesomeIcon icon={faCheck}/></button>
+                                            <div className="btnName">팔로잉</div>
+                                        </li>
+                                    )
+                                }else{
+                                    return (
+                                        <li className="btnFollow">
+                                            <button className="btnIcon" onClick={() => clickFollowButton()}><FontAwesomeIcon icon={faPlus}/></button>
+                                            <div className="btnName">팔로우</div>
+                                        </li>
+                                    )
+                                }
+                            })()
+                    }
                     <li className="btnRequest">
                         <button className="btnIcon"><FontAwesomeIcon icon={faEdit}/></button>
                         <div className="btnName">의뢰하기</div>
@@ -457,4 +503,4 @@ const VideoContents = ({order,contents,margin}) =>{
     )
 }
 
-export default WorkDetailModal;
+export default createCommonConsumer(WorkDetailModal);

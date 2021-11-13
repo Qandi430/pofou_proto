@@ -32,6 +32,22 @@ const updateProfile = (form) => (
     axios.put("/member/updateProfile",form)
 )
 
+const insertFollow = (memberNumber,followMemberNumber) => (
+    axios.put("/member/insertFollow",{memberNumber : memberNumber , followMemberNumber : followMemberNumber})
+)
+
+const deleteFollow = (memberNumber,followMemberNumber) => (
+    axios.delete("/member/deleteFollow",{params : {memberNumber : memberNumber,followMemberNumber : followMemberNumber}})
+)
+
+const insertCollection = (memberNumber,workNumber) => (
+    axios.put("/member/insertCollection",{memberNumber : memberNumber , workNumber : workNumber})
+)
+
+const getMemberByMemberNumber = (memberNumber) => (
+    axios.get("/member/getMemberByMemberNumber",{params : {memberNumber : memberNumber}})
+)
+
 export {
     emailAuthentication,
     checkAuthNumber,
@@ -41,4 +57,8 @@ export {
     selectMemberType,
     checkUrl,
     updateProfile,
+    insertFollow,
+    deleteFollow,
+    insertCollection,
+    getMemberByMemberNumber,
 }
