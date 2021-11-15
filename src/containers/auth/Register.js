@@ -129,7 +129,10 @@ const Register = () => {
 
     return(
         <div className="registerWrap">
-            <h3 className="pageTitle">가입 하기</h3>
+            <div className="titleBox">
+                <img src={`https://storage.googleapis.com/pofou_repo/resources/logo.png`} alt="" />
+                <h3 className="pageTitle">시작하기</h3>
+            </div>
             <RegisterForm 
                 registrationForm={registrationForm} 
                 changeRegisterForm={changeRegisterForm} 

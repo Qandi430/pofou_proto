@@ -54,13 +54,13 @@ const RegisterForm = ({registrationForm,changeRegisterForm,handleEmailAuthentica
                         <span className="dummyCheck"><FontAwesomeIcon icon={faCheck}/></span>
                         포포유 가입약관에 모두 동의합니다.
                     </label>
-                    <button className="btnRegisterModal">확인하기</button>
+                    <button type="button" className="btnRegisterModal">확인하기</button>
                 </FormGroup>
                 <p>
-                    스터닝 이용약관(필수), 개인정보취급방침(필수), 마케팅정보 수집동의(선택)
+                    포포유 이용약관(필수), 개인정보취급방침(필수), 마케팅정보 수집동의(선택)
                 </p>
             </div>
-            <Button>다음으로</Button>
+            <Button>회원가입</Button>
         </Form>
     )
 }

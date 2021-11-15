@@ -6,7 +6,7 @@ import React from 'react';
 const SnsRegister = () => {
     return (
         <div className="snsRegister">
-            <h6>SNS 계정으로 간편하게 시작하기</h6>
+            <h6>간편하게 시작하기</h6>
             <ul className="snsList">
                 <li><button className="btnNaver">N</button></li>
                 <li><button className="btnKakao"><FontAwesomeIcon icon={faComment}/></button></li>

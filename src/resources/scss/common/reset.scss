@@ -15,12 +15,18 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
+    font-size: 13px;
     font: inherit;
     vertical-align: baseline; 
     font-family: inherit;
   }
-  
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+  transition: background-color 5000s;
+  -webkit-text-fill-color: inherit !important;
+}
   /* HTML5 display-role reset for older browsers */
   
   article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {

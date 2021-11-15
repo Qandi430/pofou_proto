@@ -1,12 +1,16 @@
+$main-color: #89c997;
 .auth{
     width: 100vw;
     &:not(.selectMemberType){
-        background-image: url('../../images/auth/authBg.jpg');
+        // background-image: url('../../images/auth/authBg.jpg');
         display: flex;
         justify-content: flex-end;
         height: calc(100vh - 39px);
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-size: contain;
         >div{
-            flex: 0 0 55%;
+            flex: 0 0 45%;
             background: rgba(255,255,255,1);
             height: 100%;
             display: flex;
@@ -21,6 +25,20 @@
     }
     > div{
         > *{
+            &.titleBox{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-self: center;
+                img{
+                    width: 105px;
+                }
+                .pageTitle{
+                    margin-top: 10px;
+                    font-weight: bold;
+                    font-size: 1.64rem;
+                }
+            }
             &.pageTitle{
                 font-size: 2rem;
                 font-weight: bold;
@@ -157,7 +175,7 @@
                             }
                             &~label{
                                 transform: translateY(-25px) scale(0.8);
-                                color: turquoise;
+                                color: $main-color;
                                 font-weight: bold;
                             }
                             &:not(:focus){
@@ -171,7 +189,7 @@
                         position: absolute;
                         width: 100%;
                         height: 1px;
-                        background-color: turquoise;
+                        background-color: $main-color;
                         display: block;
                         left:0;
                         bottom:0;
@@ -194,9 +212,9 @@
                             display: block;
                         }
                         &:hover{
-                            background-color: turquoise;
+                            background-color: $main-color;
                             color: #fff;
-                            border-color: turquoise;
+                            border-color: $main-color;
                         }
                     }
                     > p{
@@ -210,7 +228,7 @@
                             display: block;
                         }
                         &.valid{
-                            color:#16afb0;
+                            color:$main-color;
                         }
                     }
                     .btnBox{
@@ -232,9 +250,9 @@
                             transition: all 0.5s;
                             margin-left: 5px;
                             &:hover{
-                                background-color: turquoise;
+                                background-color: $main-color;
                                 color: #fff;
-                                border-color: turquoise;
+                                border-color: $main-color;
                             }
                         }
                     }
@@ -242,11 +260,12 @@
                 > button{
                     margin-top: 30px;
                     width: 100%;
-                    background-color: #000;
+                    border: 0;
+                    background-color: rgba(137,201,151,1);
                     color: #fff;
                     transition: all 0.5s;
                     &:hover{
-                        background-color: #333;
+                        background-color: rgba(137,201,151,0.8);
                     }
                 }
                 .agreeBox{
