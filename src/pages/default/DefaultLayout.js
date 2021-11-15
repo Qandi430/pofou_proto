@@ -3,6 +3,7 @@ import { BrowserRouter,Route,Switch } from 'react-router-dom';
 import { CommonProvider } from '../../context/commonContext';
 import Header from '../../containers/common/Header';
 import "react-datepicker/dist/react-datepicker.css";
+import Footer from '../../containers/common/Footer';
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 const UploadPage = React.lazy(() => import('../upload/UploadPage'));
 const AuthPage = React.lazy(() => import('../auth/AuthPage'));
@@ -39,6 +40,7 @@ const LayoutWrap = ({location,match,history}) => {
                 <Route path="/portfolio" component={Portfolio}/>
                 <Route path="/" component={MainPage}/>
             </Switch>
+            <Footer/>
         </CommonProvider>
     )
 }

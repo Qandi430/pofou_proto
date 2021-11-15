@@ -3,6 +3,7 @@ import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
 import { getWorkList } from '../server/main/MainServer';
 import { deleteLike, getWorkByWorkNumber, getWorkDetail, insertLike } from '../server/work/WorkServer';
+import {getCategoryCodeList} from '../server/common/CommonServer';
 
 const Context  = createContext();
 
@@ -35,6 +36,7 @@ class MainProvider extends Component{
                 ],
             },
             openWorkDetailModal : false,
+            keywordList : [],
         };
     }
 
@@ -48,6 +50,9 @@ class MainProvider extends Component{
                 ...this.state,
                 loginMember : loginMember.member
             })
+        }
+        if(this.state.keywordList.length === 0){
+            this.setKeywordList();
         }
         this.setWorkList();
     }
@@ -69,6 +74,9 @@ class MainProvider extends Component{
                 ...this.state,
                 loginMember : this.props.loginMember
             })
+        }
+        if(this.state.keywordList.length === 0){
+            this.setKeywordList();
         }
     }
 
@@ -182,6 +190,14 @@ class MainProvider extends Component{
         }
     }
     
+    setKeywordList = async() => {
+        const {data} = await getCategoryCodeList();
+        this.setState({
+            ...this.state,
+            keywordList : data
+        });
+    }
+    
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.history !== undefined) {
             if(prevState.history === undefined || nextProps.history.location.pathname !== prevState.history.location.pathname){
@@ -219,6 +235,7 @@ function createMainConsumer(WrappedComponent){
                             workDetail = {state.workDetail}
                             selectWork = {actions.selectWork}
                             clickLikeButton = {actions.clickLikeButton}
+                            keywordList = {state.keywordList}
                             {...props}
                         />
                     )

@@ -1,18 +1,30 @@
 import React from 'react';
+import { createMainConsumer } from '../../../context/mainContext';
 
-const Filters = () => {
+const Filters = ({keywordList}) => {
     return (
         <div className="filters">
-            <ul>
-                <li><button>포포유 픽</button></li>
+            <ul className="">
+                <li className="on"><button>포포유 픽</button></li>
                 <li><button>최신순</button></li>
                 <li><button>추천순</button></li>
-                <li className="line">|</li>
-                <li><button>전체기간</button></li>
-                <li><button>전체분야</button></li>
-            </ul>    
+            </ul>
+            <ul className="keywordFilters">
+                <li className="on"><button>전체</button></li>
+                {
+                    keywordList !== null && keywordList !== undefined &&
+                    keywordList.map(
+                        keyword => 
+                            <li key={keyword.code}>
+                                <button>
+                                    {keyword.kor}
+                                </button>
+                            </li>
+                    )
+                }
+            </ul>
         </div>
     )
 }
 
-export default Filters;
+export default createMainConsumer(Filters);

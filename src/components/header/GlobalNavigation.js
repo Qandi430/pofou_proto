@@ -1,22 +1,19 @@
 import React from 'react';
-// import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
-const GlobalNavigation = () => {
+const GlobalNavigation = ({location}) => {
     return (
         <nav className="gnb">
             <ul>
-                {/* <li>
-                    <Link to="/">갤러리</Link>
+                <li className={`${location.pathname === "/" ? "on" : ""}`}>
+                    <Link to="/">둘러보기</Link>
                 </li>
                 <li>
-                    <Link to="/">갤러리</Link>
+                    <Link to="/">채용</Link>
                 </li>
                 <li>
-                    <Link to="/">갤러리</Link>
+                    <Link to="/">의뢰</Link>
                 </li>
-                <li>
-                    <Link to="/">갤러리</Link>
-                </li> */}
             </ul>
         </nav>
     )

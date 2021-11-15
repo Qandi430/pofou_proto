@@ -3,6 +3,7 @@ import {faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Form } from 'reactstrap';
 import { createCommonConsumer } from '../../context/commonContext';
 import AlarmMenu from './AlarmMenu';
 import MyPageMenu from './MyPageMenu';
@@ -34,17 +35,22 @@ const PersonalNavigation = ({isLogin,history,loginMember}) => {
     return (
         <nav className="pnb">
             <ul>
+                <li>
+                    <div className="searchBox">
+                        <form>
+                            <input type="text" name="serachText" id="searchText"/>
+                            <button>
+                                <FontAwesomeIcon icon={faSearch}/>
+                            </button>
+                        </form>
+                    </div>
+                </li>
                 {
                     isLogin &&
                         <li>
                             <Link className="btnUpload" to="/upload">업로드</Link>
                         </li>
                 }
-                <li>
-                    <button className="btnSearch">
-                        <FontAwesomeIcon icon={faSearch}/>
-                    </button>
-                </li>
                 <li>
                     {
                         isLogin ? 
@@ -59,7 +65,7 @@ const PersonalNavigation = ({isLogin,history,loginMember}) => {
                 <li>
                     {
                         isLogin ? 
-                            <button className="btnMyPage" onClick={handleOpenMyPageMenu} style={ loginMember !== null && loginMember.profileImage !== null ? {backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${loginMember.profileImage})`} : {backgroundColor:"#e8e8e8"}}>
+                            <button className="btnMyPage" onClick={handleOpenMyPageMenu} style={ loginMember !== null && loginMember.profileImage !== null ? {backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${loginMember.profileImage})`} : {backgroundColor:"#89c997"}}>
                                 {
                                     loginMember !== null && loginMember.profileImage !== null ?
                                     "" : loginMember.member === null ? "P" : loginMember.email.split("")[0].toUpperCase()
