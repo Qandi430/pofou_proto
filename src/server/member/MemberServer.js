@@ -44,6 +44,10 @@ const insertCollection = (memberNumber,workNumber) => (
     axios.put("/member/insertCollection",{memberNumber : memberNumber , workNumber : workNumber})
 )
 
+const deleteCollection = (memberNumber,workNumber) => (
+    axios.delete("/member/deleteCollection",{params : {memberNumber : memberNumber,workNumber: workNumber}})
+)
+
 const getMemberByMemberNumber = (memberNumber) => (
     axios.get("/member/getMemberByMemberNumber",{params : {memberNumber : memberNumber}})
 )
@@ -60,5 +64,6 @@ export {
     insertFollow,
     deleteFollow,
     insertCollection,
+    deleteCollection,
     getMemberByMemberNumber,
 }

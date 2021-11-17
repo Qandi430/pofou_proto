@@ -138,11 +138,11 @@ const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail,toggle
                                     {detailForm.thumbnail !== "" && <img src={`https://storage.googleapis.com/pofou_repo/${detailForm.thumbnail}`} alt=""/>}
                                 </div>
                                 <div className="btnBox">
-                                    <button onClick={toggleImageSelectModal}>
-                                    {/* <button onClick={() => alert("오류로 인하여 잠시 사용중지")}> */}
+                                    {/* <button onClick={toggleImageSelectModal}>
+                                    
                                         <FontAwesomeIcon icon={faImage}/>
                                         <p>내용중 선택</p>
-                                    </button>
+                                    </button> */}
                                     <label htmlFor="thumbnailInput">
                                         <FontAwesomeIcon icon={faUpload}/>
                                         <p>새로 업로드</p>

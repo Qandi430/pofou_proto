@@ -1,12 +1,11 @@
 import { faComments, faEye, faHeart as emptyHeart, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { faEdit, faFolderPlus, faPlus, faShareSquare, faHeart as fullHeart, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React,{useState} from 'react';
-import { useEffect } from 'react';
+import React,{useState,Fragment,useEffect} from 'react';
 import { Input, Modal } from 'reactstrap';
 import moment from 'moment';
 import { getCommentListByWorkNumber, insertComment, insertReComment } from '../../server/work/WorkServer';
-import { deleteFollow, insertCollection, insertFollow } from '../../server/member/MemberServer';
+import { deleteCollection, deleteFollow, insertCollection, insertFollow } from '../../server/member/MemberServer';
 import {createCommonConsumer} from '../../context/commonContext';
 const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,toggleSpinnerModal,resetMemberInfo}) => {
     
@@ -236,32 +235,59 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,t
     }
 
     const clickFollowButton = async () => {
+        toggleSpinnerModal(true);
         const {data : followResult}  = await insertFollow(loginMember.memberNumber, data.memberNumber);
         if(followResult){
             alert("팔로우 하였습니다.");
-            resetMemberInfo(loginMember.memberNumber);
+            await resetMemberInfo(loginMember.memberNumber);
         }else{
             alert("팔로우에 실패하였습니다.");
         }
+        toggleSpinnerModal(false);
     }
 
     const clickCancelFollow = async() => {
+        toggleSpinnerModal(true);
         const {data : cancelResult} = await deleteFollow(loginMember.memberNumber,data.memberNumber);
         if(cancelResult){
             alert("팔로우 취소하였습니다.");
-            resetMemberInfo(loginMember.memberNumber);
+            await resetMemberInfo(loginMember.memberNumber);
         }else{
             alert("팔로우 취소에 실패하였습니다.");
         }
+        toggleSpinnerModal(false);
     }
 
     const clickCollectionButton = async () => {
+        toggleSpinnerModal(true);
+        if(loginMember === null || loginMember.memberNumber === ""){
+            alert("로그인시 이용 가능합니다.");
+            return false;
+        }
         const {data : collectionResult} = await insertCollection(loginMember.memberNumber,data.workNumber);
         if(collectionResult){
             alert("컬렉션에 추가되었습니다.");
+            await resetMemberInfo(loginMember.memberNumber);
         }else{
             alert("컬렉션 추가에 실패하였습니다.");
         }
+        toggleSpinnerModal(false);
+    }
+
+    const clickCancelCollection = async () => {
+        toggleSpinnerModal(true);
+        if(loginMember === null || loginMember.memberNumber === ""){
+            alert("로그인시 이용 가능합니다.");
+            return false;
+        }
+        const {data : cancelResult} = await deleteCollection(loginMember.memberNumber,data.workNumber);
+        if(cancelResult){
+            alert("컬렉션에서 삭제되었습니다.");
+            await resetMemberInfo(loginMember.memberNumber);
+        }else{
+            alert("컬렉션 삭제에 실패하였습니다.")
+        }
+        toggleSpinnerModal(false);
     }
 
     return(
@@ -476,8 +502,20 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,t
                         <div className="btnName">좋아요</div>
                     </li>
                     <li className="btnCollection">
-                        <button className="btnIcon"><FontAwesomeIcon icon={faFolderPlus}/></button>
-                        <div className="btnName">컬렉션</div>
+                        {/* <button className="btnIcon" onClick={() => clickCollectionButton()}><FontAwesomeIcon icon={faFolderPlus}/></button>
+                        <div className="btnName">컬렉션</div> */}
+                        {
+                            loginMember !== null && loginMember.memberNumber !== "" &&  loginMember.collectionList.indexOf(data.workNumber) > -1?
+                            <Fragment>
+                                <button className="btnIcon" style={{color: "#89c997"}} onClick={() => clickCancelCollection()}><FontAwesomeIcon icon={faFolderPlus}/></button>
+                                <div className="btnName">컬렉션</div>
+                            </Fragment>
+                            :
+                            <Fragment>
+                                <button className="btnIcon" onClick={() => clickCollectionButton()}><FontAwesomeIcon icon={faFolderPlus}/></button>
+                                <div className="btnName">컬렉션</div>
+                            </Fragment>
+                        }
                     </li>
                     <li className="btnShare">
                         <button className="btnIcon"><FontAwesomeIcon icon={faShareSquare}/></button>
