@@ -294,11 +294,51 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,t
         <Modal isOpen={isOpen} toggle={toggle} centered id="workDetailModal">
             <div className="detailWrap">
                 <div className="detailHeader">
-                    <div className="headerLeft">
-                        <h3 className="title">{data.title}</h3>
-                        <div className="registrationDate">
-                            { dateConvert(data.registrationDate) }
+                    <h3 className="title">{data.title}</h3>
+                    <div className="category">
+                        {
+                            data.category1 !== "" && <span>{data.category1}</span>
+                        }
+                        {
+                            data.category2 !== "" && <span>{data.category2}</span>
+                        }
+                    </div>
+                    <div className="profile">
+                        <div className="profileImage" style={ data.profileImage !== null || data.profileImage !=="" ? {backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${data.profileImage})`} : {backgroundColor:"#e8e8e8"}}>
+                            {
+                                data.profileImage !== null ?
+                                "" : data.email === null ? "P" : data.email.split("")[0].toUpperCase()
+                            }
                         </div>
+                        <div className="name">{data.name}</div>
+                    </div>
+                    
+                    <div className="workInfo">
+                        <div className="likeCnt">
+                            {
+                                loginMember !== null && loginMember.memberNumber !== "" && data.likeList !== null && data.likeList !== undefined && data.likeList.find(like => like.memberNumber === loginMember.memberNumber) !== undefined ? <FontAwesomeIcon icon={fullHeart} className="fullHeart"/>:<FontAwesomeIcon icon={emptyHeart}/>
+                            }
+                            <span>{data.likeList !== null && data.likeList !== undefined ? data.likeList.length : 0}</span>
+                        </div>
+                        <div className="viewCnt">
+                            <h6>VIEW</h6>
+                            {/* <FontAwesomeIcon icon={faEye}/> */}
+                            <span>{data.viewCnt}</span>
+                        </div>
+                    </div>
+                    {/* <div className="headerLeft">
+                        <h3 className="title">{data.title}</h3>
+                        <div className="profile">
+                            <div className="profileImage" style={ data.profileImage !== null || data.profileImage !=="" ? {backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${data.profileImage})`} : {backgroundColor:"#e8e8e8"}}>
+                                {
+                                    data.profileImage !== null ?
+                                    "" : data.email === null ? "P" : data.email.split("")[0].toUpperCase()
+                                }
+                            </div>
+                            <div className="name">{data.name}</div>
+                        </div>
+                    </div>
+                    <div className="headerRight">
                         {
                             data.category1 !== "" || data.category2 !== "" ?
                             <div className="category">
@@ -311,23 +351,19 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,t
                             </div>
                             : ""
                         }
-                    </div>
-                    <div className="headerRight">
-                        <div className="viewCnt">
-                            <FontAwesomeIcon icon={faEye}/>
-                            <span>{data.viewCnt}</span>
+                        <div className="workInfo">
+                            <div className="likeCnt">
+                                {
+                                    loginMember !== null && loginMember.memberNumber !== "" && data.likeList !== null && data.likeList !== undefined && data.likeList.find(like => like.memberNumber === loginMember.memberNumber) !== undefined ? <FontAwesomeIcon icon={fullHeart} className="fullHeart"/>:<FontAwesomeIcon icon={emptyHeart}/>
+                                }
+                                <span>{data.likeList !== null && data.likeList !== undefined ? data.likeList.length : 0}</span>
+                            </div>
+                            <div className="viewCnt">
+                                <FontAwesomeIcon icon={faEye}/>
+                                <span>{data.viewCnt}</span>
+                            </div>
                         </div>
-                        <div className="likeCnt">
-                            {
-                                loginMember !== null && loginMember.memberNumber !== "" && data.likeList !== null && data.likeList !== undefined && data.likeList.find(like => like.memberNumber === loginMember.memberNumber) !== undefined ? <FontAwesomeIcon icon={fullHeart} className="fullHeart"/>:<FontAwesomeIcon icon={emptyHeart}/>
-                            }
-                            <span>{data.likeList !== null && data.likeList !== undefined ? data.likeList.length : 0}</span>
-                        </div>
-                        <div className="commentCnt">
-                            <FontAwesomeIcon icon={faComments}/>
-                            <span>0</span>
-                        </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="detailBody" style={{backgroundColor : `${data.backgroundColor}`}}>
                     {
@@ -346,17 +382,6 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,t
                     }
                 </div>
                 <div className="detailFooter">
-                    <div className="btnBox">
-                        <button className="btnLike" onClick={() => handleLike(data.workNumber)}>
-                            {
-                                loginMember !== null && loginMember.memberNumber !== "" && data.likeList !== null && data.likeList !== undefined && data.likeList.find(like => like.memberNumber === loginMember.memberNumber) !== undefined ? <FontAwesomeIcon icon={fullHeart} className="fullHeart"/>:<FontAwesomeIcon icon={emptyHeart}/>
-                            }
-                            &nbsp;좋아요 {data.likeList !== null && data.likeList !== undefined ? data.likeList.length : 0}
-                        </button>
-                        <button className="btnCollection">
-                            <FontAwesomeIcon icon={faPlusSquare}/> 컬렉션 추가
-                        </button>
-                    </div>
                     <div className="tagBox">
                         <ul>
                             {
@@ -366,6 +391,9 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,t
                                     )
                             }
                         </ul>
+                        <div className="registrationDate">
+                            { dateConvert(data.registrationDate) }
+                        </div>
                     </div>
                     <div className="infoBox">
                         <div className="copyright"></div>
@@ -453,7 +481,7 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,t
                                     </div>
                                 </div>
                                 <Input id="detailComment" type="textarea" defaultValue={convertBr(commentForm.commentContents)} onChange={e => changeComment(e.target.value)}></Input>
-                                <button onClick={submitCommentForm}>댓글작성</button>
+                                <button onClick={submitCommentForm}>작성</button>
                             </div>
                         }
                     </div>
