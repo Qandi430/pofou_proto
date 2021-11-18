@@ -38,7 +38,7 @@ const GalleyList = ({workList,selectWork,clickLikeButton,loginMember}) => {
                                         <div className="infoBottom">
                                            <h6 className="title">{work.title}</h6>
                                              <div className="btnBox">
-                                                 <button>
+                                                 <button onClick={(e) => clickLikeButton(e,work.workNumber)}>
                                                     {loginMember !== null && loginMember.memberNumber !== "" && work.likeList.find( like => like.memberNumber === loginMember.memberNumber) !== undefined ? <FontAwesomeIcon icon={fullHeart} className="fullHeart"/>:<FontAwesomeIcon icon={emptyHeart}/>}
                                                  </button>
                                                  <button onClick={() => clickLikeButton(work.workNumber)}>
@@ -48,39 +48,6 @@ const GalleyList = ({workList,selectWork,clickLikeButton,loginMember}) => {
                                         </div>
                                     </div>
                                 </li>
-                                // <li key={work.workNumber} onClick={() => selectWork(work.workNumber)}>
-                                //     <div className="thumbnail" style={{backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${work.thumbnail})`}}>
-                                //         <div className="titleBox">
-                                //             <h6 className="title">{work.title}</h6>
-                                //             <div className="btnBox">
-                                //                 <button>
-                                //                 {loginMember !== null && loginMember.memberNumber !== "" && work.likeList.find( like => like.memberNumber === loginMember.memberNumber) !== undefined ? <FontAwesomeIcon icon={fullHeart} className="fullHeart"/>:<FontAwesomeIcon icon={emptyHeart}/>}
-                                //                 </button>
-                                //                 <button onClick={() => clickLikeButton(work.workNumber)}>
-                                //                     <FontAwesomeIcon icon={faPlusSquare}/>
-                                //                 </button>
-                                //             </div>
-                                //         </div>
-                                //     </div>
-                                //     <div className="workInfo">
-                                //         <div className="profileImage" style={ work.profileImage !== null || work.profileImage !=="" ? {backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${work.profileImage})`} : {backgroundColor:"#e8e8e8"}}>
-                                //             {
-                                //                 work.profileImage !== null ?
-                                //                 "" : work.email === null ? "P" : work.email.split("")[0].toUpperCase()
-                                //             }
-                                //         </div>
-                                //         <div className="name">{work.name}</div>
-                                //         <div className="info">
-                                //             <span className="viewCnt">
-                                //                 <FontAwesomeIcon icon={faEye}/> {work.viewCnt}
-                                //             </span>
-                                //             <span className="like">
-                                //                 {loginMember !== null && loginMember.memberNumber !== "" && work.likeList.find( like => like.memberNumber === loginMember.memberNumber) !== undefined ? <FontAwesomeIcon icon={fullHeart} className="fullHeart"/>:<FontAwesomeIcon icon={emptyHeart}/>}
-                                //                 &nbsp;{work.likeList === null ? 0 : work.likeList.length}
-                                //             </span>
-                                //         </div>
-                                //     </div>
-                                // </li>
                         )
                         :
                         <li className="empty">

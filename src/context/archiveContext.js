@@ -37,6 +37,7 @@ class ArchiveProvider extends Component{
             openWorkDetailModal : false,
             workDetail : {
                 memberNumber : "",
+                profileImage : "",
                 workNumber : "",
                 title : "",
                 backgroundColor : "#FFFFFF",
@@ -47,9 +48,11 @@ class ArchiveProvider extends Component{
                 tag : "",
                 copyright : "",
                 status : "",
+                linkList : [],
                 contentsList : [
                     
                 ],
+                commentList: [],
             },
             openSpinnerModal : false,
         };

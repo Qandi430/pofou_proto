@@ -2,7 +2,7 @@ import React, { createContext, Component } from 'react';
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
 import { getWorkList } from '../server/main/MainServer';
-import { deleteLike, getWorkByWorkNumber, getWorkDetail, insertLike } from '../server/work/WorkServer';
+import { deleteLike, getLikeListByWorkNumber, getWorkByWorkNumber, getWorkDetail, insertLike } from '../server/work/WorkServer';
 import {getCategoryCodeList} from '../server/common/CommonServer';
 
 const Context  = createContext();
@@ -34,6 +34,7 @@ class MainProvider extends Component{
                 contentsList : [
                     
                 ],
+                commentList: [],
             },
             openWorkDetailModal : false,
             keywordList : [],
@@ -84,7 +85,8 @@ class MainProvider extends Component{
         toggleSpinnerModal : status => this.toggleSpinnerModal(status),
         toggleWorkDetailModal : () => this.toggleWorkDetailModal(),
         selectWork : workNumber => this.selectWork(workNumber),
-        clickLikeButton : workNumber => this.clickLikeButton(workNumber),
+        clickLikeButton : (e,workNumber) => this.clickLikeButton(e,workNumber),
+        getLikeList : workNumber => this.getLikeList(workNumber),
     }
 
    setWorkList = async (pageNo) => {
@@ -118,8 +120,9 @@ class MainProvider extends Component{
         }
         this.toggleSpinnerModal(true);
         const {data : workDetail} = await getWorkDetail(workNumber);
+
         if(workDetail !== null){
-            this.setState({
+            await this.setState({
                 ...this.state,
                 workDetail : workDetail
             });
@@ -137,43 +140,34 @@ class MainProvider extends Component{
         })
     }
 
-    clickLikeButton = async (workNumber) => {
+    clickLikeButton = async (e,workNumber) => {
+
+        e.stopPropagation();
         if(this.state.loginMember == null || this.state.loginMember.memberNumber === ""){
             alert("로그인시 이용 가능합니다.");
         }else{
             this.toggleSpinnerModal(true);
+            const work = this.state.workList.find(work => work.workNumber === workNumber);
+
             if(
-                this.state.workDetail.likeList == null 
-                || this.state.workDetail.likeList.find(like => like.memberNumber === this.state.loginMember.memberNumber) === undefined
+                work.likeList == null 
+                || work.likeList.find(like => like.memberNumber === this.state.loginMember.memberNumber) === undefined
             ){
                 const {data : insertResult} = await insertLike(workNumber,this.state.loginMember.memberNumber);
                 if(insertResult){
-                    console.log("success insert Like");
-                    this.changeWorkList(workNumber);
-                    this.setState({
-                        ...this.state,
-                        workDetail : {
-                            ...this.state.workDetail,
-                            likeList : this.state.workDetail.likeList.concat({workNumber:workNumber,memberNumber:this.state.loginMember.memberNumber}),
-                        }
-                    });
+                    
+                    this.getLikeList(workNumber);
                 }else{
                     console.log("fail insert Like");
+                    alert("오류가 발생했습니다.");
                 }
             }else{
                 const {data : deleteResult} = await deleteLike(workNumber,this.state.loginMember.memberNumber);
                 if(deleteResult){
-                    console.log("success delete Like");
-                    this.changeWorkList(workNumber);
-                    this.setState({
-                        ...this.state,
-                        workDetail : {
-                            ...this.state.workDetail,
-                            likeList : this.state.workDetail.likeList.filter(like => like.memberNumber !== this.state.loginMember.memberNumber),
-                        }
-                    });
+                    this.getLikeList(workNumber);
                 }else{
                     console.log("fail delete Like");
+                    alert("오류가 발생했습니다.");
                 }
             }
             this.toggleSpinnerModal(false);
@@ -195,6 +189,15 @@ class MainProvider extends Component{
         this.setState({
             ...this.state,
             keywordList : data
+        });
+    }
+
+    getLikeList = async(workNumber) => {
+        const {data} = await getLikeListByWorkNumber(workNumber);
+        
+        this.setState({
+            ...this.state,
+            workList : this.state.workList.map(work => work.workNumber === workNumber ? {...work,likeList : data} : work)
         });
     }
     
@@ -236,6 +239,7 @@ function createMainConsumer(WrappedComponent){
                             selectWork = {actions.selectWork}
                             clickLikeButton = {actions.clickLikeButton}
                             keywordList = {state.keywordList}
+                            getLikeList = {actions.getLikeList}
                             {...props}
                         />
                     )

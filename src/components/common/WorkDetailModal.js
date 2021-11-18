@@ -4,10 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React,{useState,Fragment,useEffect} from 'react';
 import { Input, Modal } from 'reactstrap';
 import moment from 'moment';
-import { getCommentListByWorkNumber, insertComment, insertReComment } from '../../server/work/WorkServer';
+import { getCommentListByWorkNumber, insertComment, insertReComment, insertLike, deleteLike } from '../../server/work/WorkServer';
 import { deleteCollection, deleteFollow, insertCollection, insertFollow } from '../../server/member/MemberServer';
 import {createCommonConsumer} from '../../context/commonContext';
-const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,toggleSpinnerModal,resetMemberInfo}) => {
+const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggleSpinnerModal,resetMemberInfo}) => {
     
     const [data,setData] = useState({
         memberNumber : "",
@@ -48,21 +48,71 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,t
         commentContents : "",
     })
 
-    useEffect(()=>{
+    // useEffect(()=>{
+    //     console.log(workDetail);
+    //     if(workDetail){
+    //         if(workDetail.workNumber !== data.workNumber){
+    //             setData(workDetail);
+    //             setCommentForm({
+    //                 ...commentForm,
+    //                 workNumber : workDetail.workNumber,
+    //                 memberNumber : loginMember!== null ? loginMember.memberNumber : "",
+    //             });
+    //             setReCommentForm({
+    //                 ...reCommentForm,
+    //                 workNumber : workDetail.workNumber,
+    //                 memberNumber : loginMember!== null ? loginMember.memberNumber : "",
+    //             });
+    //         }
+    //     }else{
+    //         setData({
+    //             memberNumber : "",
+    //             workNumber : "",
+    //             profileImage : "",
+    //             name : "",
+    //             keyword1 : "",
+    //             keyword2 : "",
+    //             title : "",
+    //             backgroundColor : "#FFFFFF",
+    //             margin : 0,
+    //             thumbnail : "",
+    //             category1 : "",
+    //             category2 : "",
+    //             tag : "",
+    //             copyright : "",
+    //             status : "",
+    //             registrationDate : new Date(),
+    //             contentsList : [
+                    
+    //             ],
+    //         })
+    //         setCommentForm({
+    //             memberNumber : "",
+    //             workNumber : "",
+    //             commentContents : "",
+    //         });
+    //         setReCommentForm({
+    //             memberNumber : "",
+    //             workNumber : "",
+    //             commentContents : "",
+    //             reCommentNumber : "",
+    //         });
+    //     }
+    // },[workDetail,loginMember]);
+
+    useEffect(() => {
         if(workDetail){
-            if(workDetail.workNumber !== data.workNumber){
-                setData(workDetail);
-                setCommentForm({
-                    ...commentForm,
-                    workNumber : workDetail.workNumber,
-                    memberNumber : loginMember!== null ? loginMember.memberNumber : "",
-                });
-                setReCommentForm({
-                    ...reCommentForm,
-                    workNumber : workDetail.workNumber,
-                    memberNumber : loginMember!== null ? loginMember.memberNumber : "",
-                });
-            }
+            setData(workDetail);
+            setCommentForm({
+                ...commentForm,
+                workNumber : workDetail.workNumber,
+                memberNumber : loginMember!== null ? loginMember.memberNumber : "",
+            });
+            setReCommentForm({
+                ...reCommentForm,
+                workNumber : workDetail.workNumber,
+                memberNumber : loginMember!== null ? loginMember.memberNumber : "",
+            });
         }else{
             setData({
                 memberNumber : "",
@@ -84,6 +134,7 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,t
                 contentsList : [
                     
                 ],
+                commentList: [],
             })
             setCommentForm({
                 memberNumber : "",
@@ -97,10 +148,45 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,t
                 reCommentNumber : "",
             });
         }
-    },[workDetail,loginMember]);
+    },[isOpen])
     
-    const handleLike = (workNumber) => {
-        clickLikeButton(workNumber);
+    const handleLike = async () => {
+        if(loginMember === null || loginMember.memberNumber ===""){
+            alert("로그인시 이용 가능합니다.");
+            return;
+        }
+
+        toggleSpinnerModal(true);
+        if(data.likeList.find(like => like.memberNumber === loginMember.memberNumber) !== undefined){
+            console.log("delete like");
+            const {data : deleteResult} = await deleteLike(data.workNumber,loginMember.memberNumber);
+            if(deleteResult){
+                setData({
+                    ...data,
+                    likeList : data.likeList.filter(like => like.memberNumber !== loginMember.memberNumber)
+                })
+            }
+        }else{
+            console.log("insert like");
+            const {data : likeResult} = await insertLike(data.workNumber,loginMember.memberNumber);
+            if(likeResult){
+                let newLike = {};
+                newLike["memberNumber"] = loginMember.memberNumber;
+                newLike["registrationDate"] = new Date();
+                newLike["workNumber"] = data.workNumber;
+                setData({
+                    ...data,
+                    likeList : data.likeList.concat(newLike)
+                });
+            }else{
+                alert("오류가 발생핬습니다.");
+            }
+        }
+        if(getLikeList !== undefined){
+            console.log("getLikeList initialized")
+            getLikeList(data.workNumber);
+        }
+        toggleSpinnerModal(false);
     }
 
     const dateConvert = (date) => {
@@ -522,7 +608,7 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,clickLikeButton,t
                         <div className="btnName">의뢰하기</div>
                     </li>
                     <li className="btnLike">
-                        <button className="btnIcon" onClick={() => clickLikeButton(data.workNumber)}>
+                        <button className="btnIcon" onClick={handleLike}>
                             {
                                 loginMember !== null && loginMember.memberNumber !== "" && data.likeList !== null && data.likeList !== undefined && data.likeList.find(like => like.memberNumber === loginMember.memberNumber) !== undefined ? <FontAwesomeIcon icon={fullHeart} className="fullHeart"/>:<FontAwesomeIcon icon={emptyHeart}/>
                             }
