@@ -3,7 +3,6 @@ import {faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Form } from 'reactstrap';
 import { createCommonConsumer } from '../../context/commonContext';
 import AlarmMenu from './AlarmMenu';
 import MyPageMenu from './MyPageMenu';
@@ -11,6 +10,7 @@ import MyPageMenu from './MyPageMenu';
 const PersonalNavigation = ({isLogin,history,loginMember}) => {
     const [openMyPageMenu,setOpenMyPageMenu] = useState(false);
     const [openAlarmMenu,setOpenAlarmMenu] = useState(false);
+    const [searchKeyword,setSearchKeyword] =  useState("");
     let location = useLocation();
     
     useEffect(() => {
@@ -32,13 +32,21 @@ const PersonalNavigation = ({isLogin,history,loginMember}) => {
         setOpenAlarmMenu(!openAlarmMenu);
     }
 
+    const changeSearchKeyword = (keyword) => {
+        setSearchKeyword(keyword);
+    }
+
+    const submitSearchKeyword = () => {
+        history.go(`/search?searchKeyword=${searchKeyword}`);
+    }
+
     return (
         <nav className="pnb">
             <ul>
                 <li>
                     <div className="searchBox">
-                        <form>
-                            <input type="text" name="serachText" id="searchText"/>
+                        <form onSubmit={submitSearchKeyword}>
+                            <input type="text" name="serachText" id="searchText" value={searchKeyword} onChange={e => changeSearchKeyword(e.target.value)}/>
                             <button>
                                 <FontAwesomeIcon icon={faSearch}/>
                             </button>

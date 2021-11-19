@@ -37,6 +37,7 @@ const Portfolio = ({openSpinnerModal,toggleSpinnerModal,match,history,loginMembe
         contentsList : [
             
         ],
+        commentList: [],
     },);
     
     const [openWorkDetailModal,setOpenWorkDetailModal] = useState(false);

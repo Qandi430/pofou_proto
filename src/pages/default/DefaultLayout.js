@@ -11,8 +11,8 @@ const Archive = React.lazy(() => import('../contents/Archive'));
 const Resume = React.lazy(() => import('../contents/Resume'));
 const MyPage = React.lazy(() => import('../myPage/MyPage'));
 const Portfolio = React.lazy(() => import('../myPage/Portfolio'));
-
 const MainPage = React.lazy(() => import('../main/MainPage'));
+const Search = React.lazy(() => import("../search/Search"));
 
 
 class DefaultLayout extends Component{
@@ -38,6 +38,7 @@ const LayoutWrap = ({location,match,history}) => {
                 <Route path="/resume" component={Resume}/>
                 <Route path="/myPage" component={MyPage}/>
                 <Route path="/portfolio" component={Portfolio}/>
+                <Route path="/search" component={Search}/>
                 <Route path="/" component={MainPage}/>
             </Switch>
             <Footer/>

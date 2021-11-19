@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { getWorkList } from '../server/main/MainServer';
 import { deleteLike, getLikeListByWorkNumber, getWorkByWorkNumber, getWorkDetail, insertLike } from '../server/work/WorkServer';
 import {getCategoryCodeList} from '../server/common/CommonServer';
+import {getQuery} from '../components/common/CommonScript';
 
 const Context  = createContext();
 
@@ -38,13 +39,15 @@ class MainProvider extends Component{
             },
             openWorkDetailModal : false,
             keywordList : [],
+            serchKeywrod : "",
         };
     }
 
     componentDidMount(prevProps,prevState){
         // const urlSeparte = this.props.history.location.pathname.split("/");
         const memberToken = cookie.load("memberToken");
-        
+        let query = getQuery();
+        console.log("query = ",query);
         if(memberToken !== undefined){
             const loginMember = jwtDecode(memberToken);
             this.setState({
@@ -59,6 +62,8 @@ class MainProvider extends Component{
     }
 
     componentDidUpdate(prevProps,prevState){
+        let query = getQuery();
+        console.log("query = ",query);
         if(this.state.loginMember === null){
             const memberToken = cookie.load("memberToken");
             
@@ -198,6 +203,13 @@ class MainProvider extends Component{
         this.setState({
             ...this.state,
             workList : this.state.workList.map(work => work.workNumber === workNumber ? {...work,likeList : data} : work)
+        });
+    }
+
+    changeSearchKeyword = (keyword) => {
+        this.setState({
+            ...this.state,
+            searchKeyword  : keyword,
         });
     }
     
