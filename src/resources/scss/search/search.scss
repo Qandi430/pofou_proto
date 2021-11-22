@@ -1,0 +1,38 @@
+.search{
+    .searchBox{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .inputBox{
+            display: flex;
+            justify-content: center;
+            border-bottom: 1px solid #333;
+            width: 100%;
+            max-width: 890px;
+            input{
+                border: 0;
+                font-size: 1.5rem;
+                &:focus{
+                    border:0;
+                    box-shadow: none;
+                    outline: none;
+                }
+            }
+            button{
+                background-color: transparent;
+                margin-right: 10px;
+                svg{
+                    font-size: 1.5rem;
+                }
+            }
+        }
+        .resultBox{
+            margin-top: 25px;
+            span{
+                font-weight: bold
+            }
+        }
+    }
+    @import "../main/gallary.scss";
+}

@@ -1,7 +1,7 @@
 import React, { createContext, Component } from 'react';
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
-import { getWorkList } from '../server/main/MainServer';
+import { getWorkList, getWorkListBySearchText } from '../server/main/MainServer';
 import { deleteLike, getLikeListByWorkNumber, getWorkByWorkNumber, getWorkDetail, insertLike } from '../server/work/WorkServer';
 import {getCategoryCodeList} from '../server/common/CommonServer';
 import {getQuery} from '../components/common/CommonScript';
@@ -47,7 +47,7 @@ class MainProvider extends Component{
         // const urlSeparte = this.props.history.location.pathname.split("/");
         const memberToken = cookie.load("memberToken");
         let query = getQuery();
-        console.log("query = ",query);
+        // console.log("query = ",query);
         if(memberToken !== undefined){
             const loginMember = jwtDecode(memberToken);
             this.setState({
@@ -58,12 +58,21 @@ class MainProvider extends Component{
         if(this.state.keywordList.length === 0){
             this.setKeywordList();
         }
-        this.setWorkList();
+        if(query.searchKeyword === undefined){
+            // console.log("main");
+            this.cleanWorkList();
+            this.setWorkList();
+        }else{
+            // console.log(query.searchKeyword);
+            this.cleanWorkList();
+            this.setWorkListBySearchText(query.searchKeyword);
+        }
+        
     }
 
     componentDidUpdate(prevProps,prevState){
         let query = getQuery();
-        console.log("query = ",query);
+        // console.log("query = ",query);
         if(this.state.loginMember === null){
             const memberToken = cookie.load("memberToken");
             
@@ -92,6 +101,8 @@ class MainProvider extends Component{
         selectWork : workNumber => this.selectWork(workNumber),
         clickLikeButton : (e,workNumber) => this.clickLikeButton(e,workNumber),
         getLikeList : workNumber => this.getLikeList(workNumber),
+        cleanWorkList : () => this.cleanWorkList(),
+        setWorkListBySearchText : (searchText,pageNo) => this.setWorkListBySearchText(searchText,pageNo),
     }
 
    setWorkList = async (pageNo) => {
@@ -103,6 +114,24 @@ class MainProvider extends Component{
             workList : this.state.workList.concat(workList)
         })
         this.toggleSpinnerModal(false);
+   }
+
+   setWorkListBySearchText = async (searchText,pageNo) => {
+        this.toggleSpinnerModal();
+        if(typeof pageNo !== "number") pageNo = this.state.pageNo;
+        const {data : workList} = await getWorkListBySearchText(searchText,pageNo);
+        this.setState({
+            ...this.state,
+            workList : this.state.workList.concat(workList)
+        });
+        this.toggleSpinnerModal(false);
+   }
+
+   cleanWorkList = async () => {
+       await this.setState({
+           ...this.state,
+           workList : [],
+       })
    }
 
    toggleSpinnerModal = (status) => {
@@ -252,6 +281,8 @@ function createMainConsumer(WrappedComponent){
                             clickLikeButton = {actions.clickLikeButton}
                             keywordList = {state.keywordList}
                             getLikeList = {actions.getLikeList}
+                            cleanWorkList = {actions.cleanWorkList}
+                            setWorkListBySearchText = {actions.setWorkListBySearchText}
                             {...props}
                         />
                     )

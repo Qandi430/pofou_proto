@@ -14,8 +14,10 @@ const PersonalNavigation = ({isLogin,history,loginMember}) => {
     let location = useLocation();
     
     useEffect(() => {
+        console.log(location);
         setOpenMyPageMenu(false);
         setOpenAlarmMenu(false);
+        setSearchKeyword("");
     },[location])
 
     const handleOpenMyPageMenu = () => {
@@ -36,16 +38,21 @@ const PersonalNavigation = ({isLogin,history,loginMember}) => {
         setSearchKeyword(keyword);
     }
 
-    const submitSearchKeyword = () => {
-        history.go(`/search?searchKeyword=${searchKeyword}`);
+    const submitSearchKeyword = (e) => {
+        e.preventDefault();
+        if(searchKeyword.length === 0){
+            alert("검색어를 입력해 주세요.");
+            return;
+        }
+        history.push(`/search?searchKeyword=${searchKeyword}`);
     }
 
     return (
         <nav className="pnb">
             <ul>
-                <li>
+                <li style={{display :  location.pathname.indexOf("search") > -1 ? "none" : "block"}}>
                     <div className="searchBox">
-                        <form onSubmit={submitSearchKeyword}>
+                        <form onSubmit={e => submitSearchKeyword(e)}>
                             <input type="text" name="serachText" id="searchText" value={searchKeyword} onChange={e => changeSearchKeyword(e.target.value)}/>
                             <button>
                                 <FontAwesomeIcon icon={faSearch}/>
