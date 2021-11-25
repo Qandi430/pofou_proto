@@ -103,6 +103,7 @@ class MainProvider extends Component{
         getLikeList : workNumber => this.getLikeList(workNumber),
         cleanWorkList : () => this.cleanWorkList(),
         setWorkListBySearchText : (searchText,pageNo) => this.setWorkListBySearchText(searchText,pageNo),
+        toggleLoginNoticeModal : () => this.props.toggleLoginNoticeModal(),
     }
 
    setWorkList = async (pageNo) => {
@@ -178,7 +179,8 @@ class MainProvider extends Component{
 
         e.stopPropagation();
         if(this.state.loginMember == null || this.state.loginMember.memberNumber === ""){
-            alert("로그인시 이용 가능합니다.");
+            // alert("로그인시 이용 가능합니다.");
+            this.props.toggleLoginNoticeModal();
         }else{
             this.toggleSpinnerModal(true);
             const work = this.state.workList.find(work => work.workNumber === workNumber);
@@ -283,6 +285,7 @@ function createMainConsumer(WrappedComponent){
                             getLikeList = {actions.getLikeList}
                             cleanWorkList = {actions.cleanWorkList}
                             setWorkListBySearchText = {actions.setWorkListBySearchText}
+                            toggleLoginNoticeModal = {actions.toggleLoginNoticeModal}
                             {...props}
                         />
                     )

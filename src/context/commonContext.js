@@ -21,6 +21,7 @@ class CommonProvider extends Component{
                 memberType : "",
             },
             openSpinnerModal : false,
+            openLoginNoticeModal : false,
         };
     }
 
@@ -63,6 +64,7 @@ class CommonProvider extends Component{
         setMember : token => this.setMember(token),
         toggleSpinnerModal : status => this.toggleSpinnerModal(status),
         resetMemberInfo : memberNumber => this.resetMemberInfo(memberNumber),
+        toggleLoginNoticeModal : () => this.toggleLoginNoticeModal(),
     };
 
     //login action
@@ -150,6 +152,14 @@ class CommonProvider extends Component{
             }
         });
     }
+    
+    toggleLoginNoticeModal = () => {
+        console.log("???")
+        this.setState({
+            ...this.state,
+            openLoginNoticeModal : !this.state.openLoginNoticeModal
+        })
+    }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.history !== undefined) {
@@ -189,6 +199,8 @@ function createCommonConsumer(WrappedComponent){
                             openSpinnerModal = {state.openSpinnerModal}
                             toggleSpinnerModal = {actions.toggleSpinnerModal}
                             resetMemberInfo = {actions.resetMemberInfo}
+                            openLoginNoticeModal = {state.openLoginNoticeModal}
+                            toggleLoginNoticeModal = {actions.toggleLoginNoticeModal}
                             {...props}
                         />
                     )

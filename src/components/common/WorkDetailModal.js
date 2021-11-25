@@ -7,7 +7,8 @@ import moment from 'moment';
 import { getCommentListByWorkNumber, insertComment, insertReComment, insertLike, deleteLike } from '../../server/work/WorkServer';
 import { deleteCollection, deleteFollow, insertCollection, insertFollow } from '../../server/member/MemberServer';
 import {createCommonConsumer} from '../../context/commonContext';
-const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggleSpinnerModal,resetMemberInfo}) => {
+import LoginNoticeModal from './LoginNoticeModal';
+const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggleSpinnerModal,resetMemberInfo,openLoginNoticeModal,toggleLoginNoticeModal}) => {
     
     const [data,setData] = useState({
         memberNumber : "",
@@ -47,58 +48,6 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggl
         reCommentNumber : "",
         commentContents : "",
     })
-
-    // useEffect(()=>{
-    //     console.log(workDetail);
-    //     if(workDetail){
-    //         if(workDetail.workNumber !== data.workNumber){
-    //             setData(workDetail);
-    //             setCommentForm({
-    //                 ...commentForm,
-    //                 workNumber : workDetail.workNumber,
-    //                 memberNumber : loginMember!== null ? loginMember.memberNumber : "",
-    //             });
-    //             setReCommentForm({
-    //                 ...reCommentForm,
-    //                 workNumber : workDetail.workNumber,
-    //                 memberNumber : loginMember!== null ? loginMember.memberNumber : "",
-    //             });
-    //         }
-    //     }else{
-    //         setData({
-    //             memberNumber : "",
-    //             workNumber : "",
-    //             profileImage : "",
-    //             name : "",
-    //             keyword1 : "",
-    //             keyword2 : "",
-    //             title : "",
-    //             backgroundColor : "#FFFFFF",
-    //             margin : 0,
-    //             thumbnail : "",
-    //             category1 : "",
-    //             category2 : "",
-    //             tag : "",
-    //             copyright : "",
-    //             status : "",
-    //             registrationDate : new Date(),
-    //             contentsList : [
-                    
-    //             ],
-    //         })
-    //         setCommentForm({
-    //             memberNumber : "",
-    //             workNumber : "",
-    //             commentContents : "",
-    //         });
-    //         setReCommentForm({
-    //             memberNumber : "",
-    //             workNumber : "",
-    //             commentContents : "",
-    //             reCommentNumber : "",
-    //         });
-    //     }
-    // },[workDetail,loginMember]);
 
     useEffect(() => {
         if(workDetail){
@@ -148,11 +97,11 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggl
                 reCommentNumber : "",
             });
         }
-    },[isOpen])
+    },[isOpen]);
     
     const handleLike = async () => {
         if(loginMember === null || loginMember.memberNumber ===""){
-            alert("로그인시 이용 가능합니다.");
+            toggleLoginNoticeModal();
             return;
         }
 
@@ -229,7 +178,7 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggl
             return;
         }
         if(commentForm.memberNumber === ""){
-            alert("로그인시 이용 가능합니다.");
+            toggleLoginNoticeModal();
             return;
         }
         if(commentForm.workNumber === ""){
@@ -288,7 +237,7 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggl
             return;
         }
         if(reCommentForm.memberNumber === ""){
-            alert("로그인시 이용 가능합니다.");
+            toggleLoginNoticeModal();
             return;
         }
         if(reCommentForm.reCommentNumber === ""){
@@ -347,7 +296,7 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggl
     const clickCollectionButton = async () => {
         toggleSpinnerModal(true);
         if(loginMember === null || loginMember.memberNumber === ""){
-            alert("로그인시 이용 가능합니다.");
+            toggleLoginNoticeModal();
             return false;
         }
         const {data : collectionResult} = await insertCollection(loginMember.memberNumber,data.workNumber);
@@ -363,7 +312,7 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggl
     const clickCancelCollection = async () => {
         toggleSpinnerModal(true);
         if(loginMember === null || loginMember.memberNumber === ""){
-            alert("로그인시 이용 가능합니다.");
+            toggleLoginNoticeModal();
             return false;
         }
         const {data : cancelResult} = await deleteCollection(loginMember.memberNumber,data.workNumber);
@@ -412,44 +361,6 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggl
                             <span>{data.viewCnt}</span>
                         </div>
                     </div>
-                    {/* <div className="headerLeft">
-                        <h3 className="title">{data.title}</h3>
-                        <div className="profile">
-                            <div className="profileImage" style={ data.profileImage !== null || data.profileImage !=="" ? {backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${data.profileImage})`} : {backgroundColor:"#e8e8e8"}}>
-                                {
-                                    data.profileImage !== null ?
-                                    "" : data.email === null ? "P" : data.email.split("")[0].toUpperCase()
-                                }
-                            </div>
-                            <div className="name">{data.name}</div>
-                        </div>
-                    </div>
-                    <div className="headerRight">
-                        {
-                            data.category1 !== "" || data.category2 !== "" ?
-                            <div className="category">
-                                {
-                                    data.category1 !== "" && <span>{data.category1}</span>
-                                }
-                                {
-                                    data.category2 !== "" && <span>{data.category2}</span>
-                                }
-                            </div>
-                            : ""
-                        }
-                        <div className="workInfo">
-                            <div className="likeCnt">
-                                {
-                                    loginMember !== null && loginMember.memberNumber !== "" && data.likeList !== null && data.likeList !== undefined && data.likeList.find(like => like.memberNumber === loginMember.memberNumber) !== undefined ? <FontAwesomeIcon icon={fullHeart} className="fullHeart"/>:<FontAwesomeIcon icon={emptyHeart}/>
-                                }
-                                <span>{data.likeList !== null && data.likeList !== undefined ? data.likeList.length : 0}</span>
-                            </div>
-                            <div className="viewCnt">
-                                <FontAwesomeIcon icon={faEye}/>
-                                <span>{data.viewCnt}</span>
-                            </div>
-                        </div>
-                    </div> */}
                 </div>
                 <div className="detailBody" style={{backgroundColor : `${data.backgroundColor}`}}>
                     {

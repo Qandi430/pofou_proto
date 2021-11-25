@@ -1127,3 +1127,54 @@ footer{
         }
     }
 }
+
+#loginNoticeModal{
+    max-width: 325px;
+    .modal-content{
+        border-radius: 0;
+        .modal-body{
+            display: flex;
+            flex-direction: column;
+            padding: 60px 30px;
+            h2{
+                font-size: 1.25rem;
+                text-align: center;
+                line-height: 1.6rem;
+            }
+            h6{
+                margin-top: 30px;
+                font-size: 0.9rem;
+                color: #999999;
+                text-align: center;
+                line-height: 1.8rem;
+            }
+            .btnLogin{
+                margin-top: 30px;
+                text-align: center;
+                width: 100%;
+                background-color: rgba(137,201,151,0.8);
+                color: #fff;
+                padding: 10px;
+                font-size: 0.8rem;
+                transition: background-color 0.5s;
+                &:hover{
+                    background-color: rgba(137,201,151,1);
+                }
+            }
+            p{
+                text-align: center;
+                margin-top: 30px;
+                font-size: 0.9rem;
+                color: #999999;
+                .btnRegister{
+                    color: rgba(137,201,151,0.8);
+                    border-bottom: 1px solid #89c997;
+                    transition: color 0.5s;
+                    &:hover{
+                        color:rgba(137,201,151,1);
+                    }
+                }
+            }
+        }
+    }
+}

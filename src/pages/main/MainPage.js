@@ -4,9 +4,9 @@ import { createCommonConsumer } from '../../context/commonContext';
 import { MainProvider } from '../../context/mainContext';
 import '../../resources/scss/main/main.scss';
 
-const MainPage = ({loginMember,history}) => {
+const MainPage = ({loginMember,history,openLoginNoticeModal,toggleLoginNoticeModal}) => {
     return (
-        <MainProvider loginMember={loginMember} history={history}>
+        <MainProvider loginMember={loginMember} history={history} openLoginNoticeModal={openLoginNoticeModal} toggleLoginNoticeModal={toggleLoginNoticeModal}>
             <div className="main">
                 <Gallery/>
             </div>
