@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMainConsumer } from '../../../context/mainContext';
 
-const Filters = ({keywordList}) => {
+const Filters = ({keywordList,setCurrentList,currentCategory}) => {
     return (
         <div className="filters">
             <ul className="">
@@ -10,12 +10,12 @@ const Filters = ({keywordList}) => {
                 <li><button>추천순</button></li>
             </ul>
             <ul className="keywordFilters">
-                <li className="on"><button>전체</button></li>
+                <li className={currentCategory === "all" ? "on" : ""} onClick={() => setCurrentList("all")}><button>전체</button></li>
                 {
                     keywordList !== null && keywordList !== undefined &&
                     keywordList.map(
                         keyword => 
-                            <li key={keyword.code}>
+                            <li className={currentCategory === keyword.code ? "on" : ""} key={keyword.code} onClick={() => setCurrentList(keyword.code)}>
                                 <button>
                                     {keyword.kor}
                                 </button>

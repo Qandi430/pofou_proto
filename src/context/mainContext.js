@@ -17,6 +17,8 @@ class MainProvider extends Component{
             loginMember : null,
             pageNo : 1,
             workList : [],
+            currentWorkList : [],
+            currentCategory : "all",
             openSpinnerModal : false,
             workDetail : {
                 memberNumber : "",
@@ -104,27 +106,40 @@ class MainProvider extends Component{
         cleanWorkList : () => this.cleanWorkList(),
         setWorkListBySearchText : (searchText,pageNo) => this.setWorkListBySearchText(searchText,pageNo),
         toggleLoginNoticeModal : () => this.props.toggleLoginNoticeModal(),
+        setCurrentList : category => this.setCurrentList(category),
     }
 
    setWorkList = async (pageNo) => {
        this.toggleSpinnerModal(true);
         if(typeof pageNo !== "number") pageNo = this.state.pageNo;
         const {data : workList} = await getWorkList(pageNo);
+        await this.setState({
+            ...this.state,
+            workList : workList,
+        });
+        this.setCurrentList("all");
+        this.toggleSpinnerModal(false);
+   };
+
+   setCurrentList = async (category) => {
+        const {workList} = this.state;
+        let newList = category === 'all' || category === '' || category === undefined ? workList :  workList.filter(work => work.category1 === category || work.category2 === category);
         this.setState({
             ...this.state,
-            workList : this.state.workList.concat(workList)
-        })
-        this.toggleSpinnerModal(false);
+            currentCategory : category,
+            currentWorkList : newList
+        });
    }
 
    setWorkListBySearchText = async (searchText,pageNo) => {
         this.toggleSpinnerModal();
         if(typeof pageNo !== "number") pageNo = this.state.pageNo;
         const {data : workList} = await getWorkListBySearchText(searchText,pageNo);
-        this.setState({
+        await this.setState({
             ...this.state,
-            workList : this.state.workList.concat(workList)
+            workList : workList,
         });
+        this.setCurrentList("all");
         this.toggleSpinnerModal(false);
    }
 
@@ -286,6 +301,9 @@ function createMainConsumer(WrappedComponent){
                             cleanWorkList = {actions.cleanWorkList}
                             setWorkListBySearchText = {actions.setWorkListBySearchText}
                             toggleLoginNoticeModal = {actions.toggleLoginNoticeModal}
+                            currentWorkList = {state.currentWorkList}
+                            setCurrentList = {actions.setCurrentList}
+                            currentCategory = {state.currentCategory}
                             {...props}
                         />
                     )

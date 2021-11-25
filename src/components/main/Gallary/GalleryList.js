@@ -5,13 +5,13 @@ import React from 'react';
 import { createMainConsumer } from '../../../context/mainContext';
 
 
-const GalleyList = ({workList,selectWork,clickLikeButton,loginMember}) => {
+const GalleyList = ({currentWorkList,selectWork,clickLikeButton,loginMember}) => {
     return (
         <div className="galleryList">
             <ul>
                 {
-                    workList.length > 0 ?
-                        workList.map(
+                    currentWorkList.length > 0 ?
+                        currentWorkList.map(
                             work => 
                                 <li key={work.workNumber} onClick={() => selectWork(work.workNumber)} style={{backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${work.thumbnail})`}}>
                                     <div className="workInfo">
