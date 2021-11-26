@@ -172,7 +172,7 @@ const Certificate = ({formData,changeFormData}) => {
                                 }
                                 <FormGroup className="certificateName">
                                     <Label>
-                                        {certificate.certificateType === "license" ? "자격증명": certificate.certificateType === "language" ? "시험종류" : "수상명"}
+                                        {certificate.certificateType === "awards" ? "수상명": certificate.certificateType === "language" ? "시험종류" : "자격증명"}
                                     </Label>
                                     <div className="inputBox">
                                         <Input 
@@ -180,7 +180,7 @@ const Certificate = ({formData,changeFormData}) => {
                                             name="certificateName" 
                                             value={certificate.certificateName} 
                                             onChange={e => changeCertificate(index,e.target.name,e.target.value)} 
-                                            placeholder={certificate.certificateType === "license" ? "자격증명 입력": certificate.certificateType === "language" ? "시험종류 입력" : "수상명 입력"}
+                                            placeholder={certificate.certificateType === "awards" ? "수상명 입력": certificate.certificateType === "language" ? "시험종류 입력" : "자격증명 입력"}
                                         />
                                     </div>
                                 </FormGroup>
@@ -438,7 +438,7 @@ const Certificate = ({formData,changeFormData}) => {
                     )
                 }
             </div>
-            <button onClick={addCertificate}>자격증/어학/수상내역 추가 <FontAwesomeIcon icon={faPlus}/></button>
+            <button type="button" onClick={addCertificate}>자격증/어학/수상내역 추가 <FontAwesomeIcon icon={faPlus}/></button>
         </FormGroup>
     )
 }

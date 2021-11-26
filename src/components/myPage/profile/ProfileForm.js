@@ -45,7 +45,7 @@ const ProfileForm = ({saveProfile,profileForm,changeProfileForm,handleCategorySe
                     </div>
                     <div className="inputWrap">
                         <div className="buttonWrap">
-                            <input type="file" name="profileImage" id="profileImage" onChange={e => changeBeforeImage(e)}/>
+                            <input type="file" name="profileImage" id="profileImage" onChange={e => changeBeforeImage(e)} accept="image/jpg, image/jpeg, image/png"/>
                             <label htmlFor="profileImage" className="btnUpload"><FontAwesomeIcon icon={faUpload}/> 프로필 사진 업로드</label>
                             <button className="btnRemove">이미지 삭제</button>
                         </div>

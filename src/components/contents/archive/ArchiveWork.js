@@ -21,10 +21,10 @@ const ArchiveWork = ({show,archive,selectWork,openWorkDetailModal,toggleWorkDeta
                     }
                 </div>
                 :
-                <Fragment>
+                <div className="workEmpty">
                     아직 업로드한 작품이 없습니다.
                     <Link to="/upload">지금 등록해보세요</Link>
-                </Fragment>
+                </div>
             }
             <WorkDetailModal isOpen={openWorkDetailModal} toggle={toggleWorkDetailModal} workDetail={workDetail} loginMember={loginMember}/>
         </div>

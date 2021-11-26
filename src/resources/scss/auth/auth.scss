@@ -1,13 +1,14 @@
 $main-color: #89c997;
 .auth{
     width: 100vw;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: cover;
     &:not(.selectMemberType){
         // background-image: url('../../images/auth/authBg.jpg');
         display: flex;
         justify-content: flex-end;
         height: calc(100vh - 39px);
-        background-repeat: no-repeat;
-        background-position: left center;
         background-size: contain;
         >div{
             flex: 0 0 45%;

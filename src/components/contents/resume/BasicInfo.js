@@ -165,7 +165,7 @@ const BasicInfo = ({
                 <FormGroup className="address">
                     <Label>주소 <span>필수</span></Label>
                     <div className="inputBox">    
-                        <Input type="text" name="baseAddress" value={formData.baseAddress}  onClick={toggleDaumPostModal} readOnly placeholder="기본주소"/>
+                        <Input type="text" name="baseAddress" value={formData.baseAddress} onClick={toggleDaumPostModal} readOnly placeholder="기본주소"/>
                         <Input type="text" name="detailAddress" value={formData.detailAddress} onChange={e => changeFormData(e.target.name,e.target.value)} placeholder="상세주소 입력"/>
                     </div>
                 </FormGroup>

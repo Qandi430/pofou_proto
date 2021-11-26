@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { createPortfolioConsumer } from '../../../../context/portfolioContext';
 import { getResumeByMemberNumber,getResumeDetailByResumeNumber } from '../../../../server/resume/ResumeServer';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 
@@ -36,6 +37,7 @@ const ResumeSelectModal = ({openResumeSelectModal,toggleResumeSelectModal,loginM
             <ModalBody>
                 <div className="resumeList">
                     {
+                        resumeList.length > 0?
                         resumeList.map(
                             (resume,index) => 
                                 <div className="listItem" key={index}>
@@ -53,6 +55,11 @@ const ResumeSelectModal = ({openResumeSelectModal,toggleResumeSelectModal,loginM
                                     </div>
                                 </div>
                         )
+                        :
+                        <div className="empty">
+                            등록된 이력서가 없습니다.
+                            <Link to="/resume/form">이력서 등록하기.</Link>
+                        </div>
                     }
                 </div>
             </ModalBody>

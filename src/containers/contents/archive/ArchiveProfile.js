@@ -32,7 +32,7 @@ const ArchiveProfile = ({archive,keywordList,editMode}) => {
                         </div>
                     }
                     <div className="profileInfo">
-                        <h4 className="name">이승재</h4>
+                        <h4 className="name">{archive.name}</h4>
                         <div className="category">
                             {
                                 archive !== null && (archive.keyword1 !== "" && archive.keyword2 !== "" )?

@@ -1,3 +1,4 @@
+$main-color: #89c997;
 .archive{
     .archiveBackground{
         width: 100%;
@@ -168,6 +169,16 @@
                     border: 1px solid #d9d9d9;
                 }
                 &.archiveWork{
+                    > .workEmpty{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 300px;
+                        a{
+                            color: $main-color;
+                            border-bottom: 1px solid $main-color;
+                        }
+                    }
                     > .workList{
                         display: flex;
                         flex-wrap: wrap;

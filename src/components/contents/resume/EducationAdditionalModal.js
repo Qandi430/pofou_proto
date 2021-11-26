@@ -86,6 +86,11 @@ const EducationAdditionalModal = ({isOpen,toggle,addEducation,modifyEducationFor
         //     ...eduForm,
         //     [name]:value
         // });
+        if(name === "admissionYear" || name === "graduatedYear"){
+            const regex = /[^0-9]/g;
+            value = value.replace(regex,"");
+        }
+        
         setEduForm(() => {
             if(name === "degreeType" || name === "majorType" || name === "majorName"){
                 let major = eduForm.majorList.find(m => m.index === index );
@@ -338,9 +343,9 @@ const EducationAdditionalModal = ({isOpen,toggle,addEducation,modifyEducationFor
                     </Col>
                     <Col md={6}>
                         <FormGroup>
-                            <Input type="text" name="admissionYear" onChange={e => changeEduForm("admissionYear",e.target.value)} placeholder="입학년도"/>
+                            <Input type="text" name="admissionYear" onChange={e => changeEduForm("admissionYear",e.target.value)} value={eduForm.admissionYear} placeholder="입학년도"/>
                             <span>-</span>
-                            <Input type="text" name="graduatedYear"  onChange={e => changeEduForm("graduatedYear",e.target.value)} placeholder="졸업년도"/>
+                            <Input type="text" name="graduatedYear"  onChange={e => changeEduForm("graduatedYear",e.target.value)} value={eduForm.graduatedYear} placeholder="졸업년도"/>
                             <Dropdown isOpen={openGraduatedType} toggle={() => handleDropdown("openGraduatedType")}>
                                 <DropdownToggle caret>
                                     {convertValueToName("graduatedType")}
