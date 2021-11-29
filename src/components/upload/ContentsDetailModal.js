@@ -8,7 +8,7 @@ import ImageSelectModal from './ImageSelectModal';
 import ThumbnailCreateModal from './ThumbnailCreateModal';
 
 
-const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail,toggleSpinnerModal}) => {
+const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail,toggleSpinnerModal,submitUpload,submitPrivate}) => {
     const [detailForm,setDetailForm] = useState({
        title : "",
        thumbnail : "",
@@ -231,7 +231,8 @@ const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail,toggle
             </ModalBody>
             <ModalFooter>
                 <Button color="danger" onClick={toggle}>취소</Button>
-                <Button color="info" onClick={submitContentsDetail}>저장</Button>
+                <Button color="warning" onClick={submitPrivate}>비공개로 저장</Button>
+                <Button color="info" onClick={submitUpload}>저장</Button>
             </ModalFooter>
             <ThumbnailCreateModal beforeImage={beforeImage} saveImage={changeThumbnailImage} changeBeforeImage={changeBeforeImage}/>
             <ImageSelectModal isOpen={openImageSelectModal} toggle={toggleImageSelectModal} uploadForm={uploadForm} changeBeforeImage={changeBeforeImage}/>

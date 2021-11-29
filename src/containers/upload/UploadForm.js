@@ -15,13 +15,20 @@ import {createCommonConsumer} from '../../context/commonContext';
 import { upload } from '../../server/work/WorkServer';
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
+import iconImage from '../../resources/images/upload/icon_image.png';
+import iconText from '../../resources/images/upload/icon_text.png';
+import iconVideo from '../../resources/images/upload/icon_video.png';
+import iconGrid from '../../resources/images/upload/icon_grid.png';
+import iconAlign from '../../resources/images/upload/icon_align.png';
+import iconBg from '../../resources/images/upload/icon_bg.png';
+import iconMargin from '../../resources/images/upload/icon_margin.png';
 
 const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerModal}) => {
     const [uploadForm,setUploadForm] = useState({
         memberNumber : "",
         workNumber : "",
         title : "",
-        backgroundColor : "#FFFFFF",
+        backgroundColor : "#ffffff",
         margin : 0,
         thumbnail : "",
         category1 : "",
@@ -94,7 +101,9 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
     }
 
     const saveContents = (order,name,value) => {
-        // console.log(order,name,value)
+        
+        const newContents = uploadForm.contentsList.map(content => content.order === order ? {...content,[name]:value} : content);
+        console.log(order,name,value,newContents);
         setUploadForm({
             ...uploadForm,
             contentsList : uploadForm.contentsList.map(content => content.order === order ? {...content,[name]:value} : content)
@@ -140,17 +149,17 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
     const confirmUploadForm = () => {
         if(uploadForm.title === ""){
             alert("콘텐츠 제목을 입력해 주세요.");
-            toggleContentsDetailModal();
+            
             return false;
         }
         if(uploadForm.thumbnail === ""){
             alert("썸네일 이미지를 등록해 주세요.");
-            toggleContentsDetailModal();
+            
             return false;
         }
         if(uploadForm.category1 === "" || uploadForm.category2 === "" ){
             alert("카테고리를 선택해 주세요.");
-            toggleContentsDetailModal();
+            
             return false;
         }
         if(uploadForm.contentsList.length <= 0){
@@ -281,19 +290,19 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
                                     <p>콘텐츠를 선택하여 업로드를 시작하세요.</p>
                                     <ul>
                                         <li>
-                                            <button onClick={() => addContents("image")}><FontAwesomeIcon icon={faImages}/></button>
+                                            <button onClick={() => addContents("image")}><img src={iconImage} alt="" /></button>
                                             <p>이미지</p>
                                         </li>
                                         <li>
-                                            <button onClick={() => addContents("text")}><FontAwesomeIcon icon={faKeyboard}/></button>
+                                            <button onClick={() => addContents("text")}><img src={iconText} alt="" /></button>
                                             <p>텍스트</p>
                                         </li>
                                         <li>
-                                            <button onClick={() => addContents("video")}><FontAwesomeIcon icon={faVideo}/></button>
+                                            <button onClick={() => addContents("video")}><img src={iconVideo} alt="" /></button>
                                             <p>동영상</p>
                                         </li>
                                         <li>
-                                            <button onClick={() => addContents("grid")}><FontAwesomeIcon icon={faTh}/></button>
+                                            <button onClick={() => addContents("grid")}><img src={iconGrid} alt="" /></button>
                                             <p>이미지 그리드</p>
                                         </li>
                                     </ul>
@@ -306,24 +315,35 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
                             <div className="contentsSetting setting1">
                                 <ul>
                                     <li onClick={() => addContents("image")}>
-                                        <FontAwesomeIcon icon={faImages}/>
-                                        이미지 추가
-                                    </li>
-                                    <li onClick={() => addContents("text")}>
-                                        <FontAwesomeIcon icon={faKeyboard}/>
-                                        텍스트 추가
-                                    </li>
-                                    <li onClick={() => addContents("video")}>
-                                        <FontAwesomeIcon icon={faVideo}/>
-                                        동영상 추가
+                                        {/* <FontAwesomeIcon icon={faImages}/> */}
+                                        <img src={iconImage} alt="" />
+                                        이미지
                                     </li>
                                     <li onClick={() => addContents("grid")}>
-                                        <FontAwesomeIcon icon={faTh}/>
-                                        이미지 그리드 추가
+                                        {/* <FontAwesomeIcon icon={faTh}/> */}
+                                        <img src={iconGrid} alt="" />
+                                        이미지<br />
+                                        그리드
+                                    </li>
+                                    <li onClick={() => addContents("text")}>
+                                        {/* <FontAwesomeIcon icon={faKeyboard}/> */}
+                                        <img src={iconText} alt="" />
+                                        텍스트
+                                    </li>
+                                    <li onClick={() => addContents("video")}>
+                                        {/* <FontAwesomeIcon icon={faVideo}/> */}
+                                        <img src={iconVideo} alt="" />
+                                        동영상
+                                    </li>
+                                    <li onClick={toggleContentsSortModal}>
+                                        {/* <FontAwesomeIcon icon={faImages}/> */}
+                                        <img src={iconAlign} alt="" />
+                                        콘텐츠<br />
+                                        정렬
                                     </li>
                                 </ul>
                             </div>
-                            <div className="contentsSetting setting2">
+                            {/* <div className="contentsSetting setting2">
                                 <ul>
                                     <li onClick={toggleContentsSortModal}>
                                         <FontAwesomeIcon icon={faImages}/>
@@ -334,11 +354,18 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
                                         세부 정보 설정
                                     </li>
                                 </ul>
-                            </div>
+                            </div> */}
                             <div className="contentsSetting setting3">
-                                <dl className="background">
-                                    <dt>배경색상 설정</dt>
-                                    <dd>
+                                <div className="background">
+                                    <label htmlFor="contentsBackgroundColor">
+                                        <div style={{backgroundColor:`${uploadForm.backgroundColor}`}}></div>
+                                    </label>
+                                    <p>
+                                        배경 색상 
+                                    </p>
+                                    <span>{uploadForm.backgroundColor}</span>
+                                    <Input type="color"  id="contentsBackgroundColor" value={uploadForm.backgroundColor} onChange={e => changeUploadForm("backgroundColor",e.target.value)}/>
+                                    {/* <dd>
                                         <label htmlFor="contentsBackgroundColor">
                                             <dl>
                                                 <dt style={{backgroundColor:`${uploadForm.backgroundColor}`}}></dt>
@@ -346,20 +373,19 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
                                             </dl>
                                         </label>
                                         <Input type="color"  id="contentsBackgroundColor" onChange={e => changeUploadForm("backgroundColor",e.target.value)}/>
-                                    </dd>
-                                </dl>
+                                    </dd> */}
+                                </div>
                                 <dl className="margin">
-                                    <dt>콘텐츠 간격 설정</dt>
+                                    <dt><img src={iconMargin} alt="" /> 콘텐츠 간격 <span>{uploadForm.margin}px</span></dt>
                                     <dd>
                                         <Input type="range" value={uploadForm.margin} min="0" max="100" onChange={ e => changeUploadForm("margin",e.target.value)}/>
-                                        <span>{uploadForm.margin}px</span>
                                     </dd>
                                 </dl>
                             </div>
                             <div className="btnBox">
-                                <Button className="btnUpload" onClick={submitUpload}>업로드</Button>
-                                <Button className="btnPrivate" onClick={submitPrivate}>비공개로 임시저장</Button>
-                                <Button className="btnPreview"><FontAwesomeIcon icon={faSearch}/> 화면 미리보기</Button>
+                                <Button className="btnPreview">미리보기</Button>
+                                <Button className="btnUpload" onClick={toggleContentsDetailModal}>업로드</Button>
+                                {/* <Button className="btnPrivate" onClick={submitPrivate}>비공개로 임시저장</Button> */}
                             </div>
                         </div>
                     </Col>
@@ -367,7 +393,7 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
             </Container>
             <PackmanLoader isOpen={openSpinnerModal} toggleSpinnerModal={toggleSpinnerModal}/>
             <ContentsSortModal isOpen={openContentsSortModal} toggle={toggleContentsSortModal} contentsList={uploadForm.contentsList} saveList={saveList}/>
-            <ContentsDetailModal isOpen={openContentsDetailModal} toggle={toggleContentsDetailModal} uploadForm={uploadForm} changeUploadDetail={changeUploadDetail} toggleSpinnerModal={toggleSpinnerModal}/>
+            <ContentsDetailModal isOpen={openContentsDetailModal} toggle={toggleContentsDetailModal} uploadForm={uploadForm} changeUploadDetail={changeUploadDetail} toggleSpinnerModal={toggleSpinnerModal} submitUpload={submitUpload} submitPrivate={submitPrivate}/>
             <ResultModal result={uploadResult} closedResultModal={closedResultModal}/>
         </div>
     )

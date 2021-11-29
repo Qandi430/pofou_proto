@@ -1,11 +1,21 @@
 .upload{
-    background: #f1f1f1;
-    padding: 10px 0;
+    
+    padding: 10px 0 50px;
     min-height: calc(100vh - 51px);
     .uploadForm{
+        .titleBox{
+            border-bottom: 1px solid #eeeeee;
+            input{
+                border: 0;
+                font-size: 2rem;
+                &:focus{
+                    box-shadow: none;
+                }
+            }
+        }
         .contentsBox{
             margin-top: 15px;
-            background: #fff;
+            background: #fafafa;
             padding: 15px 30px;
             border: 1px solid #d9d9d9;
             position: relative;
@@ -17,7 +27,7 @@
                 padding: 100px 0;
                 border: 2px solid transparent;
                 transition: border 0.5s;
-                background-color: #ffffff;
+                // background-color: #ffffff;
                 ul{
                     display: flex;
                     align-items: center;
@@ -259,7 +269,7 @@
             .addContentsBox{
                 position: absolute;
                 left: -60px;
-                margin-top: -40px;
+                margin-top: -20px;
                 width: 40px;
                 height: 40px;
                 display: flex;
@@ -270,6 +280,7 @@
                 background-color: #fff;
                 overflow: hidden;
                 transition: all 0.5s;
+                z-index: 99999;
                 button{
                     background-color: transparent;
                     color: #999;
@@ -291,165 +302,218 @@
             }
         }
     }
-    .uploadSideBar{
-        position: -webkit-sticky; /* 사파리 브라우저 지원 */
-        position: sticky;
-        top: 10px;
-        .contentsSetting{
-            background: #fff;
-            &+.contentsSetting{
-                margin-top: 30px;
-            }
-            &.setting1{
-                ul{
-                    display: flex;
-                    flex-wrap: wrap;
-                    border: 1px solid #d9d9d9;
-                    li{
-                        flex: 0 0 50%;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                        padding: 12% 0;
-                        font-size: 0.7rem;
-                        letter-spacing: -1px;
-                        cursor: pointer;
-                        &:nth-child(2n){
-                            border-left: 1px solid #d9d9d9;
-                        }
-                        &:nth-child(n+3){
-                            border-top: 1px solid #d9d9d9;
-                        }
-                        svg{
-                            margin-bottom: 10px;
-                            font-size: 1.2rem;
+    .uploadSideBarWrap{
+        padding-top:75px;
+        // display: flex;
+        // justify-content: flex-end;
+        // height: 100%;
+        .uploadSideBar{
+            position: -webkit-sticky; /* 사파리 브라우저 지원 */
+            position: sticky;
+            margin-left: auto;
+            top: 10px;
+            max-width: 125px;
+            .contentsSetting{
+                background: #fff;
+                &+.contentsSetting{
+                    margin-top: 30px;
+                }
+                &.setting1{
+                    ul{
+                        border-radius: 12px;
+                        border: 1px solid #d9d9d9;
+                        width: fit-content;
+                        padding: 10px 25px;
+                        li{
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            padding: 15px 0;
+                            font-size: 0.7rem;
+                            letter-spacing: -1px;
+                            cursor: pointer;
+                            text-align: center;
+                            svg{
+                                margin-bottom: 10px;
+                                font-size: 1.2rem;
+                            }
+                            img{
+                                margin-bottom: 10px;
+                            }
                         }
                     }
                 }
-            }
-            &.setting2{
-                ul{
-                    display: flex;
-                    flex-wrap: wrap;
-                    border: 1px solid #d9d9d9;
-                    li{
-                        flex: 0 0 50%;
+                &.setting2{
+                    ul{
                         display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                        padding: 12% 0;
-                        font-size: 0.7rem;
-                        letter-spacing: -1px;
-                        cursor: pointer;
-                        &:nth-child(2){
-                            border-left: 1px solid #d9d9d9;
-                        }
-                        svg{
-                            margin-bottom: 10px;
-                            font-size: 1.4rem;
+                        flex-wrap: wrap;
+                        border: 1px solid #d9d9d9;
+                        li{
+                            flex: 0 0 50%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            padding: 12% 0;
+                            font-size: 0.7rem;
+                            letter-spacing: -1px;
+                            cursor: pointer;
+                            &:nth-child(2){
+                                border-left: 1px solid #d9d9d9;
+                            }
+                            svg{
+                                margin-bottom: 10px;
+                                font-size: 1.4rem;
+                            }
                         }
                     }
                 }
-            }
-            &.setting3{
-                padding: 10px 15px;
-                dl{
-                    padding: 10px 0;
-                    dt{
-                        font-size: 0.7rem;
-                        letter-spacing: -1px;
-                    }
-                    dd{
-                        margin-top: 10px;
+                &.setting3{
+                    // padding: 10px 15px;
+                    .background{
                         display: flex;
                         align-items: center;
+                        justify-content: space-between;
+                        font-size: 0.7rem;
+                        // letter-spacing: -1px;
+                        position: relative;
+                        label{
+                            cursor: pointer;
+                            // margin-right: 10px;
+                            > div{
+                                border: 1px solid #000;
+                                width: 20px;
+                                height: 20px;
+                            }
+                        }
+                        p{
+                            display: flex;
+                            // flex-direction: column;
+                        }
+                        input{
+                            visibility: hidden;
+                            position: absolute;
+                            left:0;
+                            bottom: 0;
+                        }
                     }
-                    &.background{
+                    dl{
+                        padding: 10px 0;
+                        dt{
+                            font-size: 0.7rem;
+                            letter-spacing: -1px;
+                        }
                         dd{
-                            // border: 1px solid #d9d9d9;
-                            position: relative;
-                            label{
-                                width: 100%;
-                                dl{
-                                    padding: 0;
-                                    height:25px;
-                                    display: flex;
-                                    border: 1px solid #d9d9d9;
-                                    justify-content: space-between;
-                                    align-items: center;
-                                    cursor: pointer;
-                                    dt{
-                                        flex: 0 0 20%;
-                                        height: 100%;
-                                        border-right: 1px solid #d9d9d9;
-                                    }
-                                    dd{
-                                        flex: 0 0 80%;
-                                        margin-top: 0;
-                                        font-size: 0.7rem;
-                                        padding-left: 5px;
-                                        
+                            margin-top: 10px;
+                            display: flex;
+                            align-items: center;
+                        }
+                        &.background{
+                            dt{
+                                display: flex;
+                                label{
+                                    >div{
+                                        border: 1px solid #000;
+                                        width: 20px;
+                                        height: 20px;
                                     }
                                 }
-                                &~input[type=color]{
-                                    visibility: hidden;
-                                    position: absolute;
-                                    left:0;
-                                    bottom: 0;
+                                input{
+                                    display: none;
+                                }
+                            }
+                            dd{
+                                // border: 1px solid #d9d9d9;
+                                position: relative;
+                                label{
+                                    width: 100%;
+                                    dl{
+                                        padding: 0;
+                                        height:25px;
+                                        display: flex;
+                                        border: 1px solid #d9d9d9;
+                                        justify-content: space-between;
+                                        align-items: center;
+                                        cursor: pointer;
+                                        dt{
+                                            flex: 0 0 20%;
+                                            height: 100%;
+                                            border-right: 1px solid #d9d9d9;
+                                        }
+                                        dd{
+                                            flex: 0 0 80%;
+                                            margin-top: 0;
+                                            font-size: 0.7rem;
+                                            padding-left: 5px;
+                                            
+                                        }
+                                    }
+                                    &~input[type=color]{
+                                        visibility: hidden;
+                                        position: absolute;
+                                        left:0;
+                                        bottom: 0;
+                                    }
                                 }
                             }
                         }
-                    }
-                    &.margin{
-                        border-top: 1px solid #d9d9d9;
-                        dd{
-                            input[type=range]{
-                                flex: 0 0 70%;
-                                width: 70%;
+                        &.margin{
+                            // border-top: 1px solid #d9d9d9;
+                            margin-top: 15px;
+                            dt{
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
                             }
-                            span{
-                                font-size: 0.7rem;
-                                flex: 0 0 30%;
-                                text-align: right;
+                            dd{
+                                input[type=range]{
+                                    flex: 0 0 100%;
+                                    width: 100%;
+                                }
+                                span{
+                                    font-size: 0.7rem;
+                                    flex: 0 0 30%;
+                                    text-align: right;
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        .btnBox{
-            margin-top: 30px;
-            button{
-                width: 100%;
-                border-radius: 20px;
-                font-size: 0.9rem;
-                transition: all 0.5s;
-                &+button{
-                    margin-top: 10px;
-                }
-                &.btnUpload{
-                    background-color: #f85272;
-                    border-color: #f85272;
-                    &:hover{
-                        background-color: #fff;
+            .btnBox{
+                margin-top: 20px;
+                button{
+                    width: 100%;
+                    border-radius: 0px;
+                    font-size: 0.8rem;
+                    transition: all 0.5s;
+                    &.btnUpload{
+                        background-color: #89c997;
+                        border-color: #89c997;
+                        &:hover{
+                            background-color: #fff;
+                            color: #333;
+                        }
+                    }
+                    // &.btnPrivate{
+                    //     background-color: #fff;
+                    //     border-color: #333;
+                    //     color: #333;
+                    //     &:hover{
+                    //         background-color: #333;
+                    //         color: #fff;
+                    //     }
+                    // }
+                    &.btnPreview{
+                        background-color: transparent;
+                        border: 1px solid #ededed;
                         color: #333;
+                        &:hover{
+                            background-color: #ededed;
+                            color: #333;
+                        }
                     }
-                }
-                &.btnPrivate{
-                    background-color: #fff;
-                    border-color: #333;
-                    color: #333;
-                    &:hover{
-                        background-color: #333;
-                        color: #fff;
-                    }
-                }
-                &.btnPreview{
-                    background-color: transparent;
-                    border: none;
-                    color: #333;
                 }
             }
         }
