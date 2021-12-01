@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImages } from '@fortawesome/free-solid-svg-icons';
 import { singleFileUpload } from '../../server/common/CommonServer';
 
-const ImageDropzone = ({toggleSpinnerModal,contents,saveContents}) => {
+const ImageDropzone = ({toggleSpinnerModal,contents,saveContents,uploadForm}) => {
 
     const onDrop = useCallback( async acceptedFiles => {
         if(acceptedFiles.length > 1){
@@ -31,7 +31,7 @@ const ImageDropzone = ({toggleSpinnerModal,contents,saveContents}) => {
 
 
     return(
-        <div {...getRootProps({className:`dropzone contents imageDropzone`})}>
+        <div {...getRootProps({className:`dropzone contents imageDropzone`})} style={{margin:`${contents.order > 0 ? uploadForm.margin : 0}px 0`}}>
             <input {...getInputProps()}/>
             <button><FontAwesomeIcon icon={faImages}/></button>
             <h6>파일을 여기로 드래그 또는 파일을 선택해 주세요.</h6>

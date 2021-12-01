@@ -25,6 +25,17 @@ const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail,toggle
         initCategory();
     },[]);
 
+    useEffect(() => {
+        setDetailForm({
+            title : uploadForm.title,
+            thumbnail : uploadForm.thumbnail,
+            category1 : uploadForm.category1,
+            category2 : uploadForm, 
+            tagList : [],
+            copyright : "",
+        })
+    },[uploadForm])
+
     const initCategory = async () => {
         const {data} = await getCategoryCodeList();;
         setKeywordList(data);

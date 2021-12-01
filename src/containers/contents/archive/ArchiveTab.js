@@ -14,24 +14,22 @@ const ArchiveTab = ({openSpinnerModal,toggleSpinnerModal}) => {
 
     return (
         <div className="archiveTab">
-            <Container>
-                <div className="tabList">
-                    <ul>
-                        <li onClick={() => setCurrentTab("about")} className={currentTab === "about" ? "on" :""}><span>About</span></li>
-                        <li onClick={() => setCurrentTab("work")} className={currentTab === "work" ? "on" :""}><span>Work 0</span></li>
-                        <li onClick={() => setCurrentTab("like")} className={currentTab === "like" ? "on" :""}><span>Like 0</span></li>
-                        <li onClick={() => setCurrentTab("collect")} className={currentTab === "collect" ? "on" :""}><span>Collect 0</span></li>
-                        <li onClick={() => setCurrentTab("temp")} className={currentTab === "temp" ? "on" :""}><span>임시저장함 0</span></li>
-                    </ul>
-                </div>
-                <div className="tabContents">
-                    <ArchiveAbout show={currentTab === "about" ? "on" : "off"}/>
-                    <ArchiveWork show={currentTab === "work" ? "on" : "off"}/>
-                    <ArchiveLike show={currentTab === "like" ? "on" : "off"}/>
-                    <ArchiveCollect show={currentTab === "collect" ? "on" : "off"}/>
-                    <ArchiveTemp show={currentTab === "temp" ? "on" : "off"}/>
-                </div>
-            </Container>
+            <div className="tabList">
+                <ul>
+                    <li onClick={() => setCurrentTab("about")} className={currentTab === "about" ? "on" :""}><span>정보</span></li>
+                    <li onClick={() => setCurrentTab("work")} className={currentTab === "work" ? "on" :""}><span>피드</span></li>
+                    <li onClick={() => setCurrentTab("like")} className={currentTab === "like" ? "on" :""}><span>좋아요</span></li>
+                    <li onClick={() => setCurrentTab("collect")} className={currentTab === "collect" ? "on" :""}><span>컬렉션</span></li>
+                    <li onClick={() => setCurrentTab("temp")} className={currentTab === "temp" ? "on" :""}><span>임시저장</span></li>
+                </ul>
+            </div>
+            <div className="tabContents">
+                <ArchiveAbout show={currentTab === "about" ? "on" : "off"}/>
+                <ArchiveWork show={currentTab === "work" ? "on" : "off"}/>
+                <ArchiveLike show={currentTab === "like" ? "on" : "off"}/>
+                <ArchiveCollect show={currentTab === "collect" ? "on" : "off"}/>
+                <ArchiveTemp show={currentTab === "temp" ? "on" : "off"}/>
+            </div>
             <PackmanLoader isOpen={openSpinnerModal} toggle={toggleSpinnerModal}/>
         </div>
     )

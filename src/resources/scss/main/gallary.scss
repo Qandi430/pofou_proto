@@ -127,9 +127,13 @@ $main-color: #89c997;
                         }
                         &.infoBottom{
                             .title{
+                                flex: 0 0 70%;
                                 color: #fff;
                                 font-size: 1.15rem;
                                 font-weight: bold;
+                                overflow:hidden;
+                                text-overflow:ellipsis;
+                                white-space:nowrap;
                             }
                             .btnBox{
                                 display: flex;

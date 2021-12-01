@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTh } from '@fortawesome/free-solid-svg-icons';
 import { multiFileUpload, singleFileUpload } from '../../server/common/CommonServer';
 
-const GridDropzone = ({contents,toggleSpinnerModal,saveContents}) => {
+const GridDropzone = ({contents,toggleSpinnerModal,saveContents,uploadForm}) => {
 
     const onDrop = useCallback( async acceptedFiles => {
         if(acceptedFiles.length > 10){
@@ -39,7 +39,7 @@ const GridDropzone = ({contents,toggleSpinnerModal,saveContents}) => {
     const { getRootProps, getInputProps} = useDropzone({onDrop});
 
     return (
-        <div {...getRootProps({className:`dropzone contents imageDropzone`})}>
+        <div {...getRootProps({className:`dropzone contents imageDropzone`})} style={{margin:`${contents.order > 0 ? uploadForm.margin : 0}px 0`}}>
             <input {...getInputProps()}/>
             <button><FontAwesomeIcon icon={faTh}/></button>
             <h6>파일을 선택하여 이미지 그리드(최대 10장)를 시작하세요.</h6>

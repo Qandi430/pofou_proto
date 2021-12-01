@@ -4,7 +4,7 @@ import { faVideo } from '@fortawesome/free-solid-svg-icons';
 import { Input } from 'reactstrap';
 import axios from 'axios';
 
-const VideoUpload = ({contents,toggleSpinnerModal,saveContents}) => {
+const VideoUpload = ({contents,toggleSpinnerModal,saveContents,uploadForm}) => {
 
     const [videoUrl,setVideoUrl] = useState("");
     // <iframe width="640" height="360" src="https://player.vimeo.com/video/584079874?h=398353b162" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
@@ -40,7 +40,7 @@ const VideoUpload = ({contents,toggleSpinnerModal,saveContents}) => {
     }
 
     return(
-        <div className="contents videoUpload">
+        <div className="contents videoUpload" style={{margin:`${contents.order > 0 ? uploadForm.margin : 0}px 0`}}>
             <button><FontAwesomeIcon icon={faVideo}/></button>
             <h6>동영상 URL을 입력해주세요. (Youtube, Vimeo)</h6>
             <Input type="text" value={videoUrl} placeholder="https://를 포함한 전체 URL을 입력해주세요." onChange={e => setVideoUrl(e.target.value)}/>

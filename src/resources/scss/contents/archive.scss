@@ -40,13 +40,16 @@ $main-color: #89c997;
         }
     }
     .archiveProfile{
-        .profileWrap{
+        padding: 15px 70px;
+        border-bottom: 1px solid #cccccc;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        .profileLeft{
             display: flex;
-            margin-top: 50px;
             .profileImage{
-                width: 90px;
-                height: 90px;
-                margin-right: 30px;
+                width: 66px;
+                height: 66px;
                 border-radius: 50%;
                 overflow: hidden;
                 > img{
@@ -54,40 +57,94 @@ $main-color: #89c997;
                 }
             }
             .profileInfo{
-                
-                > * {
-                    & + *{
-                        margin-top: 10px;
-                    }
-                }
-                ul{
-                    display: flex;
-                    align-items: center;
-                    li{
-                        color: #999;
-                        &+ li{
-                            margin-left: 10px;
-                        }
-                    }     
-                }
+                margin-left: 30px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
                 .name{
-                    font-size: 1.4rem;
-                    font-weight: bold;
+                    font-size: 1.35rem;
                 }
                 .category{
-                    button{
-                        background: transparent;
-                        border: 0;
-                        padding: 0;
-                        color: #f85272;
+                    ul{
+                        li{
+                            color: #999999;
+                        }
                     }
                 }
-                .snsList{
-                    button{
-                        background: transparent;
-                        border: 0;
-                        padding: 0;
-                        color: #428bca;
+            }
+        }
+        .profileRight{
+            ul{
+                display: flex;
+                justify-content: flex-end;
+            }
+            .snsList{
+                ul{
+                    li{
+                        &+li{
+                            margin-left: 15px;
+                        }
+                        &.homepage{
+                            svg{
+                                color: #333;
+                            }
+                        }
+                        &.facebook{
+                            svg{
+                                color: rgb(61,94,239);
+                            }
+                        }
+                        &.twitter{
+                            svg{
+                                color: rgb(74,141,238);
+                            }
+                        }
+                        &.pinterest{
+                            svg{
+                                color: rgb(220,0,55);
+                            }
+                        }
+                        &.tumblr{
+                            svg{
+                                color: rgb(10,17,40);
+                            }
+                        }
+                        &.vimeo{
+                            svg{
+                                color: rgb(89,164,222);
+                            }
+                        }
+                        &.youtube{
+                            svg{
+                                color: rgb(220,0,55);
+                            }
+                        }
+                        &.instagram{
+                            svg{
+                                color: rgb(220,0,55);
+                            }
+                        }
+                    }
+                }
+            }
+            .infoList{
+                margin-top: 20px;
+                display: flex;
+                ul{
+                    &+ul{
+                        &::before{
+                            content:'|';
+                            margin: 0 15px;
+                            color: #cccccc;
+                        }
+                    }
+                    li{
+                        &+li{
+                            margin-left: 30px;
+                        }
+                        span{
+                            font-weight: bold;
+                        }
                     }
                 }
             }
@@ -95,33 +152,51 @@ $main-color: #89c997;
     }
     .archiveTab{
         margin-top: 30px; 
+        padding: 0 70px;
         .tabList{
             ul{
-                padding: 0 5px;
+                padding-left: 50px;
                 display: flex;
-                border-bottom: 1px solid #d9d9d9;
+                // border-bottom: 1px solid #d9d9d9;
                 li{
                     span{
+                        font-size: 1.3rem;
                         display: block;
-                        padding: 0 10px 20px;
                         cursor: pointer;
                         border-bottom:1px solid transparent;
                         position: relative;
                         top: 1px;
                         transition: all 0.5s;
                         &:hover{
-                            border-color: #f85272;
-                            color: #f85272;
+                            // border-color: $main-color;
+                            color: $main-color;
+                        }
+                        &::before{
+                            position: absolute;
+                            content: '';
+                            display: block;
+                            width: 5px;
+                            height: 5px;
+                            background-color: $main-color;
+                            opacity: 0;
+                            transition: opacity 0.5s;
+                            bottom: -8px;
+                            left: 50%;
+                            transform: translate(-50%,0);
+                            border-radius: 50%;
                         }
                     }
                     &.on{
                         span{
-                            border-color: #f85272;
-                            color: #f85272;
+                            // border-color: #f85272;
+                            color: $main-color;
+                            &::before{
+                                opacity: 1;
+                            }
                         }
                     }
                     &+li{
-                        margin-left: 30px;
+                        margin-left: 70px;
                     }
                 }
             }
@@ -180,34 +255,115 @@ $main-color: #89c997;
                         }
                     }
                     > .workList{
-                        display: flex;
-                        flex-wrap: wrap;
-                        align-items: flex-start;
-                        gap:3%;
-                        > .item{
-                            flex: 0 0 22.75%;
-                            cursor: pointer;
-                            .thumbnail{
-                                width: 100%;
+                        >ul{
+                            display: flex;
+                            gap: 2%;
+                            flex-wrap: wrap;
+                            > li{
+                                flex: 0 0 18.4%;
+                                margin-bottom: 2%;
+                                cursor: pointer;
+                                position: relative;
                                 position: relative;
                                 background-position: center center;
                                 background-repeat: no-repeat;
                                 background-size: 100%;
-                                border-radius: 10px;
+                                // border-radius: 10px;
                                 transition: background-size 0.5s;
+                                overflow: hidden;
                                 &::after{
                                     content: "";
                                     display: block;
                                     padding-bottom: 100%;
                                 }
-                            }
-                            .title{
-                                font-weight: bold;
-                                margin-top: 15px;
-                            }
-                            &:hover{
-                                .thumbnail{
+                                .workInfo{
+                                    position: absolute;
+                                    width: 100%;
+                                    height: 100%;
+                                    display: flex;
+                                    padding: 22px;
+                                    flex-direction: column;
+                                    justify-content: space-between;
+                                    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,000000+54,000000+100&1+0,0+54,0.65+100 */
+                                    background: -moz-linear-gradient(top,  rgba(0,0,0,65) 0%, rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%, rgba(0,0,0,0.65) 100%); /* FF3.6-15 */
+                                    background: -webkit-linear-gradient(top,  rgba(0,0,0,65) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,0.65) 100%); /* Chrome10-25,Safari5.1-6 */
+                                    background: linear-gradient(to bottom,  rgba(0,0,0,65) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0) 80%,rgba(0,0,0,0.65) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
+                                    opacity: 0;
+                                    transition: opacity 0.5s;
+                                    > div{
+                                        display: flex;
+                                        justify-content: space-between;
+                                        align-items: center;
+                                        &.infoTop{
+                                            .profile{
+                                                display: flex;
+                                                align-items: center;
+                                                .profileImage{
+                                                    width: 25px;
+                                                    height: 25px;
+                                                    background-color: $main-color;
+                                                    display: flex;
+                                                    justify-content: center;
+                                                    align-items: center;
+                                                    border-radius: 50%;
+                                                    background-repeat: no-repeat;
+                                                    background-size: cover;
+                                                }
+                                                .name{
+                                                    margin-left: 5px;
+                                                    color: #fff;
+                                                }
+                                            }
+                                            .info{
+                                                color: #fff;
+                                                span{
+                                                    &+span{
+                                                        margin-left: 10px;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        &.infoBottom{
+                                            .title{
+                                                flex: 0 0 70%;
+                                                color: #fff;
+                                                font-size: 1.15rem;
+                                                font-weight: bold;
+                                                overflow:hidden;
+                                                text-overflow:ellipsis;
+                                                white-space:nowrap;
+                                            }
+                                            .btnBox{
+                                                display: flex;
+                                                button{
+                                                    display: flex;
+                                                    justify-content: center;
+                                                    align-items: center;
+                                                    background-color: transparent;
+                                                    transition: all 0.5s;
+                                                    color: #fff;
+                                                    svg{
+                                                        &.fullHeart{
+                                                            color: #f85272;
+                                                        }
+                                                    }
+                                                    &+button{
+                                                        margin-left: 10px;
+                                                    }
+                                                    &:hover{
+                                                        color: #f85272;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                &:hover{
                                     background-size: 110%;
+                                    .workInfo{
+                                        opacity: 1;
+                                    }
                                 }
                             }
                         }
