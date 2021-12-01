@@ -30,9 +30,9 @@ const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail,toggle
             title : uploadForm.title,
             thumbnail : uploadForm.thumbnail,
             category1 : uploadForm.category1,
-            category2 : uploadForm, 
-            tagList : [],
-            copyright : "",
+            category2 : uploadForm.category2, 
+            tagList : uploadForm.tag === "" ? [] : uploadForm.tag.split(","),
+            copyright : uploadForm.copyright,
         })
     },[uploadForm])
 
@@ -104,7 +104,7 @@ const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail,toggle
         setOpenImageSelectModal(!openImageSelectModal)
     }
 
-    const submitContentsDetail = () => {
+    const submitContentsDetail = async (type) => {
         let form = {};
         form["title"] = detailForm.title;
         form["thumbnail"] = detailForm.thumbnail;
@@ -116,7 +116,14 @@ const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail,toggle
             (tag,index) => form["tag"] +=  index === detailForm.tagList.length -1 ? `${tag}` : `${tag},`
         )
         form["copyright"] = detailForm.copyright;
-        changeUploadDetail(form);
+        await changeUploadDetail(form);
+        if(type === "cancel"){
+            toggle();
+        }else if(type === "private"){
+            submitPrivate();
+        }else if(type === "upload"){
+            submitUpload();
+        }
     }
 
     const uploadGif = async(e) => {
@@ -135,7 +142,7 @@ const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail,toggle
     }
 
     return (
-        <Modal isOpen={isOpen} toggle={toggle} centered size="xl" id="contentsDetailModal">
+        <Modal isOpen={isOpen} toggle={() => submitContentsDetail("cancel")} centered size="xl" id="contentsDetailModal">
             <ModalHeader>콘텐츠 세부설정</ModalHeader>
             <ModalBody>
                 <Row>
@@ -241,9 +248,9 @@ const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail,toggle
                 </Row>
             </ModalBody>
             <ModalFooter>
-                <Button color="danger" onClick={toggle}>취소</Button>
-                <Button color="warning" onClick={submitPrivate}>비공개로 저장</Button>
-                <Button color="info" onClick={submitUpload}>저장</Button>
+                <Button color="danger" onClick={() => submitContentsDetail("cancel")}>취소</Button>
+                <Button color="warning" onClick={() => submitContentsDetail("private")}>비공개로 저장</Button>
+                <Button color="info" onClick={() => submitContentsDetail("upload")}>저장</Button>
             </ModalFooter>
             <ThumbnailCreateModal beforeImage={beforeImage} saveImage={changeThumbnailImage} changeBeforeImage={changeBeforeImage}/>
             <ImageSelectModal isOpen={openImageSelectModal} toggle={toggleImageSelectModal} uploadForm={uploadForm} changeBeforeImage={changeBeforeImage}/>
