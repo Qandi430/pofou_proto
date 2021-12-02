@@ -8,7 +8,7 @@ import ArchiveWork from '../../../components/contents/archive/ArchiveWork';
 import PackmanLoader from '../../../components/common/PackmanLoader';
 import { createArchiveConsumer } from '../../../context/archiveContext';
 
-const ArchiveTab = ({openSpinnerModal,toggleSpinnerModal}) => {
+const ArchiveTab = () => {
 
     const [currentTab,setCurrentTab] = useState("work");
 
@@ -30,7 +30,6 @@ const ArchiveTab = ({openSpinnerModal,toggleSpinnerModal}) => {
                 <ArchiveCollect show={currentTab === "collect" ? "on" : "off"}/>
                 <ArchiveTemp show={currentTab === "temp" ? "on" : "off"}/>
             </div>
-            <PackmanLoader isOpen={openSpinnerModal} toggle={toggleSpinnerModal}/>
         </div>
     )
 }

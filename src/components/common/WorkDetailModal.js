@@ -1,13 +1,14 @@
 import { faComments, faEye, faHeart as emptyHeart, faPlusSquare } from '@fortawesome/free-regular-svg-icons';
-import { faEdit, faFolderPlus, faPlus, faShareSquare, faHeart as fullHeart, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faFolderPlus, faPlus, faShareSquare, faHeart as fullHeart, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React,{useState,Fragment,useEffect} from 'react';
-import { Input, Modal } from 'reactstrap';
+import { Button, Input, Modal } from 'reactstrap';
 import moment from 'moment';
 import { getCommentListByWorkNumber, insertComment, insertReComment, insertLike, deleteLike } from '../../server/work/WorkServer';
 import { deleteCollection, deleteFollow, insertCollection, insertFollow } from '../../server/member/MemberServer';
 import {createCommonConsumer} from '../../context/commonContext';
 import LoginNoticeModal from './LoginNoticeModal';
+import { Link } from 'react-router-dom';
 const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggleSpinnerModal,resetMemberInfo,openLoginNoticeModal,toggleLoginNoticeModal}) => {
     
     const [data,setData] = useState({
@@ -47,7 +48,9 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggl
         workNumber : "",
         reCommentNumber : "",
         commentContents : "",
-    })
+    });
+
+    const [openProfileDetail, setOpenProfileDetail] = useState(false);
 
     useEffect(() => {
         if(workDetail){
@@ -294,11 +297,11 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggl
     }
 
     const clickCollectionButton = async () => {
-        toggleSpinnerModal(true);
         if(loginMember === null || loginMember.memberNumber === ""){
             toggleLoginNoticeModal();
             return false;
         }
+        toggleSpinnerModal(true);
         const {data : collectionResult} = await insertCollection(loginMember.memberNumber,data.workNumber);
         if(collectionResult){
             alert("컬렉션에 추가되었습니다.");
@@ -323,6 +326,14 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggl
             alert("컬렉션 삭제에 실패하였습니다.")
         }
         toggleSpinnerModal(false);
+    }
+
+    const toggleProfileDetail = () => {
+        if(openProfileDetail){
+            setOpenProfileDetail(false);
+        }else{
+            setOpenProfileDetail(true);
+        }
     }
 
     return(
@@ -487,12 +498,41 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggl
             <div className="detailSidebar">
                 <ul>
                     <li className="btnProfile">
-                        <button className="btnIcon" style={ data.profileImage !== null ? {backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${data.profileImage})`} : {backgroundColor:"#e8e8e8"}}>
+                        <button className="btnIcon" onClick={toggleProfileDetail} style={ data.profileImage !== null && data.profileImage !== "" ? {backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${data.profileImage})`} : {backgroundColor:"#e8e8e8"}}>
                             {
-                                data.profileImage === ""  &&  "P"
+                                data.profileImage === "" && data.profileImage !== "" ? "" :  
+                                    data.email !== "" && data.email !== null && data.email !== undefined ? data.email.split("")[0].toUpperCase() : "P"
                             }
                         </button>
                         <div className="btnName">프로필</div>
+                        <div className={`profileDetail ${openProfileDetail ? "on" : ""}`}>
+                            <div className="detailWrap">
+                                <div className="infoBox">
+                                    <div className="profileImage" style={ data.profileImage !== null ? {backgroundImage:`url(https://storage.googleapis.com/pofou_repo/${data.profileImage})`} : {backgroundColor:"#e8e8e8"}}>
+                                        {
+                                            data.profileImage === "" && data.profileImage !== "" ? "" :  
+                                                data.email !== "" && data.email !== null && data.email !== undefined ? data.email.split("")[0].toUpperCase() : "P"
+                                        }
+                                    </div>
+                                    <h4 className="name">{data.name}</h4>
+                                    <div className="category">
+                                        <ul>
+                                            {
+                                                data.keyword1 !== "" && <li>{data.keyword1}</li>
+                                            }
+                                            {
+                                                data.keyword2 !== "" && <li>{data.keyword2}</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div className="btnBox">
+                                    <Button className="btnArchive" tag={Link} to={`/archive/${data.url}`}>아카이브</Button>
+                                    <Button className="btnFollow"><FontAwesomeIcon icon={faPlus}/> 팔로우</Button>
+                                </div>
+                                <button className="btnClose" onClick={toggleProfileDetail}><FontAwesomeIcon icon={faTimes}/></button>
+                            </div>
+                        </div>
                     </li>
                     {
                         loginMember !== null && loginMember.memberNumber !== "" && loginMember.memberNumber !== data.memberNumber &&
@@ -514,10 +554,10 @@ const WorkDetailModal = ({isOpen,toggle,workDetail,loginMember,getLikeList,toggl
                                 }
                             })()
                     }
-                    <li className="btnRequest">
+                    {/* <li className="btnRequest">
                         <button className="btnIcon"><FontAwesomeIcon icon={faEdit}/></button>
                         <div className="btnName">의뢰하기</div>
-                    </li>
+                    </li> */}
                     <li className="btnLike">
                         <button className="btnIcon" onClick={handleLike}>
                             {

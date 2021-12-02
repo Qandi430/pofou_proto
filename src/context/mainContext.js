@@ -246,10 +246,11 @@ class MainProvider extends Component{
     getLikeList = async(workNumber) => {
         const {data} = await getLikeListByWorkNumber(workNumber);
         
-        this.setState({
+        await this.setState({
             ...this.state,
             workList : this.state.workList.map(work => work.workNumber === workNumber ? {...work,likeList : data} : work)
         });
+        this.setCurrentList(this.state.currentCategory);
     }
 
     changeSearchKeyword = (keyword) => {

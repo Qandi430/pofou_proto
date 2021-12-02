@@ -98,21 +98,7 @@ class ArchiveProvider extends Component{
         changeBackgroundImage : e => this.changeBackgroundImage(e),
         toggleWorkDetailModal : () => this.toggleWorkDetailModal(),
         selectWork : number => this.selectWork(number),
-        toggleSpinnerModal : status => this.toggleSpinnerModal(status),
-    }
-
-    toggleSpinnerModal = (status) => {
-        if(status === undefined){
-            this.setState({
-                ...this.state,
-                openSpinnerModal : !this.state.openSpinnerModal
-            })
-        }else{
-            this.setState({
-                ...this.state,
-                openSpinnerModal : status
-            })
-        }
+        toggleSpinnerModal : status => this.props.toggleSpinnerModal(status),
     }
 
     setKeywordList = async () => {
@@ -124,15 +110,17 @@ class ArchiveProvider extends Component{
     }
 
     getArchiveInfo = async (url) => {
+        this.props.toggleSpinnerModal(true);
         const {data} = await getArchive(url);
         if(data === null || data === ""){
             alert("잘못된 접근입니다.");
             window.location.href = "/";
         }
-        this.setState({
+        await this.setState({
             archive : data,
             editMode : this.state.loginMember !== null && this.state.loginMember.memberNumber === data.memberNumber
-        })
+        });
+        this.props.toggleSpinnerModal(false);
     }
 
     changeBackgroundImage = async(e) => {
@@ -164,7 +152,7 @@ class ArchiveProvider extends Component{
         if(typeof workNumber !== "number"){
             alert("잘못된 접근입니다.");
         }
-        this.toggleSpinnerModal(true);
+        this.props.toggleSpinnerModal(true);
         const {data : workDetail} = await getWorkDetail(workNumber);
         if(workDetail !== null){
             this.setState({
@@ -175,7 +163,7 @@ class ArchiveProvider extends Component{
         }else{
             alert("손상된 작업물 입니다.");
         }
-        this.toggleSpinnerModal(false);
+        this.props.toggleSpinnerModal(false);
     }
 
     toggleWorkDetailModal = () => {
