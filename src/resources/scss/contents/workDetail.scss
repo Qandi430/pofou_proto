@@ -22,12 +22,14 @@ $main-color: #89c997;
             padding: 35px 35px 5px;
             .title{
                 font-size: 1.75rem;
-                flex: 80%;
+                flex: 0 0 80%;
                 // font-weight: bold;
                 // margin-bottom: 10px;
             }
             .category{
                 color: #191919;
+                flex: 0 0 20%;
+                text-align: right;
                 span{
                     &+span{
                         &::before{
@@ -593,5 +595,67 @@ $main-color: #89c997;
     }
     svg.fullHeart{
         color: #f85272;
+    }
+}
+
+#shareModal{
+    .modal-body{
+        display: flex;
+        flex-direction: column;
+        .workInfo{
+            display: flex;
+            align-items: center;
+            .thumbnailImage{
+                width: 80px;
+                height: 80px;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                img{
+                    max-width: 100%;
+                }
+            }
+            .workTitle{
+                margin-left: 10px;
+                font-size: 1.2rem;
+                font-weight: bold;
+            }
+        }
+        .snsList{
+            margin-top: 30px;
+            ul{
+                display: flex;
+                justify-content: space-around;
+                align-items: center;    
+                li{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-self: center;
+                    font-size: 0.8rem;
+                    >button{
+                        margin-bottom: 10px;
+                        width: 45px;
+                        height: 45px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        svg{
+                            font-size: 1rem;
+                            color: #fff;
+                        }
+                        img{
+                            max-width: 100%;
+                            width: 25px;
+                        }
+                    }
+                }
+            }
+        }
+        .shareInput{
+            margin-top: 30px;
+        }
     }
 }

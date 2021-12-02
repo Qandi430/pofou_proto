@@ -112,4 +112,5 @@ const DetailFooter = ({data,loginMember,openReCommnetInput,reCommentForm,submitR
     )
 }
 
+
 export default DetailFooter

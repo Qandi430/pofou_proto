@@ -1,17 +1,24 @@
 import React, { useState,Fragment } from 'react'
-import { Button } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, InputGroup,Input  } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { faFolderPlus, faPlus, faShareSquare, faHeart as fullHeart, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as emptyHeart } from '@fortawesome/free-regular-svg-icons';
+import { faFacebookF, faPinterestP, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import blogIcon from '../../../resources/images/common/icon_naver_blog.png';
+import kakaoIcon from '../../../resources/images/common/icon_kakao.png';
 const DetailSideBar = ({data,loginMember,handleLike,clickCancelCollection,clickCollectionButton,clickFollowButton,clickCancelFollow}) => {
     const [openProfileDetail,setOpenProfileDetail] = useState(false); 
+    const [openShareModal,setOpenShareModal] = useState(false);
     const toggleProfileDetail = () => {
         if(openProfileDetail){
             setOpenProfileDetail(false);
         }else{
             setOpenProfileDetail(true);
         }
+    }
+    const toggleShareModal = () => {
+        setOpenShareModal(!openShareModal);
     }
     return (
         <div className="detailSidebar">
@@ -102,11 +109,78 @@ const DetailSideBar = ({data,loginMember,handleLike,clickCancelCollection,clickC
                         }
                     </li>
                     <li className="btnShare">
-                        <button className="btnIcon"><FontAwesomeIcon icon={faShareSquare}/></button>
+                        <button className="btnIcon" onClick={toggleShareModal}><FontAwesomeIcon icon={faShareSquare}/></button>
                         <div className="btnName">공유하기</div>
                     </li>
                 </ul>
+                <ShareModal isOpen={openShareModal} toggle={toggleShareModal} data={data}/>
             </div>
+    )
+}
+
+
+const ShareModal = ({isOpen,toggle,data}) => {
+
+    const handleCopy = () => {
+        document.getElementById("copyInput").select();
+        document.execCommand("copy");
+        alert("복사 되었습니다.");
+    }
+
+    return (
+        <Modal id="shareModal" isOpen={isOpen} toggle={toggle} centered>
+            <ModalHeader>프로젝트 공유하기</ModalHeader>
+            <ModalBody>
+                <div className="workInfo">
+                    <div className="thumbnailImage">
+                        {
+                            data.thumbnail !== "" && <img src={`https://storage.googleapis.com/pofou_repo/${data.thumbnail}`} alt="" />
+                        }
+                    </div>
+                    <h5 className="workTitle">{data.title}</h5>
+                </div>
+                <div className="snsList">
+                    <ul>
+                        <li>
+                            <button style={{backgroundColor:"rgb(74,141,238)"}}>
+                                <FontAwesomeIcon icon={faTwitter}/>
+                            </button>
+                            트위터
+                        </li>
+                        <li>
+                            <button style={{backgroundColor:"rgb(61,94,240)"}}>
+                                <FontAwesomeIcon icon={faFacebookF}/>
+                            </button>
+                            페이스북
+                        </li>
+                        <li>
+                            <button style={{backgroundColor:"rgb(220,0,55)"}}>
+                                <FontAwesomeIcon icon={faPinterestP}/>
+                            </button>
+                            핀터레스트
+                        </li>
+                        <li>
+                            <button style={{backgroundColor:"rgb(67,168,57)"}}>
+                                <img src={blogIcon} alt="" />
+                            </button>
+                            블로그
+                        </li>
+                        <li>
+                            <button style={{backgroundColor:"rgb(242,224,8)"}}>
+                                <img src={kakaoIcon} alt="" />
+                            </button>
+                            카카오톡
+                        </li>
+                    </ul>
+                </div>
+                <div className="shareInput">
+                    <InputGroup>
+                        <Input id="copyInput" value={`http://34.82.14.122:3000/workDetail/${data.url}/${data.workNumber}`} readOnly/>
+                        <Button onClick={handleCopy}>URL 복사</Button>
+                    </InputGroup>
+                </div>
+            </ModalBody>
+        </Modal>
     )
 }
 

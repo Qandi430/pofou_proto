@@ -4,6 +4,7 @@ import { CommonProvider } from '../../context/commonContext';
 import Header from '../../containers/common/Header';
 import "react-datepicker/dist/react-datepicker.css";
 import Footer from '../../containers/common/Footer';
+
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 const UploadPage = React.lazy(() => import('../upload/UploadPage'));
 const AuthPage = React.lazy(() => import('../auth/AuthPage'));
@@ -13,7 +14,7 @@ const MyPage = React.lazy(() => import('../myPage/MyPage'));
 const Portfolio = React.lazy(() => import('../myPage/Portfolio'));
 const MainPage = React.lazy(() => import('../main/MainPage'));
 const Search = React.lazy(() => import("../search/Search"));
-
+const WorkDetail = React.lazy(() => import("../contents/WorkDetail"));
 
 class DefaultLayout extends Component{
     render(){
@@ -39,6 +40,7 @@ const LayoutWrap = ({location,match,history}) => {
                 <Route path="/myPage" component={MyPage}/>
                 <Route path="/portfolio" component={Portfolio}/>
                 <Route path="/search" component={Search}/>
+                <Route path="/workDetail/:url/:workNumber" component={WorkDetail} history={history}/>
                 <Route path="/" component={MainPage}/>
             </Switch>
             <Footer/>
