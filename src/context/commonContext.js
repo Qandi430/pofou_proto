@@ -56,6 +56,13 @@ class CommonProvider extends Component{
                 this.resetMemberInfo(member.memberNumber);
             }
         }
+        if(this.props.history.location.pathname.indexOf("/workDetail") < 0){
+            document.title = `포포유`;
+            document.querySelector('meta[property="og:title"]').setAttribute("content",`포포유`);
+            document.querySelector('meta[property="og:image"]').setAttribute("content",`https://storage.googleapis.com/pofou_repo/resources/logo.png`);
+            document.querySelector('meta[property="og:description"]').setAttribute("content", `당신을 위한 포트폴리오 - 포포유`);
+            document.querySelector('meta[property="og:url"]').setAttribute("content", "https://www.pofou.com");
+        }
     }
 
     actions = {
