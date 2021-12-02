@@ -121,6 +121,7 @@ class CommonProvider extends Component{
     }
 
     toggleSpinnerModal = (status) => {
+        console.log(status);
         if(status === undefined){
             this.setState({
                 ...this.state,

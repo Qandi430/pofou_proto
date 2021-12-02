@@ -1,4 +1,4 @@
-
+import moment from 'moment';
 
 const convertFontName = fontName => {
     switch(fontName){
@@ -172,6 +172,32 @@ const charByteSize = (ch) => {
     }
 }
 
+const dateConvert = (date) => {
+    if(date !== undefined){
+        const now = new Date();
+        const target = new Date(date);
+        // console.log(now,target);
+        let result = now - target;
+        // console.log(result,result/1000,result/(1000 * 60),result/(1000 * 60 * 60),result/(1000*60*60*24));
+        if(60>result/1000){
+            return `${Math.floor(result/1000)}초 전`;
+        }else if(60>result/(1000*60)){
+            return `${Math.floor(result/(1000*60))}분 전`;
+        }else if(24 > result/(1000*60*60)){
+            return `${Math.floor(result/(1000*60*60))}시간 전`;
+        }else if(7 > result/(1000*60*60*24)){
+            return `${Math.floor(result/(1000*60*60*24))}일 전`;
+        }else{
+            return moment(date).format('YYYY.MM.DD');
+        }
+    }
+};
+
+const convertBr = text => {
+    const result = text.replace(/<br\s*\/?>/mg,"\n");
+    return result;
+}
+
 export {
     getYearList,
     convertFontName,
@@ -179,4 +205,6 @@ export {
     getQuery,
     getDayList,
     getByteLength,
+    dateConvert,
+    convertBr,
 }
