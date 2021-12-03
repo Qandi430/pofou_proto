@@ -19,6 +19,7 @@ class MainProvider extends Component{
             workList : [],
             currentWorkList : [],
             currentCategory : "all",
+            currentOrder : "date",
             openSpinnerModal : false,
             workDetail : {
                 memberNumber : "",
@@ -107,6 +108,7 @@ class MainProvider extends Component{
         setWorkListBySearchText : (searchText,pageNo) => this.setWorkListBySearchText(searchText,pageNo),
         toggleLoginNoticeModal : () => this.props.toggleLoginNoticeModal(),
         setCurrentList : category => this.setCurrentList(category),
+        setCurrentOrder : order => this.setCurrentOrder(order),
     }
 
    setWorkList = async (pageNo) => {
@@ -122,13 +124,32 @@ class MainProvider extends Component{
    };
 
    setCurrentList = async (category) => {
-        const {workList} = this.state;
+        const {workList,currentOrder} = this.state;
         let newList = category === 'all' || category === '' || category === undefined ? workList :  workList.filter(work => work.category1 === category || work.category2 === category);
+        if(currentOrder === "date"){
+            newList.sort((a,b) => new Date(b.registrationDate) - new Date(a.registrationDate));
+         }else if(currentOrder === "like"){
+            newList.sort((a,b) => b.likeList.length - a.likeList.length);
+         }
         this.setState({
             ...this.state,
             currentCategory : category,
             currentWorkList : newList
         });
+   }
+   
+   setCurrentOrder = (order) => {
+     let newList = this.state.currentWorkList;
+     if(order === "date"){
+        newList.sort((a,b) => new Date(b.registrationDate) - new Date(a.registrationDate));
+     }else if(order === "like"){
+        newList.sort((a,b) => b.likeList.length - a.likeList.length);
+     }
+     this.setState({
+         ...this.state,
+         currentOrder : order,
+         currentWorkList : newList,
+     })
    }
 
    setWorkListBySearchText = async (searchText,pageNo) => {
@@ -305,6 +326,8 @@ function createMainConsumer(WrappedComponent){
                             currentWorkList = {state.currentWorkList}
                             setCurrentList = {actions.setCurrentList}
                             currentCategory = {state.currentCategory}
+                            setCurrentOrder = {actions.setCurrentOrder}
+                            currentOrder = {state.currentOrder}
                             {...props}
                         />
                     )
