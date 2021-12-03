@@ -1,4 +1,4 @@
-import React, { useState,Fragment } from 'react'
+import React, { useState,Fragment,useEffect } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, InputGroup,Input  } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
@@ -120,11 +120,59 @@ const DetailSideBar = ({data,loginMember,handleLike,clickCancelCollection,clickC
 
 
 const ShareModal = ({isOpen,toggle,data}) => {
+    
 
     const handleCopy = () => {
         document.getElementById("copyInput").select();
         document.execCommand("copy");
         alert("복사 되었습니다.");
+    }
+
+    const shareTwitter = () => {
+        window.open(`https://twitter.com/intent/tweet?text=${data.title}&url=http://34.82.14.122:3000/workDetail/${data.url}/${data.workNumber}`, '_blank','width=600, height=350, menubar=no, status=no, toolbar=no')
+    }
+
+    const shareFacebook = () => {
+        window.open(`http://www.facebook.com/sharer/sharer.php?u=http://34.82.14.122:3000/workDetail/${data.url}/${data.workNumber}`,'_blank','width=600, height=350, menubar=no, status=no, toolbar=no');
+    }
+
+    const sharePinterest = () => {
+        const {PinUtils} = window;
+        PinUtils.pinOne({
+            'url' : `http://www.pofou.com/workDetail/${data.url}/${data.workNumber}`,
+            'media' : `https://storage.googleapis.com/pofou_repo/${data.thumbnail}`,
+            'description': `${data.title}`
+        });
+    }
+
+    const shareBlog = () => {
+        alert("준비중 입니다.");
+    }
+
+    const shareKakao = () => {
+        const {Kakao} = window;
+        console.log(Kakao);
+        Kakao.Link.sendDefault({
+            objectType : 'feed',
+            content : {
+                title : `${data.title}`,
+                description : `${data.tag}`,
+                imageUrl : `https://storage.googleapis.com/pofou_repo/${data.thumbnail}`,
+                link : {
+                    mobileWebUrl: `http://34.82.14.122:3000/workDetail/${data.url}/${data.workNumber}`,
+                    webUrl: `http://34.82.14.122:3000/workDetail/${data.url}/${data.workNumber}`,
+                },
+            },
+            buttons : [
+                {
+                    title : "포포유 바로가기",
+                    link : {
+                        mobileWebUrl: `http://34.82.14.122:3000/workDetail/${data.url}/${data.workNumber}`,
+                        webUrl: `http://34.82.14.122:3000/workDetail/${data.url}/${data.workNumber}`,
+                    },
+                },
+            ],
+        });
     }
 
     return (
@@ -142,31 +190,31 @@ const ShareModal = ({isOpen,toggle,data}) => {
                 <div className="snsList">
                     <ul>
                         <li>
-                            <button style={{backgroundColor:"rgb(74,141,238)"}}>
+                            <button style={{backgroundColor:"rgb(74,141,238)"}} onClick={shareTwitter}>
                                 <FontAwesomeIcon icon={faTwitter}/>
                             </button>
                             트위터
                         </li>
                         <li>
-                            <button style={{backgroundColor:"rgb(61,94,240)"}}>
+                            <button style={{backgroundColor:"rgb(61,94,240)"}} onClick={shareFacebook}>
                                 <FontAwesomeIcon icon={faFacebookF}/>
                             </button>
                             페이스북
                         </li>
                         <li>
-                            <button style={{backgroundColor:"rgb(220,0,55)"}}>
+                            <button style={{backgroundColor:"rgb(220,0,55)"}} onClick={sharePinterest} data-description={data.title}>
                                 <FontAwesomeIcon icon={faPinterestP}/>
                             </button>
                             핀터레스트
                         </li>
                         <li>
-                            <button style={{backgroundColor:"rgb(67,168,57)"}}>
+                            <button style={{backgroundColor:"rgb(67,168,57)"}} onClick={shareBlog}>
                                 <img src={blogIcon} alt="" />
                             </button>
                             블로그
                         </li>
                         <li>
-                            <button style={{backgroundColor:"rgb(242,224,8)"}}>
+                            <button style={{backgroundColor:"rgb(242,224,8)"}} onClick={shareKakao}>
                                 <img src={kakaoIcon} alt="" />
                             </button>
                             카카오톡
