@@ -26,8 +26,10 @@ const ResumeList = ({history,toggleSpinnerModal,openResumeDetailModal}) => {
     },[history]);
 
     const getResumeList = async(memberNumber) => {
+        toggleSpinnerModal(true);
         const {data : resumeList} = await getResumeByMemberNumber(memberNumber);
         setResumeList(resumeList);
+        toggleSpinnerModal(false);
     }
 
     const toggleItemMenu = (index) => {

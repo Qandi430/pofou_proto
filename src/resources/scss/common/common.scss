@@ -572,6 +572,10 @@ footer{
         justify-content: center;
         background-color: transparent;
         border: 0;
+        align-items: center;
+        >span{
+            margin-left: -40px;
+        }
     }
 }
 .tox-tinymce-inline{
