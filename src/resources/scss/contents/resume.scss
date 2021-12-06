@@ -1,33 +1,50 @@
+$main-color: #89c997;
 .resume{
-    padding: 30px 0;
+    padding: 30px 70px;
     .resumeList{
         // border: 1px solid #d9d9d9;
         display: flex;
-        gap: 2%;
+        gap: 1%;
         // padding: 30px;
         flex-wrap: wrap;
         .empty{
             border: 1px solid #d9d9d9;
             flex: 0 0 100%;
-            min-height: 500px;
+            min-height: 700px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            h2{
+                font-size: 2rem;
+                font-weight: bold;
+            }
             a{
-                margin-top: 10px;
-                color: #2ac5c6;
+                margin-top: 50px;
+                width: 72px;
+                height: 72px;
+                border: 1px solid $main-color;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            h6{
+                margin-top: 50px;
+                font-size: 1.65rem;
             }
         }
         .listItem{
             margin-bottom: 2%;
-            height: 200px;
-            flex: 0 0 23.5%;
+            height: 370px;
+            flex: 0 0 19.2%;
             border: 1px solid #d9d9d9;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
+            background-color: #fafafa;
+            cursor: pointer;
             .itemInfo{
                 flex: 1;
                 padding: 10px;
@@ -44,12 +61,15 @@
                     font-weight: bold;
                     color: #4876ef;
                 }
+                .status{
+                    margin-top: 10px;
+                    color: #999;
+                }
             }
             .itemFooter{
-                border-top: 1px solid #d9d9d9;
                 padding: 10px 15px;
                 display: flex;
-                justify-content: space-between;
+                justify-content: flex-end;
                 .status{
                     color: #999;
                     &.complete{
@@ -57,26 +77,37 @@
                         font-weight: bold;
                     }
                 }
+                button{
+                    color : #999999;
+                }
+            }
+            .represent{
+                position: absolute;
+                top: 0;
+                right: 15px;
+                color: $main-color; 
+                font-size: 2rem;
             }
             &.new{
                 justify-content: center;
                 align-items: center;
                 cursor: pointer;
-                transition: all 0.5s;
+                transition: border-color 0.5s;
+                background-color: #fff;
                 .icon{
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    width: 80px;
-                    height: 80px;
+                    width: 72px;
+                    height: 72px;
                     border-radius: 50%;
-                    border: 1px solid #4876ef;
-                    background-color: #4876ef;
-                    color: #fff;
+                    border: 1px solid $main-color;
+                    background-color: #fff;
+                    color: $main-color;
                     margin-bottom: 30px;
                 }
                 &:hover{
-                    border-color: #4876ef;
+                    border-color: $main-color;
                 }
             }
             .itemMenu{

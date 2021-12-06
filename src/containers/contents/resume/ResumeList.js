@@ -4,10 +4,10 @@ import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
 import { changeRepresent, deleteResume, getResumeByMemberNumber, getResumeDetailByResumeNumber } from '../../../server/resume/ResumeServer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
-import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import {  faEllipsisV, faPlus } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
-import ResumeDetailModal from '../../../components/common/ResumeDetailModal';
+import represnetIcon from '../../../resources/images/contents/resume/represent_icon.png';
+import plusButton from '../../../resources/images/contents/resume/plus_button.png';
 
 const ResumeList = ({history,toggleSpinnerModal,openResumeDetailModal}) => {
     const [resumeList,setResumeList] = useState([]);
@@ -92,7 +92,7 @@ const ResumeList = ({history,toggleSpinnerModal,openResumeDetailModal}) => {
                     <Fragment>
                         <div className="listItem new" onClick={() => history.push(`/resume/form`)}>
                             <div className="icon">
-                                <FontAwesomeIcon icon={faEdit}/>    
+                                <FontAwesomeIcon icon={faPlus}/>    
                             </div>
                             <h5>새 이력서 작성</h5>
                         </div>
@@ -100,20 +100,26 @@ const ResumeList = ({history,toggleSpinnerModal,openResumeDetailModal}) => {
                             resumeList.map(
                                 (resume,index) => 
                                     <div className="listItem" key={index}>
+                                        {
+                                            resume.represent &&
+                                            <div className="represent">
+                                                <img src={represnetIcon} alt="" />
+                                            </div>
+                                        }
                                         <div className="itemInfo" onClick={() => handleResumeDetail(resume.resumeNumber)}>
                                             <h6 className="resumeTitle">{resume.title}</h6>
                                             <p className="updateDate">{moment(resume.updateDate).format('YYYY.MM.DD')}</p>    
-                                            {
+                                            {/* {
                                                 resume.represent &&
                                                 <h3 className="represent">대표 이력서</h3>
-                                            }
-                                        </div>
-                                        <div className="itemFooter">
-                                            <div className={`status ${resume.complete ? "complete" : ""}`}>
+                                            } */}
+                                            <h6 className={`status ${resume.complete ? "complete" : ""}`}>
                                                 {
                                                     resume.complete ? "작성완료" : "작성중"
                                                 }
-                                            </div>
+                                            </h6>
+                                        </div>
+                                        <div className="itemFooter">
                                             <button onClick={() => toggleItemMenu(index)}>
                                                 <FontAwesomeIcon icon={faEllipsisV}/>
                                             </button>
@@ -131,8 +137,12 @@ const ResumeList = ({history,toggleSpinnerModal,openResumeDetailModal}) => {
                     </Fragment>
                 :
                 <div className="empty">
-                    등록된 이력서가 없습니다.
-                    <Link to="/resume/form">이력서 등록하기.</Link>
+                    <h2>아직 이력서가 없어요.</h2>
+                    <Link to="/resume/form">
+                        {/* <FontAwesomeIcon icon={faPlus}/> */}
+                        <img src={plusButton} alt="" />
+                    </Link>
+                    <h6>첫 이력서를 작성해주세요.</h6>
                 </div>
             }
         </div>

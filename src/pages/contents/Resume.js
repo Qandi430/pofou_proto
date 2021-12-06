@@ -18,7 +18,7 @@ const Resume = ({openSpinnerModal,toggleSpinnerModal,loginMember}) => {
     }
     return (
         <div className="resume">
-            <Container>
+            
                 <Switch>
                     {/* <Route path="/resume/list" component={ResumeList} openSpinnerModal={openSpinnerModal} toggleSpinnerModal={toggleSpinnerModal} loginMember={loginMember}/> */}
                     {/* <Route path="/resume/form" component={ResumeForm} openSpinnerModal={openSpinnerModal} toggleSpinnerModal={toggleSpinnerModal}/> */}
@@ -26,7 +26,7 @@ const Resume = ({openSpinnerModal,toggleSpinnerModal,loginMember}) => {
                     <Route path="/resume/form/:resumeNumber" render={(props) => <ResumeForm {...props} toggleSpinnerModal={toggleSpinnerModal} loginMember={loginMember} openResumeDetailModal={openResumeDetailModal}/>}/>
                     <Route path="/resume/form" render={(props) => <ResumeForm {...props} toggleSpinnerModal={toggleSpinnerModal} loginMember={loginMember} openResumeDetailModal={openResumeDetailModal}/>}/>
                 </Switch>    
-            </Container>
+            
             <PackManLoader isOpen={openSpinnerModal} toggle={toggleSpinnerModal}/>
             <ResumeDetailModal resume={resumeDetail} closeModal={closeResumeDetailModal}/>
         </div>
