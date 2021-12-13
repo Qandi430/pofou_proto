@@ -7,16 +7,18 @@ import { createCommonConsumer } from '../../context/commonContext';
 import { ArchiveProvider } from '../../context/archiveContext';
 import ArchiveBackground from '../../containers/contents/archive/ArchiveBackground';
 import PackmanLoader from '../../components/common/PackmanLoader';
+import LoginNoticeModal from '../../components/common/LoginNoticeModal';
 
-const Archive = ({loginMember,history,openSpinnerModal,toggleSpinnerModal}) => {
+const Archive = ({loginMember,history,openSpinnerModal,toggleSpinnerModal,toggleLoginNoticeModal}) => {
     return (
-        <ArchiveProvider loginMember={loginMember} history={history} openSpinnerModal={openSpinnerModal} toggleSpinnerModal={toggleSpinnerModal}>
+        <ArchiveProvider loginMember={loginMember} history={history} openSpinnerModal={openSpinnerModal} toggleSpinnerModal={toggleSpinnerModal} toggleLoginNoticeModal = {toggleLoginNoticeModal}>
             <div className="archive">
                 <ArchiveBackground/>
                 <ArchiveProfile/>
                 <ArchiveTab/>
             </div>
             <PackmanLoader isOpen={openSpinnerModal} toggle={toggleSpinnerModal}/>
+            <LoginNoticeModal/>
         </ArchiveProvider>
     )
 }

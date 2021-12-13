@@ -4,7 +4,6 @@ const VideoContents = ({contents}) => {
     // const [iframe,setIframe] = useState("");
     const [thumbnail,setThumbnail] = useState("");
     useEffect(() => {
-        console.log(contents)
         if(contents !== null && contents !== undefined){
             const parser = JSON.parse(contents);
             // setIframe(parser.iframe);

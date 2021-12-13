@@ -428,6 +428,9 @@ $main-color: #89c997;
                     margin-bottom: 5px;
                     background-color: transparent;
                     border: 2px solid $main-color;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                     svg{
                         // color: $main-color;
                         font-size: .8rem;

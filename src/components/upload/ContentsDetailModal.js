@@ -111,18 +111,17 @@ const ContentsDetailModal = ({isOpen,toggle,uploadForm,changeUploadDetail,toggle
         form["category1"] = detailForm.category1;
         form["category2"] = detailForm.category2;
         form["tag"] = "";
-        console.log(detailForm.tagList,JSON.stringify(detailForm.tagList));
         detailForm.tagList.forEach(
             (tag,index) => form["tag"] +=  index === detailForm.tagList.length -1 ? `${tag}` : `${tag},`
         )
         form["copyright"] = detailForm.copyright;
-        await changeUploadDetail(form);
+        // await changeUploadDetail(form);
         if(type === "cancel"){
-            toggle();
+            changeUploadDetail(form);
         }else if(type === "private"){
-            submitPrivate();
+            submitPrivate(form);
         }else if(type === "upload"){
-            submitUpload();
+            submitUpload(form);
         }
     }
 

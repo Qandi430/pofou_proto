@@ -44,6 +44,30 @@ const getWorkDetailByWorkNumberAndUrl = (workNumber,url) => (
     axios.get("/work/getWorkDetailByWorkNumberAndUrl",{params:{workNumber:workNumber,url : url}})
 )
 
+const getLikedListByMemberNumber = (memberNumber) => (
+    axios.get("/work/getLikedListByMemberNumber",{params:{memberNumber:memberNumber}})
+)
+
+const getCollectedListByMemberNumber = (memberNumber) => (
+    axios.get("/work/getCollectedListByMemberNumber",{params:{memberNumber:memberNumber}})
+)
+
+const getTempWorkListByMemberNumber = (memberNumber) => (
+    axios.get("/work/getTempWorkListByMemberNumber",{params:{memberNumber:memberNumber}})
+)
+
+const updateStatusByWorkNumber = (workNumber,status) => (
+    axios.put("/work/updateStatusByWorkNumber",{workNumber : workNumber, status : status})
+)
+
+const deleteWorkByWorkNumber = (workNumber,memberNumber) => (
+    axios.delete("/work/deleteWorkByWorkNumber",{params : {workNumber : workNumber,memberNumber : memberNumber}})
+)
+
+const getWorkDetailForUpdate = (workNumber) => (
+    axios.get("/work/getWorkDetailForUpdate",{params : {workNumber : workNumber}})
+)
+
 export {
     upload,
     getWorkDetail,
@@ -56,4 +80,10 @@ export {
     getWorkListByMemberNumber,
     getLikeListByWorkNumber,
     getWorkDetailByWorkNumberAndUrl,
+    getLikedListByMemberNumber,
+    getCollectedListByMemberNumber,
+    getTempWorkListByMemberNumber,
+    updateStatusByWorkNumber,
+    deleteWorkByWorkNumber,
+    getWorkDetailForUpdate,
 }

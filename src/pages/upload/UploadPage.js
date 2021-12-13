@@ -1,11 +1,16 @@
-import React from 'react';
+import React,{useEffect} from 'react';
+import { useState } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import UploadForm  from '../../containers/upload/UploadForm';
 import '../../resources/scss/upload/upload.scss';
 
-const UploadPage = () => {
+const UploadPage = ({match}) => {
     return (
         <div className="upload">
-            <UploadForm/>
+            <Switch>
+                <Route path="/upload/:workNumber" component={UploadForm}/>
+                <Route path="/upload" component={UploadForm}/>
+            </Switch>
         </div>
     )
 }

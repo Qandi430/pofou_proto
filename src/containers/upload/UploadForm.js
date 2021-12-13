@@ -12,7 +12,7 @@ import ImageDropzone from '../../components/upload/ImageDropzone';
 import ResultModal from '../../components/upload/ResultModal';
 import VideoUpload from '../../components/upload/VideoUpload';
 import {createCommonConsumer} from '../../context/commonContext';
-import { upload } from '../../server/work/WorkServer';
+import { getWorkDetailForUpdate, upload } from '../../server/work/WorkServer';
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
 import iconImage from '../../resources/images/upload/icon_image.png';
@@ -23,7 +23,7 @@ import iconAlign from '../../resources/images/upload/icon_align.png';
 import iconBg from '../../resources/images/upload/icon_bg.png';
 import iconMargin from '../../resources/images/upload/icon_margin.png';
 
-const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerModal}) => {
+const UploadForm = ({history,openSpinnerModal,toggleSpinnerModal,match}) => {
     const [uploadForm,setUploadForm] = useState({
         memberNumber : "",
         workNumber : "",
@@ -53,13 +53,35 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
                 history.push("/");
             }else{
                 const loginMember = jwtDecode(memberToken);
-                setUploadForm({
-                    ...uploadForm,
-                    memberNumber : loginMember.member.memberNumber
-                })
+                if(match.params.workNumber !== undefined){
+                    getWork(match.params.workNumber,loginMember.member)
+                }else{
+                    setUploadForm({
+                        ...uploadForm,
+                        memberNumber : loginMember.member.memberNumber
+                    })
+                }
             }
         }
-    },[uploadForm,history]);
+    },[uploadForm,history,match]);
+    
+
+    const getWork = async(workNumber,loginMember) => {
+        toggleSpinnerModal(true);
+        const {data} = await getWorkDetailForUpdate(workNumber);
+        if(data){
+            if(data.memberNumber !== loginMember.memberNumber){
+                alert("자신의 작업물만 수정할 수 있습니다.");
+                history.push("/");    
+            }else{
+                setUploadForm(data);
+            }
+        }else{
+            alert("잘못된 접근입니다.");
+            history.push("/");
+        }
+        toggleSpinnerModal(false);
+    }
 
     const addContents = async (type,order) => {
         
@@ -175,13 +197,17 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
         return true;
     }
 
-    const submitUpload = async() => {
+    const submitUpload = async(form) => {
         if(!confirmUploadForm()) return;
         toggleSpinnerModal(true);
-        setUploadForm({
-            ...uploadForm,
-            status : "public"
-        })
+                
+        uploadForm.title = form.title;
+        uploadForm.thumbnail = form.thumbnail;
+        uploadForm.category1 = form.category1;
+        uploadForm.category2 = form.category2;
+        uploadForm.tag = form.tag;
+        uploadForm.status = "public";
+
         const {data : uploadResult} = await upload(uploadForm);
         if(uploadResult.result){
             setUploadForm({
@@ -195,15 +221,17 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
         toggleSpinnerModal(false);
     }
 
-    const submitPrivate = async () => {
+    const submitPrivate = async (form) => {
         if(!confirmUploadForm()) return;
         toggleSpinnerModal(true);
-        setUploadForm({
-            ...uploadForm,
-            status : "private"
-        })
-        console.log("private",uploadForm);
-        toggleSpinnerModal(false);
+        uploadForm.title = form.title;
+        uploadForm.thumbnail = form.thumbnail;
+        uploadForm.category1 = form.category1;
+        uploadForm.category2 = form.category2;
+        uploadForm.tag = form.tag;
+        uploadForm.status = "private";
+
+        
         const {data : uploadResult} = await upload(uploadForm);
         if(uploadResult.result){
             setUploadForm({
@@ -214,6 +242,7 @@ const UploadForm = ({isLogin,history,loginMember,openSpinnerModal,toggleSpinnerM
         }else{
             setUploadResult("fail");    
         }
+        toggleSpinnerModal(false);
     }
 
     const closedResultModal = () => {

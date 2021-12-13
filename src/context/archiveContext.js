@@ -3,7 +3,7 @@ import { getArchive, saveBackgroundImage, uploadBackgroundImage } from '../serve
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
 import { getCategoryCodeList, singleFileUpload } from '../server/common/CommonServer';
-import { getWorkDetail } from '../server/work/WorkServer';
+import { getCollectedListByMemberNumber, getLikedListByMemberNumber, getTempWorkListByMemberNumber, getWorkDetail, getWorkListByMemberNumber, insertLike,deleteLike,getLikeListByWorkNumber, updateStatusByWorkNumber, deleteWorkByWorkNumber } from '../server/work/WorkServer';
 
 const Context  = createContext();
 
@@ -32,6 +32,7 @@ class ArchiveProvider extends Component{
                 },
                 workList : [],
             },
+            currentTab : "work",
             loginMember : null,
             keywordList : [],
             openWorkDetailModal : false,
@@ -55,6 +56,12 @@ class ArchiveProvider extends Component{
                 commentList: [],
             },
             openSpinnerModal : false,
+            workList : [],
+            likedList : [],
+            collectedList : [],
+            tempWorkList : [],
+            openPersonalMenu : -1,
+            openWorkNoticeModal : null,
         };
     }
 
@@ -62,7 +69,6 @@ class ArchiveProvider extends Component{
         const urlSeparte = this.props.history.location.pathname.split("/");
         const memberToken = cookie.load("memberToken");
         
-
         if(this.state.url !== urlSeparte[urlSeparte.length -1]){
             this.setState({
                 url : urlSeparte[urlSeparte.length -1]
@@ -99,6 +105,13 @@ class ArchiveProvider extends Component{
         toggleWorkDetailModal : () => this.toggleWorkDetailModal(),
         selectWork : number => this.selectWork(number),
         toggleSpinnerModal : status => this.props.toggleSpinnerModal(status),
+        toggleCurrentTab : tabName => this.toggleCurrentTab(tabName),
+        togglePersonalMenu : (e,index) => this.togglePersonalMenu(e,index),
+        clickLikeButton : (e,workNumber) => this.clickLikeButton(e,workNumber),
+        getLikeList : workNumber => this.getLikeList(workNumber),
+        changeWorkStatus : (workNumber,status) => this.changeWorkStatus(workNumber,status),
+        toggleWorkNoticeModal  : (e,type,workNumber) => this.toggleWorkNoticeModal(e,type,workNumber),
+        deleteWork : (workNumber) => this.deleteWork(workNumber),
     }
 
     setKeywordList = async () => {
@@ -111,17 +124,55 @@ class ArchiveProvider extends Component{
 
     getArchiveInfo = async (url) => {
         this.props.toggleSpinnerModal(true);
-        const {data} = await getArchive(url);
-        if(data === null || data === ""){
+        const {data : archiveInfo} = await getArchive(url);
+        if(archiveInfo === null || archiveInfo === ""){
             alert("잘못된 접근입니다.");
             window.location.href = "/";
         }
+        const {data : workList} = await getWorkListByMemberNumber(archiveInfo.memberNumber);
         await this.setState({
-            archive : data,
-            editMode : this.state.loginMember !== null && this.state.loginMember.memberNumber === data.memberNumber
-        });
+            archive : archiveInfo,
+            currentTab : "work",
+            workList : workList,
+            editMode : this.state.loginMember !== null && this.state.loginMember.memberNumber === archiveInfo.memberNumber
+        });        
         this.props.toggleSpinnerModal(false);
     }
+
+    toggleCurrentTab = async (tabName) => {
+        if(this.state.currentTab !== tabName){
+            this.props.toggleSpinnerModal(true);
+            await this.setState({
+                ...this.state,
+                currentTab : tabName
+            });
+            if(tabName === "work"){
+                const {data : workList} = await getWorkListByMemberNumber(this.state.archive.memberNumber);
+                this.setState({
+                    ...this.state,
+                    workList : workList,
+                })
+            }else if(tabName === "like"){
+                const {data : likedList} = await getLikedListByMemberNumber(this.state.archive.memberNumber);
+                this.setState({
+                    ...this.state,
+                    likedList : likedList
+                })
+            }else if(tabName === "collect"){
+                const {data : collectedList} = await getCollectedListByMemberNumber(this.state.archive.memberNumber);
+                this.setState({
+                    ...this.state,
+                    collectedList : collectedList
+                })
+            }else if(tabName === "temp"){
+                const {data : tempWorkList} = await getTempWorkListByMemberNumber(this.state.archive.memberNumber);
+                this.setState({
+                    tempWorkList : tempWorkList,
+                })
+            }
+            this.props.toggleSpinnerModal(false);
+        }
+    };
 
     changeBackgroundImage = async(e) => {
         let form = new FormData();
@@ -171,6 +222,140 @@ class ArchiveProvider extends Component{
             openWorkDetailModal : !this.state.openWorkDetailModal
         })
     }
+
+    togglePersonalMenu = (e,index) => {
+        e.stopPropagation();
+        if(this.state.openPersonalMenu === index){
+            this.setState({
+                ...this.state,
+                openPersonalMenu : -1
+            })
+        }else{
+            this.setState({
+                ...this.state,
+                openPersonalMenu : index
+            })
+        }
+    }
+
+    clickLikeButton = async (e,workNumber) => {
+        e.stopPropagation();
+        if(this.state.loginMember == null || this.state.loginMember.memberNumber === ""){
+            // alert("로그인시 이용 가능합니다.");
+            this.props.toggleLoginNoticeModal();
+        }else{
+            this.props.toggleSpinnerModal(true);
+            const work = this.state.workList.find(work => work.workNumber === workNumber);
+
+            if(
+                work.likeList == null 
+                || work.likeList.find(like => like.memberNumber === this.state.loginMember.memberNumber) === undefined
+            ){
+                const {data : insertResult} = await insertLike(workNumber,this.state.loginMember.memberNumber);
+                if(insertResult){
+                    
+                    this.getLikeList(workNumber);
+                }else{
+                    console.log("fail insert Like");
+                    alert("오류가 발생했습니다.");
+                }
+            }else{
+                const {data : deleteResult} = await deleteLike(workNumber,this.state.loginMember.memberNumber);
+                if(deleteResult){
+                    this.getLikeList(workNumber);
+                }else{
+                    console.log("fail delete Like");
+                    alert("오류가 발생했습니다.");
+                }
+            }
+            this.props.toggleSpinnerModal(false);
+        }
+    }
+
+    getLikeList = async(workNumber) => {
+        const {currentTab,workList,likedList,collectedList,tempWorkList} = this.state;
+        const {data} = await getLikeListByWorkNumber(workNumber);
+        if(currentTab === "work"){
+            this.setState({
+                ...this.state,
+                workList : workList.map(work => work.workNumber === workNumber ? {...work,likeList : data} : work),
+            })
+        }else if(currentTab === "like"){
+            this.setState({
+                ...this.state,
+                likedList : likedList.map(work => work.workNumber === workNumber ? {...work,likeList : data} : work),
+            })
+        }else if(currentTab === "collect"){
+            this.setState({
+                ...this.state,
+                collectedList : collectedList.map(work => work.workNumber === workNumber ? {...work,likeList : data} : work),
+            })
+        }else if(currentTab === "temp"){
+            this.setState({
+                tempWorkList : tempWorkList.map(work => work.workNumber === workNumber ? {...work,likeList : data} : work),
+            })
+        }
+    }
+
+    changeWorkStatus = async (workNumber,status) => {
+        this.props.toggleSpinnerModal(true);
+        const {data} = await updateStatusByWorkNumber(workNumber,status);
+        if(data){
+            if(this.state.currentTab === "work"){
+                console.log("currentTab is work")
+                await this.setState({
+                    ...this.state,
+                    workList : this.state.workList.filter(work => work.workNumber !== workNumber),
+                });
+            }else if(this.state.currentTab === "temp"){
+                console.log("currentTab is work")
+                await this.setState({
+                    tempWorkList : this.state.tempWorkList.filter(temp =>temp.workNumber !== workNumber),
+                })
+            }
+        }
+        this.props.toggleSpinnerModal(false);
+        return data;
+    }
+
+    deleteWork = async (workNumber) => {
+        this.props.toggleSpinnerModal(true);
+        const {data} = await deleteWorkByWorkNumber(workNumber,this.state.loginMember.memberNumber);
+        if(data){
+            if(this.state.currentTab === "work"){
+                await this.setState({
+                    ...this.state,
+                    workList : this.state.workList.filter(work => work.workNumber !== workNumber),
+                });
+            }else if(this.state.currentTab === "temp"){
+                await this.setState({
+                    tempWorkList : this.state.tempWorkList.filter(temp =>temp.workNumber !== workNumber),
+                })
+            }
+        }
+        this.props.toggleSpinnerModal(false);
+        return data;
+    }
+
+    toggleWorkNoticeModal  = (e,type,workNumber) => {
+        if(e !== undefined){
+            e.stopPropagation();
+        }
+        if(type === undefined || workNumber === undefined){
+            this.setState({
+                ...this.state,
+                openWorkNoticeModal : null
+            })
+        }else{
+            this.setState({
+                ...this.state,
+                openWorkNoticeModal : {
+                    type : type,
+                    workNumber : workNumber
+                }
+            })
+        }
+    }
     
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.history !== undefined) {
@@ -211,6 +396,20 @@ function createArchiveConsumer(WrappedComponent){
                             openSpinnerModal = {state.openSpinnerModal}
                             toggleSpinnerModal = {actions.toggleSpinnerModal}
                             workDetail = {state.workDetail}
+                            currentTab = {state.currentTab}
+                            toggleCurrentTab = {actions.toggleCurrentTab}
+                            workList = {state.workList}
+                            likedList = {state.likedList}
+                            collectedList = {state.collectedList}
+                            tempWorkList = {state.tempWorkList}
+                            togglePersonalMenu = {actions.togglePersonalMenu}
+                            openPersonalMenu = {state.openPersonalMenu}
+                            clickLikeButton = {actions.clickLikeButton}
+                            getLikeList = {actions.getLikeList}
+                            changeWorkStatus = {actions.changeWorkStatus}
+                            openWorkNoticeModal = {state.openWorkNoticeModal}
+                            toggleWorkNoticeModal = {actions.toggleWorkNoticeModal}
+                            deleteWork = {actions.deleteWork}
                             {...props}
                         />
                     )
