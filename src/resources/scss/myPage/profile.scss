@@ -1,10 +1,11 @@
+$main-color: #89c997;
 .myPage{
     .profile{
         .profileTab{
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            // display: flex;
+            // justify-content: center;
+            // align-items: center;
             border-bottom: 1px solid #d9d9d9;
             .pageTitle{
                 position: absolute;
@@ -16,45 +17,49 @@
             }
             .tabList{
                 display: flex;
-                width: 200px;
-                justify-content: space-between;
+                width: 1300px;
+                margin: 0 auto;
+                justify-content: center;
                 li{
+                    width: 72px;
+                    text-align: center;
                     padding: 15px 5px;
                     font-size: 1.1rem;
                     border-bottom: 2px solid transparent;
                     color: #999;
                     transition: all 0.5s;
                     cursor: pointer;
+                    font-size: 0.8rem;
                     &.on{
                         color: #333;
-                        border-color: #f85272;;
+                        border-color: $main-color;
                     }
                     &:hover{
                         color: #333;
-                        border-color: #f85272;;
+                        border-color: $main-color;
                     }
                 }
             }
         }
         .tabContents{
             width: 100%;
-            max-width: 700px;
+            max-width: 768px;
             margin: 0 auto;
-            padding: 50px 0 ;
+            padding: 40px 0 80px;
             .profileForm{
+                max-width: 768px;
                 .contentsTitle{
-                    font-size: 1.5rem;
-                    font-weight: bold;
+                    font-size: 1.75rem;
+                    font-weight: 500;
                 }
                 .formItem{
-                    padding: 30px 0;
-                    &+.formItem{
-                        border-top: 1px solid #d9d9d9;
-                    }
+                    padding: 20px 0;
+                    display: flex;
+                    align-items: center;
+                    
                     .formTitle{
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
+                        flex: 0 0 20%;
+                        font-size: 1.35rem;
                         button{
                             padding: 0;
                             border: 0;
@@ -64,18 +69,30 @@
                         }
                     }
                     .form-group{
-                        margin-top: 15px;
+                        // margin-top: 15px;
                         display: flex;
                         flex-wrap: wrap;
+                        input[type=text],select{
+                            border: 0;
+                            background-color: #fafafa;
+                            border-radius: 0;
+                        }
+                        button{
+                            background-color: transparent;
+                            color: $main-color;
+                        }
                     }
                     ul{
-                        margin-top: 15px;
                         display: flex;
                     }
                     &.profileImage{
+                        align-items: flex-start;
                         .form-group{
+                            display: flex;
+                            align-items: center;
                             .imageWrap{
-                                max-width: 75px;
+                                width: 76px;
+                                height: 76px;
                                 border-radius: 50%;
                                 overflow: hidden;
                                 img{
@@ -86,126 +103,169 @@
                                 margin-left: 30px;
                                 .buttonWrap{
                                     display: flex;
-                                    align-items: center;
+                                    align-items: flex-start;
+                                    font-size: 1.13rem;
                                     input{
                                         display: none;
                                     }
                                     label{
-                                        border: 1px solid #d9d9d9;
-                                        border-radius: 30px;
-                                        padding: 10px;
+                                        color: $main-color;
+                                        font-weight: bold;
+                                        display: flex;
+                                        align-items: center;
                                         cursor: pointer;
-                                        svg{
-                                            color: #f85272;
+                                        img{
                                             margin-right: 5px;
                                         }
                                     }
                                     button{
                                         margin-left: 15px;
                                         padding: 0;
+                                        padding-bottom: 3px;
                                         border:0;
                                         background-color: transparent;
                                         color: #666;
+                                        font-weight: 400;
+                                        border-bottom: 1px solid #666;
                                     }
                                     margin-bottom: 10px;
+                                }
+                                p{
+                                    font-size: 1rem;
                                 }
                             }
                         }
                     }
+                    &.profileName{
+                        .form-group{
+                            flex: 0 0 40%;
+                        }
+                    }
                     &.profileGender{
                         .form-group{
-                            > div{
-                                &+ div{
-                                    margin-left: 10px;
+                            label{
+                                padding: 10px 20px;
+                                background-color: #fafafa;
+                                transition: all 0.5s;
+                                .on{
+                                    color: #fff;
+                                    background-color: $main-color;
+                                }
+                                &.none{
+                                    margin-left: 5px;
+                                }
+                            }
+                            input[type=radio]{
+                                display: none;
+                                &:checked+label{
+                                    color: #fff;
+                                    background-color: $main-color;
                                 }
                             }
                         }
                     }
                     &.profileBirth{
-                        select{
-                            width: 100%;
-                            padding: .375rem .75rem;
-                            border: 1px solid #ced4da;
-                            border-radius: .25rem;
+                        .form-group{
+                            flex: 0 0 80%;
+                            display: flex;
+                            justify-content: space-between;
+                            select{
+                                flex: 0 0 33%;
+                                padding: .375rem .75rem;
+                            }
                         }
                     }
                     &.profileKeyword{
-                        ul{
-                            li{
-                                &+li{
-                                    &::before{
-                                        content: '\00B7';
+                        .form-group{
+                            flex: 0 0 80%;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            ul{
+                                margin-top: 0;
+                                li{
+                                    &+li{
+                                        &::before{
+                                            content: '\00B7';
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                     &.profileWebAddress{
-                        ul{
-                            li{
-                                &.homepage{
-                                    svg{
-                                        color: #333;
+                        .form-group{
+                            flex: 0 0 80%;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            ul{
+                                li{
+                                    &.homepage{
+                                        svg{
+                                            color: #333;
+                                        }
                                     }
-                                }
-                                &.facebook{
-                                    svg{
-                                        color: rgb(61,94,239);
+                                    &.facebook{
+                                        svg{
+                                            color: rgb(61,94,239);
+                                        }
                                     }
-                                }
-                                &.twitter{
-                                    svg{
-                                        color: rgb(74,141,238);
+                                    &.twitter{
+                                        svg{
+                                            color: rgb(74,141,238);
+                                        }
                                     }
-                                }
-                                &.pinterest{
-                                    svg{
-                                        color: rgb(220,0,55);
+                                    &.pinterest{
+                                        svg{
+                                            color: rgb(220,0,55);
+                                        }
                                     }
-                                }
-                                &.tumblr{
-                                    svg{
-                                        color: rgb(10,17,40);
+                                    &.tumblr{
+                                        svg{
+                                            color: rgb(10,17,40);
+                                        }
                                     }
-                                }
-                                &.vimeo{
-                                    svg{
-                                        color: rgb(89,164,222);
+                                    &.vimeo{
+                                        svg{
+                                            color: rgb(89,164,222);
+                                        }
                                     }
-                                }
-                                &.youtube{
-                                    svg{
-                                        color: rgb(220,0,55);
+                                    &.youtube{
+                                        svg{
+                                            color: rgb(220,0,55);
+                                        }
                                     }
-                                }
-                                &.instagram{
-                                    svg{
-                                        color: rgb(220,0,55);
+                                    &.instagram{
+                                        svg{
+                                            color: rgb(220,0,55);
+                                        }
                                     }
-                                }
-                                &+li{
-                                    margin-left: 15px; 
-                                }
-                                .empty{
-                                    opacity: 0.5;
+                                    &+li{
+                                        margin-left: 15px; 
+                                    }
+                                    .empty{
+                                        opacity: 0.5;
+                                    }
                                 }
                             }
                         }
                     }
                     &.profileUrl{
+                        .form-group{
+                            flex: 0 0 80%;
+                        }
                         dl{
                             display: flex;
-                            align-items: center;
+                            // align-items: center;
                             justify-content: space-between;
                             width: 100%;
                             flex: 0 0 100%;
-                            border: 1px solid #d9d9d9;
-                            border-radius: 5px;
                             // padding-bottom: 5px;
                             dt{
-                                flex: 0 0 35%;
-                                border-right: 1px solid #d9d9d9;
+                                flex: 0 0 48%;
                                 .dropdown{
+                                    background-color: #fafafa;
                                     .dropdown-toggle{
                                         background-color: transparent;
                                         border: 0;
@@ -227,8 +287,9 @@
                                 }
                             }
                             dd{
-                                flex: 0 0 60%;
+                                flex: 0 0 48%;
                                 input[type=text]{
+                                    height: 100%;
                                     border: 0;
                                     width: 100%;
                                     &:focus{
@@ -244,18 +305,18 @@
                     }
                 }
                 .btnSubmit{
-                    border: 1px solid #f85272;
+                    width: 100%;
+                    border: 1px solid $main-color;
                     display: block;
                     margin: 30px auto 0; 
-                    background-color: #f85272;
+                    background-color:  $main-color;
                     color: #fff;
                     font-size: 1.2rem;
                     padding: 10px 30px;
-                    border-radius: 20px;
                     transition: all 0.5s;
                     &:hover{
                         background-color: #fff;
-                        color: #f85272;
+                        color:  $main-color;
                     }
                 }
             }

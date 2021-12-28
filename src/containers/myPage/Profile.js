@@ -208,7 +208,6 @@ const Profile = ({isLogin,loginMember,history,setMember}) => {
     return (
         <div className="profile">
             <div className="profileTab">
-                <h2 className="pageTitle">개인정보설정</h2>
                 <ul className="tabList">
                     <li className={currentTab === "profile" ? "on" : ""} onClick={() => handleCurrentTab("profile")}>프로필</li>
                     <li className={currentTab === "account" ? "on" : ""} onClick={() => handleCurrentTab("account")}>계정</li>

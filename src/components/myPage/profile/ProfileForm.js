@@ -4,6 +4,7 @@ import { faFacebookF, faInstagram, faPinterestP, faTumblr, faTwitter, faVimeo, f
 import { faHome, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import noProfile from '../../../resources/images/contents/archive/noProfile.png';
+import uploadIcon from '../../../resources/images/mypage/icon_upload.png';
 
 const ProfileForm = ({saveProfile,profileForm,changeProfileForm,handleCategorySelectModal,handleWebAddressModal,keywordList,blurOnUrl,toggleAvatarCreateModal,changeBeforeImage}) => {
 
@@ -46,7 +47,11 @@ const ProfileForm = ({saveProfile,profileForm,changeProfileForm,handleCategorySe
                     <div className="inputWrap">
                         <div className="buttonWrap">
                             <input type="file" name="profileImage" id="profileImage" onChange={e => changeBeforeImage(e)} accept="image/jpg, image/jpeg, image/png"/>
-                            <label htmlFor="profileImage" className="btnUpload"><FontAwesomeIcon icon={faUpload}/> 프로필 사진 업로드</label>
+                            <label htmlFor="profileImage" className="btnUpload">
+                                {/* <FontAwesomeIcon icon={faUpload}/> */}
+                                <img src={uploadIcon} alt="" />
+                                이미지 업로드
+                            </label>
                             <button className="btnRemove">이미지 삭제</button>
                         </div>
                         <p>10MB 이내의 이미지 파일을 업로드 해주세요.</p>
@@ -62,30 +67,18 @@ const ProfileForm = ({saveProfile,profileForm,changeProfileForm,handleCategorySe
             <div className="formItem profileGender">
                 <h6 className="formTitle">성별</h6>
                 <FormGroup>
-                    <div className="customRadio">
-                        <input id='genderM' type='radio' value="M" name="gender" checked={profileForm.gender === "M"} onChange={e => changeProfileForm("gender",e.target.value)}/>
-                        <label htmlFor='genderM'>
-                            <span></span>
-                            남성
-                            <ins><i>남성</i></ins>
-                        </label>
-                    </div>
-                    <div className="customRadio">
-                        <input id='genderF' type='radio' value="F" name="gender" checked={profileForm.gender === "F"} onChange={e => changeProfileForm("gender",e.target.value)}/>
-                        <label htmlFor='genderF'>
-                            <span></span>
-                            여성
-                            <ins><i>여성</i></ins>
-                        </label>
-                    </div>
-                    <div className="customRadio">
-                        <input id='genderN' type='radio' value="None" name="gender" checked={profileForm.gender === "N"} onChange={e => changeProfileForm("gender",e.target.value)}/>
-                        <label htmlFor='genderN'>
-                            <span></span>
-                            선택안함
-                            <ins><i>선택안함</i></ins>
-                        </label>
-                    </div>
+                    <input id='genderM' type='radio' value="M" name="gender" checked={profileForm.gender === "M"} onChange={e => changeProfileForm("gender",e.target.value)}/>
+                    <label htmlFor="genderM" className={profileForm.gender === "M" ? "on" : ""}>
+                        남
+                    </label>
+                    <input id='genderF' type='radio' value="F" name="gender" checked={profileForm.gender === "F"} onChange={e => changeProfileForm("gender",e.target.value)}/>
+                    <label htmlFor="genderF" className={profileForm.gender === "F" ? "on" : ""}>
+                        여
+                    </label>
+                    <input id='genderN' type='radio' value="N" name="gender" checked={profileForm.gender === "N"} onChange={e => changeProfileForm("gender",e.target.value)}/>
+                    <label htmlFor="genderN" className={`none ${profileForm.gender === "N" ? "on" : ""}`}>
+                        선택안함
+                    </label>
                 </FormGroup>
             </div>
             <div className="formItem profileUrl">
@@ -103,7 +96,7 @@ const ProfileForm = ({saveProfile,profileForm,changeProfileForm,handleCategorySe
                         </Dropdown>
                         </dt>
                         <dd>
-                            <input type="text" placeholder="영문,숫자,대시,언더바(최소 4자, 최대20자)" value={profileForm.url} onChange={e => changeProfileForm("url",e.target.value)} onBlur={e => blurOnUrl(e.target.value)}/>
+                            <Input type="text" placeholder="영문,숫자,대시,언더바(최소 4자, 최대20자)" value={profileForm.url} onChange={e => changeProfileForm("url",e.target.value)} onBlur={e => blurOnUrl(e.target.value)}/>
                         </dd>
                     </dl>
                     <p style={{display:`${profileForm.url !== "" && profileForm.urlStatus !== "pass" ? "block" : "none"}`}}>
@@ -113,51 +106,37 @@ const ProfileForm = ({saveProfile,profileForm,changeProfileForm,handleCategorySe
             </div>
             <div className="formItem profileBirth">
                 <h6 className="formTitle">생년월일</h6>
-                <FormGroup row>
-                    <Col md={4}>
-                        {/* <Input type="select">
-                            {
-                                getYearList().map(
-                                    year => 
-                                        <option key={year} value={year}>{year}</option>
-                                )
-                            }
-                        </Input> */}
-                        <select name="birthYear" value={profileForm.birthYear} onChange={e => changeProfileForm("birthYear",e.target.value)}>
-                            {
-                                getYearList().map(
-                                    year => 
-                                        <option key={year} value={year}>{year}</option>
-                                )
-                            }
-                        </select>
-                    </Col>
-                    <Col md={4}>
-                        <select name="birthMonth" value={profileForm.birthMonth} onChange={e => changeProfileForm("birthMonth",e.target.value)}>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                        </select>
-                    </Col>
-                    <Col md={4}>
-                        <select name="birthDay" value={profileForm.birthDay} onChange={e => changeProfileForm("birthDay",e.target.value)}>
-                            {
-                                getDayList().map(
-                                    year => 
-                                        <option key={year} value={year}>{year}</option>
-                                )
-                            }
-                        </select>
-                    </Col>
+                <FormGroup>
+                    <select name="birthYear" value={profileForm.birthYear} onChange={e => changeProfileForm("birthYear",e.target.value)}>
+                        {
+                            getYearList().map(
+                                year => 
+                                    <option key={year} value={year}>{year}</option>
+                            )
+                        }
+                    </select>
+                    <select name="birthMonth" value={profileForm.birthMonth} onChange={e => changeProfileForm("birthMonth",e.target.value)}>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select name="birthDay" value={profileForm.birthDay} onChange={e => changeProfileForm("birthDay",e.target.value)}>
+                        {
+                            getDayList().map(
+                                year => 
+                                    <option key={year} value={year}>{year}</option>
+                            )
+                        }
+                    </select>
                 </FormGroup>
             </div>
             {
@@ -170,101 +149,107 @@ const ProfileForm = ({saveProfile,profileForm,changeProfileForm,handleCategorySe
                 </div>
             }
             <div className="formItem profileKeyword">
-                <h6 className="formTitle">작업분야 <button onClick={handleCategorySelectModal}>카테고리 설정 &gt;</button></h6>
-                <ul>
-                    {
-                        profileForm.keyword1  === "" && profileForm.keyword2 === ""
-                        ? <li>등록된 카테고리가 없습니다.</li>
-                        : 
-                        <Fragment>
-                            {
-                                profileForm.keyword1 !== null &&
-                                <li>
-                                    {
-                                        (() => {
-                                            if(keywordList !== null){
-                                                const keyword = keywordList.find(key => key.code === profileForm.keyword1);
-                                                if(keyword !== null && keyword !== undefined){
-                                                    return keyword.kor;
+                <h6 className="formTitle">작업분야</h6>
+                <FormGroup>
+                    <ul>
+                        {
+                            profileForm.keyword1  === "" && profileForm.keyword2 === ""
+                            ? <li>등록된 카테고리가 없습니다.</li>
+                            : 
+                            <Fragment>
+                                {
+                                    profileForm.keyword1 !== null &&
+                                    <li>
+                                        {
+                                            (() => {
+                                                if(keywordList !== null){
+                                                    const keyword = keywordList.find(key => key.code === profileForm.keyword1);
+                                                    if(keyword !== null && keyword !== undefined){
+                                                        return keyword.kor;
+                                                    }else{
+                                                        return profileForm.keyword1;
+                                                    }
                                                 }else{
                                                     return profileForm.keyword1;
                                                 }
-                                            }else{
-                                                return profileForm.keyword1;
-                                            }
-                                            
-                                        })()
-                                    }
-                                </li>
-                            }
-                            {
-                                profileForm.keyword2 !== null &&
-                                <li>
-                                    {
-                                        (() => {
-                                            if(keywordList !== null){
-                                                const keyword = keywordList.find(key => key.code === profileForm.keyword2);
-                                                if(keyword !== null && keyword !== undefined){
-                                                    return keyword.kor;
+                                                
+                                            })()
+                                        }
+                                    </li>
+                                }
+                                {
+                                    profileForm.keyword2 !== null &&
+                                    <li>
+                                        {
+                                            (() => {
+                                                if(keywordList !== null){
+                                                    const keyword = keywordList.find(key => key.code === profileForm.keyword2);
+                                                    if(keyword !== null && keyword !== undefined){
+                                                        return keyword.kor;
+                                                    }else{
+                                                        return profileForm.keyword2;
+                                                    }
                                                 }else{
                                                     return profileForm.keyword2;
                                                 }
-                                            }else{
-                                                return profileForm.keyword2;
-                                            }
-                                            
-                                        })()
-                                    }
-                                </li>
-                            }
-                        </Fragment>
-                    }
-                </ul>
+                                                
+                                            })()
+                                        }
+                                    </li>
+                                }
+                            </Fragment>
+                        }
+                    </ul>
+                    <button onClick={handleCategorySelectModal}>설정</button>
+                </FormGroup>
             </div>
             <div className="formItem profileWebAddress">
-                <h6 className="formTitle">웹사이트 <button onClick={handleWebAddressModal}>카테고리 설정 &gt;</button></h6>
-                <ul>
-                    <li className="hompage">
-                        <a className={profileForm.sns.homepage === "" ? "empty" : ""} href={profileForm.sns.homepage === "#" ? "" : profileForm.sns.web}>
-                            <FontAwesomeIcon icon={faHome}/>
-                        </a>
-                    </li>
-                    <li className="facebook">
-                        <a className={profileForm.sns.facebook === "" ? "empty" : ""} href={profileForm.sns.facebook === "#" ? "" : profileForm.sns.facebook}>
-                            <FontAwesomeIcon icon={faFacebookF}/>
-                        </a>
-                    </li>
-                    <li className="twitter">
-                        <a className={profileForm.sns.twitter === "" ? "empty" : ""} href={profileForm.sns.twitter === "#" ? "" : profileForm.sns.twitter}>
-                            <FontAwesomeIcon icon={faTwitter}/>
-                        </a>
-                    </li>
-                    <li className="pinterest">
-                        <a className={profileForm.sns.pinterest === "" ? "empty" : ""} href={profileForm.sns.pinterest === "#" ? "" : profileForm.sns.pinterest}>
-                            <FontAwesomeIcon icon={faPinterestP}/>
-                        </a>
-                    </li>
-                    <li className="tumblr">
-                        <a className={profileForm.sns.tumblr === "" ? "empty" : ""} href={profileForm.sns.tumblr === "#" ? "" : profileForm.sns.tumblr}>
-                            <FontAwesomeIcon icon={faTumblr}/>
-                        </a>
-                    </li>
-                    <li className="vimeo">
-                        <a className={profileForm.sns.vimeo === "" ? "empty" : ""} href={profileForm.sns.vimeo === "#" ? "" : profileForm.sns.vimeo}>
-                            <FontAwesomeIcon icon={faVimeo}/>
-                        </a>
-                    </li>
-                    <li className="youtube">
-                        <a className={profileForm.sns.youtube === "" ? "empty" : ""} href={profileForm.sns.youtube === "#" ? "" : profileForm.sns.youtube}>
-                            <FontAwesomeIcon icon={faYoutube}/>
-                        </a>
-                    </li>
-                    <li className="instagram">
-                        <a className={profileForm.sns.instagram === "" ? "empty" : ""} href={profileForm.sns.instagram === "#" ? "" : profileForm.sns.instagram}>
-                            <FontAwesomeIcon icon={faInstagram}/>
-                        </a>
-                    </li>
-                </ul>
+                <h6 className="formTitle">웹사이트</h6>
+                <FormGroup>
+                    <ul>
+                        <li className="hompage">
+                            <a className={profileForm.sns.homepage === "" ? "empty" : ""} href={profileForm.sns.homepage === "#" ? "" : profileForm.sns.web}>
+                                <FontAwesomeIcon icon={faHome}/>
+                            </a>
+                        </li>
+                        <li className="facebook">
+                            <a className={profileForm.sns.facebook === "" ? "empty" : ""} href={profileForm.sns.facebook === "#" ? "" : profileForm.sns.facebook}>
+                                <FontAwesomeIcon icon={faFacebookF}/>
+                            </a>
+                        </li>
+                        <li className="twitter">
+                            <a className={profileForm.sns.twitter === "" ? "empty" : ""} href={profileForm.sns.twitter === "#" ? "" : profileForm.sns.twitter}>
+                                <FontAwesomeIcon icon={faTwitter}/>
+                            </a>
+                        </li>
+                        <li className="pinterest">
+                            <a className={profileForm.sns.pinterest === "" ? "empty" : ""} href={profileForm.sns.pinterest === "#" ? "" : profileForm.sns.pinterest}>
+                                <FontAwesomeIcon icon={faPinterestP}/>
+                            </a>
+                        </li>
+                        <li className="tumblr">
+                            <a className={profileForm.sns.tumblr === "" ? "empty" : ""} href={profileForm.sns.tumblr === "#" ? "" : profileForm.sns.tumblr}>
+                                <FontAwesomeIcon icon={faTumblr}/>
+                            </a>
+                        </li>
+                        <li className="vimeo">
+                            <a className={profileForm.sns.vimeo === "" ? "empty" : ""} href={profileForm.sns.vimeo === "#" ? "" : profileForm.sns.vimeo}>
+                                <FontAwesomeIcon icon={faVimeo}/>
+                            </a>
+                        </li>
+                        <li className="youtube">
+                            <a className={profileForm.sns.youtube === "" ? "empty" : ""} href={profileForm.sns.youtube === "#" ? "" : profileForm.sns.youtube}>
+                                <FontAwesomeIcon icon={faYoutube}/>
+                            </a>
+                        </li>
+                        <li className="instagram">
+                            <a className={profileForm.sns.instagram === "" ? "empty" : ""} href={profileForm.sns.instagram === "#" ? "" : profileForm.sns.instagram}>
+                                <FontAwesomeIcon icon={faInstagram}/>
+                            </a>
+                        </li>
+                    </ul>
+                    <button onClick={handleWebAddressModal}>설정</button>
+                </FormGroup>
             </div>
             <button className="btnSubmit">변경 내용 저장</button>
         </Form>
