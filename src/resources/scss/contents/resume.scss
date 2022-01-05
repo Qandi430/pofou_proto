@@ -142,16 +142,18 @@ $main-color: #89c997;
         }
     }
     .resumeForm{
+        max-width: 1300px;
+        margin: 0 auto;
         .form-group{
             display: flex;
             flex-wrap: wrap;
-            padding: 30px 0;
+            padding: 12px 0;
             .formTitle{
                 flex: 0 0 100%;
                 display: flex;
                 align-items: flex-end;
                 font-weight: bold;
-                font-size: 1.4rem;
+                font-size: 1.75rem;
                 margin-bottom: 30px;
                 span{
                     color: #999;
@@ -212,13 +214,14 @@ $main-color: #89c997;
                 }
             }
             .empty{
-                border: 1px solid #d9d9d9;
+                // border: 1px solid #d9d9d9;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                min-height: 300px;
+                min-height: 120px;
                 width: 100%;
+                background-color: #fafafa;
                 button{
                     padding: 0;
                     color: #ff6813;
@@ -226,6 +229,11 @@ $main-color: #89c997;
                     margin-top: 10px;
                     background-color: transparent;
                 }
+            }
+            input[type=text],input[type=email],textarea{
+                background-color: #fafafa;
+                border: 0;
+                border-radius: 0;
             }
         }
         .resumeTitle{
@@ -247,17 +255,11 @@ $main-color: #89c997;
             }
             input{
                 border: 0;
-                border-bottom: 1px solid #d9d9d9;
-                &+button{
-                    border: 1px solid #d9d9d9;
-                    padding: 5px 10px;
-                    background-color: transparent;
-                    border-radius: 0px 3px 3px 0;
-                    transition: all 0.5s;
-                    &:hover{
-                        background: #333;
-                        color: #fff;
-                    }
+                font-size: 2rem;
+                color: #161616;
+                width: 100%;
+                &::placeholder{
+                    color: #ccc;
                 }
             }
         }
@@ -287,33 +289,6 @@ $main-color: #89c997;
                     }
                 }
             }
-            .flexTable{
-                flex: 0 0 80%;
-                .tableRow{
-                    &:first-child{
-                        .tableData{
-                            flex: 0 0 33.333%;
-                            &.birthDate{
-                                .td{
-                                    display: flex;
-                                    justify-content: center;
-                                    select{
-                                        &+select{
-                                            margin-left: 5px;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    &:last-child{
-                        .tableData{
-                            flex: 0 0 100%;
-                            // width: 100%;
-                        }
-                    }
-                }
-            }
             .basicContent{
                 flex: 1;
                 position: relative;
@@ -323,8 +298,8 @@ $main-color: #89c997;
                     align-items: center;
                     > label{
                         flex: 0 0 15%;
-                        font-size: 1.2rem;
-                        font-weight: bold;
+                        font-size: 1.4rem;
+                        // font-weight: bold;
                         display: flex;
                         align-items: flex-end;
                         span{
@@ -332,6 +307,7 @@ $main-color: #89c997;
                             font-size: 0.9rem;
                             font-weight: normal;
                             margin-left: 5px;
+                            display: none;
                         }
                     }
                     .inputBox{
@@ -341,12 +317,12 @@ $main-color: #89c997;
                     }
                     &.photo{
                         position: absolute;
-                        top: 30px;
+                        top: 15px;
                         right: 25%;
-                        width: 150px;
+                        width: 180px;
                         border: 1px solid #d9d9d9;
                         padding: 0px;
-                        border-radius: .25rem;
+                        // border-radius: .25rem;
                         overflow: hidden;
                         .imageWrap{
                             position: relative;
@@ -400,7 +376,7 @@ $main-color: #89c997;
                                 top: 0;
                                 right: 0;
                                 content: '';
-                                background-color: #4876ef;
+                                background-color: $main-color;
                                 width: 50%;
                                 height: 100%;
                                 z-index: -1;
@@ -422,33 +398,29 @@ $main-color: #89c997;
                     &.birthDate{
                         .inputBox{
                             justify-content: space-between;
-                        }
-                        .genderBox{
-                            flex: 0 0 40%;
-                            margin-left: 10px;
-                            display: flex;
-                            label{
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                flex: 1;
-                                border: 1px solid #d9d9d9;
-                                border-radius: .25rem 0 0 .25rem;
-                                cursor: pointer;
-                                transition: all 0.5s;
-                                font-size: 0.8rem;
-                                &+label{
-                                    border-radius: 0 .25rem .25rem 0;
-                                    border-left: 0;
-                                }
-                                &.on{
-                                    background-color: #4876ef;
-                                    border-color: #4876ef;
-                                    color: #fff;
-                                }
+                            .react-datepicker-wrapper{
+                                flex: 0 0 65%;
                             }
-                            input{
-                                display: none;
+                            .genderBox{
+                                flex: 0 0 30%;
+                                display: flex;
+                                label{
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    flex: 1;
+                                    cursor: pointer;
+                                    transition: all 0.5s;
+                                    font-size: 0.8rem;
+                                    background-color: #fafafa;
+                                    &.on{
+                                        background-color: $main-color;
+                                        color: #fff;
+                                    }
+                                }
+                                input{
+                                    display: none;
+                                }
                             }
                         }
                     }
@@ -456,10 +428,6 @@ $main-color: #89c997;
                         .inputBox{
                             flex: 0 0 60%;
                             input{
-                                &:read-only{
-                                    flex: 0 0 67%;
-                                    background-color: #fff;
-                                }
                                 &+input{
                                     margin-top: 10px;
                                     
@@ -474,16 +442,16 @@ $main-color: #89c997;
             .educationList{
                 flex: 1;
                 .empty{
-                    border: 1px solid #d9d9d9;
+                    // border: 1px solid #d9d9d9;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
-                    min-height: 300px;
+                    min-height: 200px;
                     width: 100%;
                     button{
                         padding: 0;
-                        color: #ff6813;
+                        color: $main-color;
                         border: 0;
                         margin-top: 10px;
                         background-color: transparent;
@@ -551,14 +519,16 @@ $main-color: #89c997;
                     flex: 0 0 50%;
                     padding: 10px 0;
                     text-align: center;
-                    border: 1px solid #d9d9d9;
+                    // border: 1px solid #d9d9d9;
+                    background-color: #fafafa;
                     font-size: 1.2rem;
+                    transition: all 0.5s;
                     cursor: pointer;
                     &+label{
                         border-left: 0;
                     }
                     &.on{
-                        background-color: #ff6813;
+                        background-color: $main-color;
                         color: #fff;
                     }
                 }
@@ -574,23 +544,23 @@ $main-color: #89c997;
                         position: absolute;
                         top: 5px;
                         right: 0;
-                        background: #ff5165;
+                        background: $main-color;
                         color: #fff;
                         padding: 5px 20px;
                         font-size: 0.9rem;
-                        border-radius: 5px;
+                        // border-radius: 5px;
                     }
                     .form-group{
                         display: flex;
                         align-items: center;
                         > label{
                             flex: 0 0 15%;
-                            font-size: 1.2rem;
-                            font-weight: bold;
+                            font-size: 1.4rem;
                         }
                         .inputBox{
                             display: flex;
                             align-items: center;
+                            
                             >label{
                                 margin: 0 10px;
                             }
@@ -616,9 +586,20 @@ $main-color: #89c997;
                                 flex: 0 0 50%;
                             }
                         }
+                        &.careerPeriod{
+                            .inputBox{
+                                flex: 0 0 85%;
+                                .react-datepicker-wrapper{
+                                    flex: 0 0 28%;
+                                }
+                            }
+                        }
                         &.careerContent{
                             .inputBox{
                                 flex: 0 0 85%;
+                                textarea{
+                                    height: 150px;
+                                }
                             }
                         }
                     }
@@ -627,11 +608,11 @@ $main-color: #89c997;
             >button{
                 margin-left: auto;
                 width: 300px;
-                border: 1px solid #d9d9d9;
+                border: 1px solid $main-color;
                 padding: 10px 0;
                 margin-top: 15px;
                 color: #fff;
-                background-color: #666666;
+                background-color: $main-color;
             }
         }
         .activity{
@@ -658,8 +639,7 @@ $main-color: #89c997;
                         align-items: center;
                         > label{
                             flex: 0 0 15%;
-                            font-size: 1.2rem;
-                            font-weight: bold;
+                            font-size: 1.4rem;
                         }
                         .inputBox{
                             display: flex;
@@ -715,11 +695,11 @@ $main-color: #89c997;
             >button{
                 margin-left: auto;
                 width: 300px;
-                border: 1px solid #d9d9d9;
+                border: 1px solid $main-color;
                 padding: 10px 0;
                 margin-top: 15px;
                 color: #fff;
-                background-color: #666666;
+                background-color: $main-color;
             }
         }
         .certificate{
@@ -746,8 +726,8 @@ $main-color: #89c997;
                         align-items: center;
                         > label{
                             flex: 0 0 15%;
-                            font-size: 1.2rem;
-                            font-weight: bold;
+                            font-size: 1.4rem;
+                            // font-weight: bold;
                         }
                         .inputBox{
                             flex: 0 0 30%;
@@ -759,17 +739,18 @@ $main-color: #89c997;
                             .dropdown{
                                 width: 100%;
                                 .dropdown-toggle{
-                                    background-color: transparent;
-                                    border: 1px solid #ced4da;
+                                    background-color: #fafafa;
+                                    border: 0;
                                     color: #333;
                                     width: 100%;
                                     display: flex;
                                     justify-content: space-between;
                                     align-items: center;
-                                    
+                                    border-radius: 0;
                                 }
                                 .dropdown-menu{
                                     width: 100%;
+                                    border-radius: 0;
                                     .dropdown-item{
                                         padding-top: 10px;
                                         padding-bottom: 10px;
@@ -805,11 +786,11 @@ $main-color: #89c997;
             >button{
                 margin-left: auto;
                 width: 300px;
-                border: 1px solid #d9d9d9;
+                border: 1px solid $main-color;
                 padding: 10px 0;
                 margin-top: 15px;
                 color: #fff;
-                background-color: #666666;
+                background-color: $main-color;
             }
         }
         .preferred{
@@ -837,8 +818,9 @@ $main-color: #89c997;
                         .dropdown{
                             width: 100%;
                             .dropdown-toggle{
-                                background-color: transparent;
-                                border: 1px solid #ced4da;
+                                background-color: #fafafa;
+                                border: 0;
+                                border-radius: 0;
                                 color: #333;
                                 width: 100%;
                                 display: flex;
@@ -967,21 +949,23 @@ $main-color: #89c997;
             >button{
                 margin-left: auto;
                 width: 300px;
-                border: 1px solid #d9d9d9;
+                border: 1px solid $main-color;
                 padding: 10px 0;
                 margin-top: 15px;
                 color: #fff;
-                background-color: #666666;
+                background-color: $main-color;
             }
         }
         .resumeSidebar{
             position: sticky;
             top: 30px;
+            margin-top: 70px;
             .title{
                 font-weight: bold;
                 font-size: 1.2rem;
-                border-bottom: 1px solid #d9d9d9;
+                // border-bottom: 1px solid #d9d9d9;
                 padding-bottom: 10px;
+                text-align: right;
             }
             .resumeList{
                 display: block;
@@ -989,6 +973,7 @@ $main-color: #89c997;
                 li{
                     display: flex;
                     align-items: center;
+                    position: relative;
                     &+li{
                         margin-top: 10px;
                     }
@@ -997,49 +982,48 @@ $main-color: #89c997;
                         padding: 5px 0;
                         transition: all 0.5s;
                         cursor: pointer;
+                        text-align: right;
                     }
                     &.on{
                         h6{
-                            color:#4876ef;
-                            font-weight: bold;
+                            color:$main-color;
+                            // font-weight: bold;
                         } 
                     }
+                    &.off{
+                        h6{
+                            color: #999999;
+                        }
+                    }
                     button{
-                        padding: 5px 10px ;
-                        border-radius: 20px;
+                        position: absolute;
+                        right: -15px;
                         font-size: 0.8rem;
+                        color: $main-color;
+                        background-color: transparent;
+                        transition: all 0.5s;
                         &.btnAdd{
-                            border: 1px solid #d9d9d9;
-                            background-color: #fff;
-                            transition: all 0.5s;
-                            &:hover{
-                                background-color: #4876ef;
-                                color: #fff;
-                                border-color: #4876ef;
-                            }
+                            transform: rotate(0);
                         }
                         &.btnExcept{
-                            border: 1px solid #4876ef;
-                            background-color: #4876ef;
-                            color: #fff;
-                            transition: all 0.5s;
-                            &:hover{
-                                background-color: #fff;
-                                color: #333;
-                                border-color: #d9d9d9;
-                            }
+                            transform: rotate(90deg);
                         }
                     }
                 }
             }
             .btnBox{
+                margin-top: 50px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-end;
                 button{
-                    width: 100%;
-                    font-size: 1.2rem;
-                    font-weight: bold;
-                    padding: 15px 0;
+                    // margin-right: auto;
+                    width: 70%;
+                    // font-size: 1.2rem;
+                    // font-weight: bold;
+                    padding: 20px 0;
                     transition: all 0.5s;
-                    border-radius: .25rem;
+                    border-radius: 0;
                     &.btnPreview{
                         background-color: #fff;
                         border: 1px solid #d9d9d9;
@@ -1050,23 +1034,22 @@ $main-color: #89c997;
                         }
                     }
                     &.btnTemporary{
-                        margin-top: 15px;
-                        background-color: #d9d9d9;
-                        border: 1px solid #d9d9d9;
+                        margin-top: 30px;
+                        background-color: transparent;
+                        border: 1px solid $main-color;
+                        border-bottom: 0;
                         color: #333;
                         &:hover{
-                            border-color: #d9d9d9;
-                            background-color: #ffffff;
-                            color: #666666;
+                            background-color: $main-color;
+                            color: #ffffff;
                         }
                     }
                     &.btnSave{
-                        margin-top: 15px;
-                        background-color: #666666;
-                        border: 1px solid #666666;
+                        margin-top: 0px;
+                        background-color: $main-color;
+                        border: 1px solid $main-color;
                         color: #fff;
                         &:hover{
-                            border-color: #d9d9d9;
                             background-color: #ffffff;
                             color: #666666;
                         }

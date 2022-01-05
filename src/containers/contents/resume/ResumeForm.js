@@ -19,7 +19,7 @@ const ResumeForm = ({openSpinnerModal,toggleSpinnerModal,loginMember,history,mat
     const [openTitleInput, setOpenTitleInput] = useState(false);
     const [formData,setFormData] = useState({
         memberNumber:  "",
-        title: "이력서",
+        title: "",
         name : "",
         photo : "",
         displayPhoto : false,
@@ -322,10 +322,10 @@ const ResumeForm = ({openSpinnerModal,toggleSpinnerModal,loginMember,history,mat
     return (
         <div className="resumeForm">
             <Row>
-                <Col md={9}>
+                <Col md={10}>
                     <Form>
                         <div className="resumeTitle">
-                            {
+                            {/* {
                                 openTitleInput ? 
                                 <>
                                 <input type="text" id="resumeTitle" name="title" value={formData.title} onChange={e => changeFormData("title",e.target.value)} />
@@ -336,7 +336,8 @@ const ResumeForm = ({openSpinnerModal,toggleSpinnerModal,loginMember,history,mat
                                     {formData.title}
                                     <button onClick={handleTitleInput}><FontAwesomeIcon icon={faEdit}/></button>
                                 </h5>
-                            }
+                            } */}
+                            <input type="text" id="resumeTitle" name="title" value={formData.title} onChange={e => changeFormData("title",e.target.value)} placeholder='이력서 제목' />
                         </div>
                         <BasicInfo formData={formData} changeFormData={changeFormData} setFormData={setFormData} toggleSpinnerModal={toggleSpinnerModal}/>
                         <Education formData={formData} handleEducationAdditionalModal = {handleEducationAdditionalModal} removeEducation={removeEducation} modifyEducation={modifyEducation}  modifyEducationForm={modifyEducationForm}/>
@@ -363,7 +364,7 @@ const ResumeForm = ({openSpinnerModal,toggleSpinnerModal,loginMember,history,mat
                         }
                     </Form>
                 </Col>
-                <Col md={3}>
+                <Col md={2}>
                     <ResumeSidebar formData={formData} changeFormData={changeFormData} openSpinnerModal={openSpinnerModal} toggleSpinnerModal={toggleSpinnerModal} history={history} handelResumeDetail={handelResumeDetail}/>
                 </Col>
             </Row>

@@ -13,7 +13,8 @@ const Education = ({
     return(
         <FormGroup className="education">
             <h6 className="formTitle">
-                학력 <button onClick={handleEducationAdditionalModal}>추가 +</button>
+                학력
+                {/* 학력 <button onClick={handleEducationAdditionalModal}>추가 +</button> */}
             </h6>
             <div className="educationList">
                 {

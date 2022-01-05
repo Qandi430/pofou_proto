@@ -227,34 +227,34 @@ const ResumeSidebar = ({formData,changeFormData,toggleSpinnerModal,history,hande
                 <li>
                     <h6 className="listName" onClick={() => moveToTarget("career")}>경력사항 <span>필수</span></h6>
                 </li>
-                <li className={`${formData.displayCertificate ? "on" : ""}`}>
+                <li className={`${formData.displayCertificate ? "on" : "off"}`}>
                     <h6 className="listName" onClick={() => moveToTarget("certificate")}>자격증/어학/수상 내역</h6>
                     {
-                        formData.displayCertificate ? <button className="btnExcept" onClick={e=>toggleDisplay(e,"displayCertificate")}>제외 <FontAwesomeIcon icon={faTimes}/></button>:<button className="btnAdd" onClick={e=>toggleDisplay(e,"displayCertificate")}>추가 <FontAwesomeIcon icon={faPlus}/></button> 
+                        formData.displayCertificate ? <button className="btnExcept" onClick={e=>toggleDisplay(e,"displayCertificate")}> <FontAwesomeIcon icon={faTimes}/></button>:<button className="btnAdd" onClick={e=>toggleDisplay(e,"displayCertificate")}> <FontAwesomeIcon icon={faPlus}/></button> 
                     }
                 </li>
-                <li className={`${formData.displayActivity ? "on" : ""}`}>
+                <li className={`${formData.displayActivity ? "on" : "off"}`}>
                     <h6 className="listName" onClick={() => moveToTarget("activity")}>대외활동</h6>
                     {
-                        formData.displayActivity ? <button className="btnExcept" onClick={e=>toggleDisplay(e,"displayActivity")}>제외 <FontAwesomeIcon icon={faTimes}/></button>:<button className="btnAdd" onClick={e=>toggleDisplay(e,"displayActivity")}>추가 <FontAwesomeIcon icon={faPlus}/></button> 
+                        formData.displayActivity ? <button className="btnExcept" onClick={e=>toggleDisplay(e,"displayActivity")}> <FontAwesomeIcon icon={faTimes}/></button>:<button className="btnAdd" onClick={e=>toggleDisplay(e,"displayActivity")}> <FontAwesomeIcon icon={faPlus}/></button> 
                     }
                 </li>
-                <li className={`${formData.displayPreferred ? "on" : ""}`}>
+                <li className={`${formData.displayPreferred ? "on" : "off"}`}>
                     <h6 className="listName" onClick={() => moveToTarget("preferred")}>취업 우대사항</h6>
                     {
-                        formData.displayPreferred ? <button className="btnExcept" onClick={e=>toggleDisplay(e,"displayPreferred")}>제외 <FontAwesomeIcon icon={faTimes}/></button>:<button className="btnAdd" onClick={e=>toggleDisplay(e,"displayPreferred")}>추가 <FontAwesomeIcon icon={faPlus}/></button> 
+                        formData.displayPreferred ? <button className="btnExcept" onClick={e=>toggleDisplay(e,"displayPreferred")}> <FontAwesomeIcon icon={faTimes}/></button>:<button className="btnAdd" onClick={e=>toggleDisplay(e,"displayPreferred")}> <FontAwesomeIcon icon={faPlus}/></button> 
                     }
                 </li>
-                <li className={`${formData.displaySkill ? "on" : ""}`}>
+                <li className={`${formData.displaySkill ? "on" : "off"}`}>
                     <h6 className="listName" onClick={() => moveToTarget("skill")}>보유기술 및 능력</h6>
                     {
-                        formData.displaySkill ? <button className="btnExcept" onClick={e=>toggleDisplay(e,"displaySkill")}>제외 <FontAwesomeIcon icon={faTimes}/></button>:<button className="btnAdd" onClick={e=>toggleDisplay(e,"displaySkill")}>추가 <FontAwesomeIcon icon={faPlus}/></button> 
+                        formData.displaySkill ? <button className="btnExcept" onClick={e=>toggleDisplay(e,"displaySkill")}> <FontAwesomeIcon icon={faTimes}/></button>:<button className="btnAdd" onClick={e=>toggleDisplay(e,"displaySkill")}> <FontAwesomeIcon icon={faPlus}/></button> 
                     }
                 </li>
-                <li className={`${formData.displayIntroduction ? "on" : ""}`}>
+                <li className={`${formData.displayIntroduction ? "on" : "off"}`}>
                     <h6 className="listName" onClick={() => moveToTarget("introduction")}>자기소개서</h6>
                     {
-                        formData.displayIntroduction ? <button className="btnExcept" onClick={e=>toggleDisplay(e,"displayIntroduction")}>제외 <FontAwesomeIcon icon={faTimes}/></button>:<button className="btnAdd" onClick={e=>toggleDisplay(e,"displayIntroduction")}>추가 <FontAwesomeIcon icon={faPlus}/></button> 
+                        formData.displayIntroduction ? <button className="btnExcept" onClick={e=>toggleDisplay(e,"displayIntroduction")}> <FontAwesomeIcon icon={faTimes}/></button>:<button className="btnAdd" onClick={e=>toggleDisplay(e,"displayIntroduction")}> <FontAwesomeIcon icon={faPlus}/></button> 
                     }
                 </li>
             </ul>
