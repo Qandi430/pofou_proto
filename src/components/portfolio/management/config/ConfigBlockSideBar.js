@@ -126,8 +126,39 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock
         <div className={`configBlockSideBar ${configBlock !== null ? "on" : ""}`}>
             <div className="blockInfo">
                 <div className="blockTitle">
-                    <h6>블럭설정</h6>
-                    <p>
+                    <h6>
+                        {
+                            configForm !== null &&
+                            (
+                                () => {
+                                    switch(configForm.category){
+                                        case "title" :
+                                            return "타이틀 ";
+                                        case "contents" :
+                                            return "컨텐츠 ";
+                                        case "text" :
+                                            return "텍스트 ";
+                                        case "work" :
+                                            return "작업물 ";
+                                        case "contact" :
+                                            return "컨택트 ";
+                                        case "image" :
+                                            return "이미지 ";
+                                        case "video" :
+                                            return "동영상 ";
+                                        case "slide" :
+                                            return "슬라이드 쇼 ";
+                                        case "contour" :
+                                            return "구분선 ";
+                                        default :
+                                            return "기타 ";
+                                    }
+                                }
+                            )()
+                        }
+                        
+                        설정</h6>
+                    {/* <p>
                         {
                             configForm !== null &&
                             (
@@ -157,7 +188,7 @@ const ConfigBlockSideBar = ({configBlock,selectConfigBlock,modifyBlock,copyBlock
                                 }
                             )()
                         }
-                    </p>
+                    </p> */}
                     <button onClick={() => selectConfigBlock(null)}><FontAwesomeIcon icon={faTimes}/></button>
                 </div>
             </div>

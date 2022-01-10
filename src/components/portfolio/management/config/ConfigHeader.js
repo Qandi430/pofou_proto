@@ -6,6 +6,12 @@ import { createPortfolioConsumer } from '../../../../context/portfolioContext';
 import { singleFileUpload } from '../../../../server/common/CommonServer';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import { convertFontName } from '../../../common/CommonScript';
+import btnSave from '../../../../resources/images/portfolio/btnSave.png';
+import btnSaveOn from '../../../../resources/images/portfolio/btnSaveOn.png';
+import btnReverse from '../../../../resources/images/portfolio/btnReverse.png';
+import btnReverseOn from '../../../../resources/images/portfolio/btnReverseOn.png';
+import btnClose from '../../../../resources/images/portfolio/btnClose.png';
+import btnCloseOn from '../../../../resources/images/portfolio/btnCloseOn.png';
 
 const ConfigHeader = ({modifyHistory,revertHistory,toggleNoticeModal,portfolioData,changeGlobalConfig,toggleSpinnerModal}) => {
     const [openHistoryBox,setOpenHistoryBox] = useState(false);
@@ -62,7 +68,7 @@ const ConfigHeader = ({modifyHistory,revertHistory,toggleNoticeModal,portfolioDa
         <header className="configHeader">
             <div className="headerLeft">
                 <div className="btnGlobalConfig">
-                    <button className="btnOpenGlobalConfig" onClick={() => setOpenGlobalConfigBox(!openGlobalConfigBox)}>포트폴리오 기본 설정</button>
+                    <button className="btnOpenGlobalConfig" onClick={() => setOpenGlobalConfigBox(!openGlobalConfigBox)}>기본 설정</button>
                     <div className={`globalConfigBox ${openGlobalConfigBox ? "on" :""}`}>
                         <div className="configItem">
                             <h5 onClick={() => toggleGlobalConfig("background")}>배경</h5>
@@ -192,11 +198,21 @@ const ConfigHeader = ({modifyHistory,revertHistory,toggleNoticeModal,portfolioDa
             </div>
             <div className="headerRight">
                 <button onMouseEnter={() => setOpenHistoryBox(true)} onMouseLeave={() => setOpenHistoryBox(false)}>
-                    되돌리기
+                    {/* 되돌리기 */}
+                    <img src={btnReverse} alt=""  className='off'/>
+                    <img src={btnReverseOn} alt="" className='on'/>
                     <HistoryBox openHistoryBox={openHistoryBox} modifyHistory={modifyHistory} revertHistory={revertHistory}/>        
                 </button>
-                <button onClick={() => toggleNoticeModal("update")}>저장하기</button>
-                <button onClick={() => toggleNoticeModal("quit")}>편집끝내기</button>
+                <button onClick={() => toggleNoticeModal("update")}>
+                    {/* 저장하기 */}
+                    <img src={btnSave} alt="" className='off'/>
+                    <img src={btnSaveOn} alt="" className='on'/>
+                </button>
+                <button onClick={() => toggleNoticeModal("quit")}>
+                    {/* 편집끝내기 */}
+                    <img src={btnClose} alt=""  className='off'/>
+                    <img src={btnCloseOn} alt="" className='on'/>
+                </button>
             </div>
         </header>
     )

@@ -24,6 +24,7 @@ const AddBlockSideBar = ({addBlock,toggleAddBlock,addNewBlock}) => {
         ],
     });
     const [selectedBlock,setSelectedBlock] = useState(null);
+    const [selectionBoxPosition,setSelectionBoxPosition] = useState(0);
     const resume = {
         "resumeNumber": 6,
         "memberNumber": 1,
@@ -430,6 +431,11 @@ const AddBlockSideBar = ({addBlock,toggleAddBlock,addNewBlock}) => {
         }
     },[addBlock,categoryList]);
 
+    useEffect(() => {
+        console.log(currentCategory,document.querySelector(`.categoryList > .${currentCategory.category}`).offsetTop);
+        setSelectionBoxPosition(document.querySelector(`.categoryList > .${currentCategory.category}`).offsetTop);
+    },[currentCategory]);
+
     const selectCategory = category => {
         setCurrentCategory(categoryList.find(cate => cate.category === category));
         setSelectedBlock(null);
@@ -444,47 +450,53 @@ const AddBlockSideBar = ({addBlock,toggleAddBlock,addNewBlock}) => {
             <aside>
                 <div className="categoryWrap">
                     <ul className="categoryList">
-                        <li onClick={() => selectCategory("title")} className={`${currentCategory.category === "title" ? "on" : ""}`}>
-                            <FontAwesomeIcon icon={faEdit}/>
+                        <li onClick={() => selectCategory("title")} className={`title ${currentCategory.category === "title" ? "on" : ""}`}>
+                            {/* <FontAwesomeIcon icon={faEdit}/> */}
                             타이틀
                         </li>
-                        <li onClick={() => selectCategory("contents")} className={`${currentCategory.category === "contents" ? "on" : ""}`}>
-                            <FontAwesomeIcon icon={faEdit}/>
+                        <li onClick={() => selectCategory("contents")} className={`contents ${currentCategory.category === "contents" ? "on" : ""}`}>
+                            {/* <FontAwesomeIcon icon={faEdit}/> */}
                             컨텐츠
                         </li>
-                        <li onClick={() => selectCategory("text")} className={`${currentCategory.category === "text" ? "on" : ""}`}>
-                            <FontAwesomeIcon icon={faEdit}/>
+                        <li onClick={() => selectCategory("text")} className={`text ${currentCategory.category === "text" ? "on" : ""}`}>
+                            {/* <FontAwesomeIcon icon={faEdit}/> */}
                             텍스트
                         </li>
-                        <li onClick={() => selectCategory("work")} className={`${currentCategory.category === "work" ? "on" : ""}`}>
-                            <FontAwesomeIcon icon={faEdit}/>
+                        <li onClick={() => selectCategory("work")} className={`work ${currentCategory.category === "work" ? "on" : ""}`}>
+                            {/* <FontAwesomeIcon icon={faEdit}/> */}
                             작업물
                         </li>
-                        <li onClick={() => selectCategory("contact")} className={`${currentCategory.category === "contact" ? "on" : ""}`}>
-                            <FontAwesomeIcon icon={faEdit}/>
+                        <li onClick={() => selectCategory("contact")} className={`contact ${currentCategory.category === "contact" ? "on" : ""}`}>
+                            {/* <FontAwesomeIcon icon={faEdit}/> */}
                             컨택트
                         </li>
-                        <li onClick={() => selectCategory("image")} className={`${currentCategory.category === "image" ? "on" : ""}`}>
-                            <FontAwesomeIcon icon={faEdit}/>
+                        <li onClick={() => selectCategory("image")} className={`image ${currentCategory.category === "image" ? "on" : ""}`}>
+                            {/* <FontAwesomeIcon icon={faEdit}/> */}
                             이미지
                         </li>
-                        <li onClick={() => selectCategory("video")} className={`${currentCategory.category === "video" ? "on" : ""}`}>
-                            <FontAwesomeIcon icon={faEdit}/>
+                        <li onClick={() => selectCategory("video")} className={`video ${currentCategory.category === "video" ? "on" : ""}`}>
+                            {/* <FontAwesomeIcon icon={faEdit}/> */}
                             동영상
                         </li>
-                        <li onClick={() => selectCategory("slide")} className={`${currentCategory.category === "slide" ? "on" : ""}`}>
-                            <FontAwesomeIcon icon={faEdit}/>
+                        <li onClick={() => selectCategory("slide")} className={`slide ${currentCategory.category === "slide" ? "on" : ""}`}>
+                            {/* <FontAwesomeIcon icon={faEdit}/> */}
                             슬라이드쇼
                         </li>
-                        <li onClick={() => selectCategory("contour")} className={`${currentCategory.category === "contour" ? "on" : ""}`}>
-                            <FontAwesomeIcon icon={faEdit}/>
+                        <li onClick={() => selectCategory("contour")} className={`contour ${currentCategory.category === "contour" ? "on" : ""}`}>
+                            {/* <FontAwesomeIcon icon={faEdit}/> */}
                             구분선
                         </li>
-                        <li onClick={() => selectCategory("etc")} className={`${currentCategory.category === "etc" ? "on" : ""}`}>
-                            <FontAwesomeIcon icon={faEdit}/>
+                        <li onClick={() => selectCategory("etc")} className={`etc ${currentCategory.category === "etc" ? "on" : ""}`}>
+                            {/* <FontAwesomeIcon icon={faEdit}/> */}
                             기타
                         </li>
                     </ul>
+                    <div className={`selectionBox ${selectionBoxPosition === 0 ? "top" : ""}`} style={{top:`${selectionBoxPosition}px`}}>
+                        <div className="inner">
+                            <div className="top"></div>
+                            <div className="bottom"></div>
+                        </div>
+                    </div>
                 </div>
                 <div className="blockWrap">
                     <ul className="blockList">
